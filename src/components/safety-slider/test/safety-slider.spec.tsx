@@ -15,12 +15,18 @@ describe('safety-slider', () => {
       </safety-slider>
     `);
   });
-  it('renders two arrow buttons when content is in the slot', async () => {
+  it('renders arrow buttons and dots when content is in the slot', async () => {
     const page = await newSpecPage({
       components: [SafetySlider],
-      html: `<safety-slider><img src="https://picsum.photos/100/100" alt="Randomly generated image"></safety-slider>`
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>`
     });
 
     expect(page.root.shadowRoot.querySelectorAll('.safety-slider__arrow').length).toBe(2);
+    expect(page.root.shadowRoot.querySelectorAll('.safety-slider__dot').length).toBe(3);
   });
 });
