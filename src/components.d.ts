@@ -21,6 +21,7 @@ export namespace Components {
         "middle": string;
     }
     interface SafetySlider {
+        "noArrows": boolean;
     }
 }
 declare global {
@@ -57,6 +58,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface SafetySlider {
+        "noArrows"?: boolean;
     }
     interface IntrinsicElements {
         "my-component": MyComponent;

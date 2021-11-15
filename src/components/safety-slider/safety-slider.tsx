@@ -1,4 +1,4 @@
-import { Component, Host, h, Element } from '@stencil/core';
+import { Component, Host, h, Element, Prop } from '@stencil/core';
 
 @Component({
   tag: 'safety-slider',
@@ -7,10 +7,12 @@ import { Component, Host, h, Element } from '@stencil/core';
 })
 export class SafetySlider {
 
-  @Element() root : HTMLElement;
-
   hasSlides: boolean;
   slideCount: number;
+
+  @Element() root: HTMLElement;
+
+  @Prop() noArrows: boolean;
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
@@ -21,15 +23,21 @@ export class SafetySlider {
     return (
       <Host>
         <slot></slot>
-        {this.hasSlides && [
-          <button class="safety-slider__arrow" type="button">Left arrow</button>,
-          <button class="safety-slider__arrow" type="button">Right arrow</button>,
+
+        {this.hasSlides && !this.noArrows && (
+          <div class="safety-slider__arrows">
+            <button class="safety-slider__arrow" type="button">Left arrow</button>,
+            <button class="safety-slider__arrow" type="button">Right arrow</button>
+          </div>
+        )}
+
+        {this.hasSlides && (
           <div class="safety-slider__dots">
             {[...new Array(this.slideCount)].map((x, i) =>
               <button class="safety-slider__dot" type="button">{i}</button>
             )}
           </div>
-        ]}
+        )}
       </Host>
     );
   }
