@@ -20,6 +20,7 @@ describe('safety-slider', () => {
       components: [SafetySlider],
       html: `<safety-slider><img src="https://picsum.photos/100/100" alt="Randomly generated image"></safety-slider>`
     });
-    expect(page.root.querySelectorAll('safety-slider__btn').length).toBe(2);
+
+    expect(page.root.shadowRoot.querySelectorAll('.safety-slider__arrow').length).toBe(2);
   });
 });
