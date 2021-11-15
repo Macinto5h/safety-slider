@@ -10,9 +10,11 @@ export class SafetySlider {
   @Element() root : HTMLElement;
 
   hasSlides: boolean;
+  slideCount: number;
 
   componentWillLoad() {
-    this.hasSlides = this.root.children.length > 0;
+    this.slideCount = this.root.children.length;
+    this.hasSlides = this.slideCount > 0;
   }
 
   render() {
@@ -21,7 +23,12 @@ export class SafetySlider {
         <slot></slot>
         {this.hasSlides && [
           <button class="safety-slider__arrow" type="button">Left arrow</button>,
-          <button class="safety-slider__arrow" type="button">Right arrow</button>
+          <button class="safety-slider__arrow" type="button">Right arrow</button>,
+          <div class="safety-slider__dots">
+            {[...new Array(this.slideCount)].map((x, i) =>
+              <button class="safety-slider__dot" type="button">{i}</button>
+            )}
+          </div>
         ]}
       </Host>
     );
