@@ -3,7 +3,7 @@ import { Component, Host, h, Element, Prop } from '@stencil/core';
 @Component({
   tag: 'safety-slider',
   styleUrl: 'safety-slider.css',
-  shadow: true,
+  shadow: false,
 })
 export class SafetySlider {
 
@@ -21,16 +21,17 @@ export class SafetySlider {
   }
 
   componentDidLoad() {
-    if (this.hasSlides) {
-      const loadedSlides = this.root.shadowRoot.querySelector('.safety-slider__slides').children;
+    if (this.hasSlides)
+      this.assignSlideClasses();
+  }
 
-      for (let i = 0; i < loadedSlides.length; i++) {
-        loadedSlides[i].classList.add('safety-slider__slide');
+  assignSlideClasses() {
+    const slides = this.root.querySelector('.safety-slider__slides').children;
 
-        if (i === 0)
-          loadedSlides[i].classList.add('-active');
-      }
-    }
+    for (let i = 0; i < this.slideCount; i++)
+      slides[i].classList.add('safety-slider__slide');
+
+    slides[0].classList.add('-active');
   }
 
   render() {
@@ -42,7 +43,7 @@ export class SafetySlider {
 
         {this.hasSlides && !this.noArrows && (
           <div class="safety-slider__arrows">
-            <button class="safety-slider__arrow" type="button">Left arrow</button>,
+            <button class="safety-slider__arrow" type="button">Left arrow</button>
             <button class="safety-slider__arrow" type="button">Right arrow</button>
           </div>
         )}

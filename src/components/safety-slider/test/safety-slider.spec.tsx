@@ -9,11 +9,7 @@ describe('safety-slider', () => {
     });
     expect(page.root).toEqualHtml(`
       <safety-slider>
-        <mock:shadow-root>
-          <div class="safety-slider__slides">
-            <slot></slot>
-          </div>
-        </mock:shadow-root>
+        <div class="safety-slider__slides"></div>
       </safety-slider>
     `);
   });
@@ -28,8 +24,8 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    expect(page.root.shadowRoot.querySelectorAll('.safety-slider__arrow').length).toBe(2);
-    expect(page.root.shadowRoot.querySelectorAll('.safety-slider__dot').length).toBe(3);
+    expect(page.root.querySelectorAll('.safety-slider__arrow').length).toBe(2);
+    expect(page.root.querySelectorAll('.safety-slider__dot').length).toBe(3);
   });
   it('does not render arrow buttons when the no-arrows attribute is present', async () => {
     const page = await newSpecPage({
@@ -42,7 +38,7 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    expect(page.root.shadowRoot.querySelectorAll('.safety-slider__arrow').length).toBe(0);
+    expect(page.root.querySelectorAll('.safety-slider__arrow').length).toBe(0);
   });
   it('does not render dot buttons when the no-dots attribute is present', async () => {
     const page = await newSpecPage({
@@ -55,7 +51,7 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    expect(page.root.shadowRoot.querySelectorAll('.safety-slider__dot').length).toBe(0);
+    expect(page.root.querySelectorAll('.safety-slider__dot').length).toBe(0);
   });
   it('renders an active slide when there is at least one item in the slot', async () => {
 
@@ -69,6 +65,6 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    expect(page.root.shadowRoot.querySelectorAll('.safety-slider__slide.-active').length).toBe(1);
+    expect(page.root.querySelectorAll('.safety-slider__slide.-active').length).toBe(1);
   });
 });
