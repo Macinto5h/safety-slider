@@ -13,6 +13,7 @@ export class SafetySlider {
   @Element() root: HTMLElement;
 
   @Prop() noArrows: boolean;
+  @Prop() noDots: boolean;
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
@@ -31,7 +32,7 @@ export class SafetySlider {
           </div>
         )}
 
-        {this.hasSlides && (
+        {this.hasSlides && !this.noDots && (
           <div class="safety-slider__dots">
             {[...new Array(this.slideCount)].map((x, i) =>
               <button class="safety-slider__dot" type="button">{i}</button>
