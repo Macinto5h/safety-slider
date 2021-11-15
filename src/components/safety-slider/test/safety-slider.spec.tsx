@@ -10,7 +10,9 @@ describe('safety-slider', () => {
     expect(page.root).toEqualHtml(`
       <safety-slider>
         <mock:shadow-root>
-          <slot></slot>
+          <div class="safety-slider__slides">
+            <slot></slot>
+          </div>
         </mock:shadow-root>
       </safety-slider>
     `);
@@ -56,6 +58,7 @@ describe('safety-slider', () => {
     expect(page.root.shadowRoot.querySelectorAll('.safety-slider__dot').length).toBe(0);
   });
   it('renders an active slide when there is at least one item in the slot', async () => {
+
     const page = await newSpecPage({
       components: [SafetySlider],
       html:
@@ -66,6 +69,6 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    expect(page.root.shadowRoot.querySelector('.safety-slider__slide.-active')).toBe(HTMLImageElement);
-  })
+    expect(page.root.shadowRoot.querySelectorAll('.safety-slider__slide.-active').length).toBe(1);
+  });
 });

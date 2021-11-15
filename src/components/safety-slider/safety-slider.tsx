@@ -20,10 +20,25 @@ export class SafetySlider {
     this.hasSlides = this.slideCount > 0;
   }
 
+  componentDidLoad() {
+    if (this.hasSlides) {
+      const loadedSlides = this.root.shadowRoot.querySelector('.safety-slider__slides').children;
+
+      for (let i = 0; i < loadedSlides.length; i++) {
+        loadedSlides[i].classList.add('safety-slider__slide');
+
+        if (i === 0)
+          loadedSlides[i].classList.add('-active');
+      }
+    }
+  }
+
   render() {
     return (
       <Host>
-        <slot></slot>
+        <div class="safety-slider__slides">
+          <slot></slot>
+        </div>
 
         {this.hasSlides && !this.noArrows && (
           <div class="safety-slider__arrows">
