@@ -20,6 +20,8 @@ export namespace Components {
          */
         "middle": string;
     }
+    interface SafetySlider {
+    }
 }
 declare global {
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
@@ -28,8 +30,15 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLSafetySliderElement extends Components.SafetySlider, HTMLStencilElement {
+    }
+    var HTMLSafetySliderElement: {
+        prototype: HTMLSafetySliderElement;
+        new (): HTMLSafetySliderElement;
+    };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
+        "safety-slider": HTMLSafetySliderElement;
     }
 }
 declare namespace LocalJSX {
@@ -47,8 +56,11 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface SafetySlider {
+    }
     interface IntrinsicElements {
         "my-component": MyComponent;
+        "safety-slider": SafetySlider;
     }
 }
 export { LocalJSX as JSX };
@@ -56,6 +68,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "safety-slider": LocalJSX.SafetySlider & JSXBase.HTMLAttributes<HTMLSafetySliderElement>;
         }
     }
 }
