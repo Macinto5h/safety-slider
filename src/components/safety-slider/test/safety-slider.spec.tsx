@@ -29,4 +29,17 @@ describe('safety-slider', () => {
     expect(page.root.shadowRoot.querySelectorAll('.safety-slider__arrow').length).toBe(2);
     expect(page.root.shadowRoot.querySelectorAll('.safety-slider__dot').length).toBe(3);
   });
+  it('does not render arrows button when the no-arrows attribute is present', async() => {
+    const page = await newSpecPage({
+      components: [SafetySlider],
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>`
+    });
+
+    expect(page.root.shadowRoot.querySelectorAll('.safety-slider__arrow').length).toBe(0);
+  })
 });
