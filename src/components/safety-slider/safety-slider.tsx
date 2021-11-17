@@ -1,3 +1,4 @@
+/*global HTMLSafetySliderElement*/
 import { Component, Host, h, Element, Prop } from '@stencil/core';
 
 @Component({
@@ -7,13 +8,13 @@ import { Component, Host, h, Element, Prop } from '@stencil/core';
 })
 export class SafetySlider {
 
-  hasSlides: boolean;
-  slideCount: number;
+  private hasSlides: boolean;
+  private slideCount: number;
 
-  @Element() root: HTMLElement;
+  @Element() root: HTMLSafetySliderElement;
 
-  @Prop() noArrows: boolean;
-  @Prop() noDots: boolean;
+  @Prop() readonly noArrows: boolean;
+  @Prop() readonly noDots: boolean;
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
@@ -25,7 +26,7 @@ export class SafetySlider {
       this.assignSlideClasses();
   }
 
-  assignSlideClasses() {
+  private assignSlideClasses() {
     const slides = this.root.querySelector('.safety-slider__slides').children;
 
     for (let i = 0; i < this.slideCount; i++)

@@ -1,3 +1,4 @@
+/*global describe, it, expect*/
 import { newSpecPage } from '@stencil/core/testing';
 import { SafetySlider } from '../safety-slider';
 
