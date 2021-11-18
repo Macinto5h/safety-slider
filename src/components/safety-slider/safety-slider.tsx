@@ -45,6 +45,11 @@ export class SafetySlider {
       this.slideContainer.children[i].classList.add('safety-slider__slide');
   }
 
+  private dotClick = (event: MouseEvent) => {
+    const activeSlide = parseInt((event.target as HTMLButtonElement).getAttribute('data-slide'));
+    this.setActiveSlide(activeSlide);
+  }
+
   render() {
     return (
       <Host>
@@ -62,7 +67,9 @@ export class SafetySlider {
         {this.hasSlides && !this.noDots && (
           <div class="safety-slider__dots">
             {[...new Array(this.slideCount)].map((x, i) =>
-              <button class="safety-slider__dot" type="button">{i}</button>
+              <button class="safety-slider__dot" type="button" onClick={this.dotClick} data-slide={i}>
+                {i}
+              </button>
             )}
           </div>
         )}
