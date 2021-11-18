@@ -26,7 +26,6 @@ describe('safety-slider', () => {
     });
 
     const arrows = page.root.querySelectorAll('.safety-slider__arrow');
-    await page.waitForChanges();
 
     expect(arrows.length).toBe(2);
     expect(page.root.querySelectorAll('.safety-slider__dot').length).toBe(3);
