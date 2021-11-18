@@ -10,6 +10,8 @@ export class SafetySlider {
 
   private hasSlides: boolean;
   private slideCount: number;
+  private slideContainer: HTMLDivElement;
+  private activeSlide: number = 0;
 
   @Element() root: HTMLSafetySliderElement;
 
@@ -22,23 +24,25 @@ export class SafetySlider {
   }
 
   componentDidLoad() {
-    if (this.hasSlides)
+    this.slideContainer = this.root.querySelector('.safety-slider__slides');
+
+    if (this.hasSlides) {
       this.assignSlideClasses();
+      this.setActiveSlide(this.activeSlide);
+    }
   }
 
   @Method()
   async setActiveSlide(activeSlide: number) {
-    this.root.querySelector('.safety-slider__slide.-active').classList.remove('-active');
-    this.root.querySelector('.safety-slider__slides').children[activeSlide].classList.add('-active');
+    this.slideContainer.children[this.activeSlide].classList.remove('-active');
+    this.slideContainer.children[activeSlide].classList.add('-active');
+
+    this.activeSlide = activeSlide;
   }
 
   private assignSlideClasses() {
-    const slides = this.root.querySelector('.safety-slider__slides').children;
-
     for (let i = 0; i < this.slideCount; i++)
-      slides[i].classList.add('safety-slider__slide');
-
-    slides[0].classList.add('-active');
+      this.slideContainer.children[i].classList.add('safety-slider__slide');
   }
 
   render() {
