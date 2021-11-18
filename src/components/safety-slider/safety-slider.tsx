@@ -57,14 +57,14 @@ export class SafetySlider {
           <slot></slot>
         </div>
 
-        {this.hasSlides && !this.noArrows && (
+        {this.slideCount > 1 && !this.noArrows && (
           <div class="safety-slider__arrows">
             <button class="safety-slider__arrow" type="button" disabled>Left arrow</button>
             <button class="safety-slider__arrow" type="button">Right arrow</button>
           </div>
         )}
 
-        {this.hasSlides && !this.noDots && (
+        {this.slideCount > 1 && !this.noDots && (
           <div class="safety-slider__dots">
             {[...new Array(this.slideCount)].map((x, i) =>
               <button class="safety-slider__dot" type="button" onClick={this.dotClick} data-slide={i}>
