@@ -68,4 +68,19 @@ describe('safety-slider', () => {
 
     expect(page.root.querySelectorAll('.safety-slider__slide.-active').length).toBe(1);
   });
+  it('The active slide should be changed when setActiveSlide is called', async () => {
+    const page = await newSpecPage({
+      components: [SafetySlider],
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>`
+    });
+
+    page.rootInstance.setActiveSlide(1);
+
+    expect(page.root.querySelector('.safety-slider__slides').children[1]).toHaveClass('-active');
+  });
 });

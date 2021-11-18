@@ -9,6 +9,7 @@ export namespace Components {
     interface SafetySlider {
         "noArrows": boolean;
         "noDots": boolean;
+        "setActiveSlide": (activeSlide: number) => Promise<void>;
     }
 }
 declare global {
