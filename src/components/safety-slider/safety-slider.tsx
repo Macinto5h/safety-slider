@@ -1,5 +1,5 @@
 /*global HTMLSafetySliderElement*/
-import { Component, Host, h, Element, Prop } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Method } from '@stencil/core';
 
 @Component({
   tag: 'safety-slider',
@@ -24,6 +24,12 @@ export class SafetySlider {
   componentDidLoad() {
     if (this.hasSlides)
       this.assignSlideClasses();
+  }
+
+  @Method()
+  async setActiveSlide(activeSlide: number) {
+    this.root.querySelector('.safety-slider__slide.-active').classList.remove('-active');
+    this.root.querySelector('.safety-slider__slides').children[activeSlide].classList.add('-active');
   }
 
   private assignSlideClasses() {
