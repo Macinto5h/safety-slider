@@ -117,4 +117,22 @@ describe('safety-slider', () => {
 
     expect(page.root.querySelector('.safety-slider__slides').children[1]).toHaveClass('-active');
   });
+  it('The active slide should change to next slide when the next arrow button is clicked. The previous arrow button should be enabled.', async () => {
+    const page = await newSpecPage({
+      components: [SafetySlider],
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>`
+    });
+    const arrows = page.root.querySelectorAll('.safety-slider__arrow');
+    const prevArrowBtn = arrows[0] as HTMLButtonElement;
+    const nextArrowBtn = arrows[1] as HTMLButtonElement;
+    nextArrowBtn.click();
+
+    expect(page.root.querySelector('.safety-slider__slides').children[1]).toHaveClass('-active');
+    expect(prevArrowBtn).not.toHaveAttribute('disabled');
+  });
 });
