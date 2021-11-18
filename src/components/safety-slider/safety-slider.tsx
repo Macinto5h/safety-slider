@@ -11,7 +11,7 @@ export class SafetySlider {
 
   private slideCount: number;
   private slideContainer: HTMLDivElement;
-  private activeSlide: number = 0;
+  private activeSlide = 0;
   private prevBtn: HTMLButtonElement;
 
   @Element() root: HTMLSafetySliderElement;
