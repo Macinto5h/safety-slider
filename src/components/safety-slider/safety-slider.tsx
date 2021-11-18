@@ -59,7 +59,7 @@ export class SafetySlider {
 
         {this.hasSlides && !this.noArrows && (
           <div class="safety-slider__arrows">
-            <button class="safety-slider__arrow" type="button">Left arrow</button>
+            <button class="safety-slider__arrow" type="button" disabled>Left arrow</button>
             <button class="safety-slider__arrow" type="button">Right arrow</button>
           </div>
         )}

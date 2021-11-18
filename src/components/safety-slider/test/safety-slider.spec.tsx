@@ -26,10 +26,11 @@ describe('safety-slider', () => {
     });
 
     const arrows = page.root.querySelectorAll('.safety-slider__arrow');
+    await page.waitForChanges();
 
     expect(arrows.length).toBe(2);
     expect(page.root.querySelectorAll('.safety-slider__dot').length).toBe(3);
-    expect((arrows[0] as HTMLButtonElement).disabled).toBeTruthy();
+    expect((arrows[0] as HTMLButtonElement)).toHaveAttribute('disabled');
   });
   it('does not render arrow buttons when the no-arrows attribute is present', async () => {
     const page = await newSpecPage({
