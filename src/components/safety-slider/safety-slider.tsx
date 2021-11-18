@@ -13,6 +13,7 @@ export class SafetySlider {
   private slideContainer: HTMLDivElement;
   private activeSlide = 0;
   private prevBtn: HTMLButtonElement;
+  private nextBtn: HTMLButtonElement;
 
   @Element() root: HTMLSafetySliderElement;
 
@@ -26,19 +27,22 @@ export class SafetySlider {
   componentDidLoad() {
     this.slideContainer = this.root.querySelector(`.${SliderClasses.SlideContainer}`);
     this.prevBtn = this.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`);
+    this.nextBtn = this.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`);
 
     this.assignSlideClasses();
     this.setActiveSlide(this.activeSlide);
   }
 
   @Method()
-  async setActiveSlide(activeSlide: number) {
+  async setActiveSlide(newActiveSlide: number) {
     if (this.slideCount > 0) {
       this.slideContainer.children[this.activeSlide].classList.remove(SliderClasses.Active);
-      this.slideContainer.children[activeSlide].classList.add(SliderClasses.Active);
+      this.slideContainer.children[newActiveSlide].classList.add(SliderClasses.Active);
 
-      this.setArrowBtnDisability(this.activeSlide, activeSlide);
-      this.activeSlide = activeSlide;
+      if (this.slideCount > 1 && !this.noArrows)
+        this.setArrowBtnDisability(newActiveSlide);
+
+      this.activeSlide = newActiveSlide;
     }
   }
 
@@ -47,10 +51,9 @@ export class SafetySlider {
       this.slideContainer.children[i].classList.add(SliderClasses.Slide);
   }
 
-  private setArrowBtnDisability(oldActiveSlide: number, newActiveSlide: number) {
-    if (oldActiveSlide !== newActiveSlide && oldActiveSlide === 0) {
-      this.prevBtn.disabled = false;
-    }
+  private setArrowBtnDisability(newActiveSlide: number) {
+    this.prevBtn.disabled = newActiveSlide === 0;
+    this.nextBtn.disabled = newActiveSlide === this.slideCount - 1;
   }
 
   private dotClick = (event: MouseEvent) => {
