@@ -83,4 +83,20 @@ describe('safety-slider', () => {
 
     expect(page.root.querySelector('.safety-slider__slides').children[1]).toHaveClass('-active');
   });
+  it('The active slide should be changed when a dot button is clicked', async () => {
+    const page = await newSpecPage({
+      components: [SafetySlider],
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>`
+    });
+
+    const secondDotBtn = page.root.querySelectorAll('.safety-slider__dot')[1] as HTMLButtonElement;
+    secondDotBtn.click();
+
+    expect(page.root.querySelector('.safety-slider__slides').children[1]).toHaveClass('-active');
+  });
 });
