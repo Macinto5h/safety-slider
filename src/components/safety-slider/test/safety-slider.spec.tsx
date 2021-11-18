@@ -14,7 +14,7 @@ describe('safety-slider', () => {
       </safety-slider>
     `);
   });
-  it('renders arrow buttons and dots when content is in the slot, left arrow by default is disabled', async () => {
+  it('renders arrow buttons and dots when there is more than 1 items in the slot, left arrow by default is disabled', async () => {
     const page = await newSpecPage({
       components: [SafetySlider],
       html:
@@ -31,6 +31,21 @@ describe('safety-slider', () => {
     expect(page.root.querySelectorAll('.safety-slider__dot').length).toBe(3);
     expect((arrows[0] as HTMLButtonElement)).toHaveAttribute('disabled');
   });
+  it('does not render arrow buttons and dots when there is only one slide', async () => {
+    const page = await newSpecPage({
+      components: [SafetySlider],
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>`
+    });
+
+    const arrows = page.root.querySelectorAll('.safety-slider__arrow');
+    const dots = page.root.querySelectorAll('.safety-slider__dot');
+
+    expect(arrows.length).toBe(0);
+    expect(dots.length).toBe(0);
+  })
   it('does not render arrow buttons when the no-arrows attribute is present', async () => {
     const page = await newSpecPage({
       components: [SafetySlider],
