@@ -1,5 +1,6 @@
 /*global HTMLSafetySliderElement*/
 import { Component, Host, h, Element, Prop, Method } from '@stencil/core';
+import { SliderClasses } from './enum/safety-slider.selectors';
 
 @Component({
   tag: 'safety-slider',
@@ -23,8 +24,8 @@ export class SafetySlider {
   }
 
   componentDidLoad() {
-    this.slideContainer = this.root.querySelector('.safety-slider__slides');
-    this.prevBtn = this.root.querySelector('.safety-slider__arrow.-prev');
+    this.slideContainer = this.root.querySelector(`.${SliderClasses.SlideContainer}`);
+    this.prevBtn = this.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`);
 
     this.assignSlideClasses();
     this.setActiveSlide(this.activeSlide);
@@ -33,8 +34,8 @@ export class SafetySlider {
   @Method()
   async setActiveSlide(activeSlide: number) {
     if (this.slideCount > 0) {
-      this.slideContainer.children[this.activeSlide].classList.remove('-active');
-      this.slideContainer.children[activeSlide].classList.add('-active');
+      this.slideContainer.children[this.activeSlide].classList.remove(SliderClasses.Active);
+      this.slideContainer.children[activeSlide].classList.add(SliderClasses.Active);
 
       this.setArrowBtnDisability(this.activeSlide, activeSlide);
       this.activeSlide = activeSlide;
@@ -43,7 +44,7 @@ export class SafetySlider {
 
   private assignSlideClasses() {
     for (let i = 0; i < this.slideCount; i++)
-      this.slideContainer.children[i].classList.add('safety-slider__slide');
+      this.slideContainer.children[i].classList.add(SliderClasses.Slide);
   }
 
   private setArrowBtnDisability(oldActiveSlide: number, newActiveSlide: number) {
@@ -64,21 +65,21 @@ export class SafetySlider {
   render() {
     return (
       <Host>
-        <div class="safety-slider__slides">
+        <div class={SliderClasses.SlideContainer}>
           <slot></slot>
         </div>
 
         {this.slideCount > 1 && !this.noArrows && (
-          <div class="safety-slider__arrows">
-            <button class="safety-slider__arrow -prev" type="button" disabled>Previous arrow</button>
-            <button class="safety-slider__arrow -next" type="button" onClick={this.nextArrowClick}>Next arrow</button>
+          <div class={SliderClasses.ArrowContainer}>
+            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous} type="button" disabled>Previous arrow</button>
+            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Next} type="button" onClick={this.nextArrowClick}>Next arrow</button>
           </div>
         )}
 
         {this.slideCount > 1 && !this.noDots && (
-          <div class="safety-slider__dots">
+          <div class={SliderClasses.DotContainer}>
             {[...new Array(this.slideCount)].map((x, i) =>
-              <button class="safety-slider__dot" type="button" onClick={this.dotClick} data-slide={i}>
+              <button class={SliderClasses.Dot} type="button" onClick={this.dotClick} data-slide={i}>
                 {i}
               </button>
             )}
