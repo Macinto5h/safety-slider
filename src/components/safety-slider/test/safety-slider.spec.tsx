@@ -137,4 +137,22 @@ describe('safety-slider', () => {
     expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[1]).toHaveClass(SliderClasses.Active);
     expect(prevArrowBtn.disabled).toBeFalsy();
   });
+  it('The next arrow button should be disabled when the active slide is the last slide.', async () => {
+    const page = await newSpecPage({
+      components: [SafetySlider],
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>`
+    });
+
+    page.rootInstance.setActiveSlide(2);
+    await page.waitForChanges();
+
+    const nextBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`) as HTMLButtonElement
+
+    expect(nextBtn.disabled).toBeTruthy();
+  });
 });
