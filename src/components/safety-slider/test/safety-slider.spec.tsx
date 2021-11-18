@@ -1,5 +1,6 @@
 /*global describe, it, expect*/
 import { newSpecPage } from '@stencil/core/testing';
+import { SliderClasses } from '../enum/safety-slider.selectors';
 import { SafetySlider } from '../safety-slider';
 
 describe('safety-slider', () => {
@@ -25,10 +26,10 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    const arrows = page.root.querySelectorAll('.safety-slider__arrow');
+    const arrows = page.root.querySelectorAll(`.${SliderClasses.ArrowButton}`);
 
     expect(arrows.length).toBe(2);
-    expect(page.root.querySelectorAll('.safety-slider__dot').length).toBe(3);
+    expect(page.root.querySelectorAll(`.${SliderClasses.Dot}`).length).toBe(3);
     expect((arrows[0] as HTMLButtonElement)).toHaveAttribute('disabled');
   });
   it('does not render arrow buttons and dots when there is only one slide', async () => {
@@ -40,8 +41,8 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    const arrows = page.root.querySelectorAll('.safety-slider__arrow');
-    const dots = page.root.querySelectorAll('.safety-slider__dot');
+    const arrows = page.root.querySelectorAll(`.${SliderClasses.ArrowButton}`);
+    const dots = page.root.querySelectorAll(`.${SliderClasses.Dot}`);
 
     expect(arrows.length).toBe(0);
     expect(dots.length).toBe(0);
@@ -57,7 +58,7 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    expect(page.root.querySelectorAll('.safety-slider__arrow').length).toBe(0);
+    expect(page.root.querySelectorAll(`.${SliderClasses.ArrowButton}`).length).toBe(0);
   });
   it('does not render dot buttons when the no-dots attribute is present', async () => {
     const page = await newSpecPage({
@@ -70,7 +71,7 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    expect(page.root.querySelectorAll('.safety-slider__dot').length).toBe(0);
+    expect(page.root.querySelectorAll(`.${SliderClasses.Dot}`).length).toBe(0);
   });
   it('renders an active slide when there is at least one item in the slot', async () => {
 
@@ -84,7 +85,7 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    expect(page.root.querySelectorAll('.safety-slider__slide.-active').length).toBe(1);
+    expect(page.root.querySelectorAll(`.${SliderClasses.Slide}.${SliderClasses.Active}`).length).toBe(1);
   });
   it('The active slide should be changed when setActiveSlide is called', async () => {
     const page = await newSpecPage({
@@ -99,7 +100,7 @@ describe('safety-slider', () => {
 
     page.rootInstance.setActiveSlide(1);
 
-    expect(page.root.querySelector('.safety-slider__slides').children[1]).toHaveClass('-active');
+    expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[1]).toHaveClass(SliderClasses.Active);
   });
   it('The active slide should be changed when a dot button is clicked', async () => {
     const page = await newSpecPage({
@@ -112,10 +113,10 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    const secondDotBtn = page.root.querySelectorAll('.safety-slider__dot')[1] as HTMLButtonElement;
+    const secondDotBtn = page.root.querySelectorAll(`.${SliderClasses.Dot}`)[1] as HTMLButtonElement;
     secondDotBtn.click();
 
-    expect(page.root.querySelector('.safety-slider__slides').children[1]).toHaveClass('-active');
+    expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[1]).toHaveClass(SliderClasses.Active);
   });
   it('The active slide should change to next slide when the next arrow button is clicked. The previous arrow button should be enabled.', async () => {
     const page = await newSpecPage({
@@ -128,12 +129,12 @@ describe('safety-slider', () => {
         </safety-slider>`
     });
 
-    (page.root.querySelector('.safety-slider__arrow.-next') as HTMLButtonElement).click();
+    (page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`) as HTMLButtonElement).click();
     await page.waitForChanges();
 
-    const prevArrowBtn = (page.root.querySelector('.safety-slider__arrow.-prev') as HTMLButtonElement);
+    const prevArrowBtn = (page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`) as HTMLButtonElement);
 
-    expect(page.root.querySelector('.safety-slider__slides').children[1]).toHaveClass('-active');
+    expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[1]).toHaveClass(SliderClasses.Active);
     expect(prevArrowBtn.disabled).toBeFalsy();
   });
 });
