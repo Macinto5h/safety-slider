@@ -8,7 +8,6 @@ import { Component, Host, h, Element, Prop, Method } from '@stencil/core';
 })
 export class SafetySlider {
 
-  private hasSlides: boolean;
   private slideCount: number;
   private slideContainer: HTMLDivElement;
   private activeSlide: number = 0;
@@ -20,24 +19,23 @@ export class SafetySlider {
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
-    this.hasSlides = this.slideCount > 0;
   }
 
   componentDidLoad() {
     this.slideContainer = this.root.querySelector('.safety-slider__slides');
 
-    if (this.hasSlides) {
-      this.assignSlideClasses();
-      this.setActiveSlide(this.activeSlide);
-    }
+    this.assignSlideClasses();
+    this.setActiveSlide(this.activeSlide);
   }
 
   @Method()
   async setActiveSlide(activeSlide: number) {
-    this.slideContainer.children[this.activeSlide].classList.remove('-active');
-    this.slideContainer.children[activeSlide].classList.add('-active');
+    if (this.slideCount > 0) {
+      this.slideContainer.children[this.activeSlide].classList.remove('-active');
+      this.slideContainer.children[activeSlide].classList.add('-active');
 
-    this.activeSlide = activeSlide;
+      this.activeSlide = activeSlide;
+    }
   }
 
   private assignSlideClasses() {
