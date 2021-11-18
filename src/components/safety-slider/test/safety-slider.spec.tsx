@@ -127,12 +127,13 @@ describe('safety-slider', () => {
           <img src="https://picsum.photos/100/100" alt="Randomly generated image">
         </safety-slider>`
     });
-    const arrows = page.root.querySelectorAll('.safety-slider__arrow');
-    const prevArrowBtn = arrows[0] as HTMLButtonElement;
-    const nextArrowBtn = arrows[1] as HTMLButtonElement;
-    nextArrowBtn.click();
+
+    (page.root.querySelector('.safety-slider__arrow.-next') as HTMLButtonElement).click();
+    await page.waitForChanges();
+
+    const prevArrowBtn = (page.root.querySelector('.safety-slider__arrow.-prev') as HTMLButtonElement);
 
     expect(page.root.querySelector('.safety-slider__slides').children[1]).toHaveClass('-active');
-    expect(prevArrowBtn).not.toHaveAttribute('disabled');
+    expect(prevArrowBtn.disabled).toBeFalsy();
   });
 });
