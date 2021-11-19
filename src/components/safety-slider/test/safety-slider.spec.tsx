@@ -146,5 +146,19 @@ describe('safety-slider', () => {
 
       expect(nextBtn.disabled).toBeTruthy();
     });
+
+    it('should change the active slide when the previous button is clicked', async () => {
+      const nextBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`) as HTMLButtonElement;
+      const prevBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`) as HTMLButtonElement;
+
+      nextBtn.click();
+      await page.waitForChanges();
+
+      prevBtn.click();
+      await page.waitForChanges();
+
+      expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[0]).toHaveClass(SliderClasses.Active);
+      expect(prevBtn.disabled).toBeTruthy();
+    });
   });
 });
