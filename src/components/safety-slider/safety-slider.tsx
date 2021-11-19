@@ -25,10 +25,6 @@ export class SafetySlider {
   }
 
   componentDidLoad() {
-    this.slideContainer = this.root.querySelector(`.${SliderClasses.SlideContainer}`);
-    this.prevBtn = this.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`);
-    this.nextBtn = this.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`);
-
     this.assignSlideClasses();
     this.setActiveSlide(this.activeSlide);
   }
@@ -68,14 +64,23 @@ export class SafetySlider {
   render() {
     return (
       <Host>
-        <div class={SliderClasses.SlideContainer}>
+        <div class={SliderClasses.SlideContainer} ref={(el) => this.slideContainer = el as HTMLDivElement}>
           <slot></slot>
         </div>
 
         {this.slideCount > 1 && !this.noArrows && (
           <div class={SliderClasses.ArrowContainer}>
-            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous} type="button">Previous arrow</button>
-            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Next} type="button" onClick={this.nextArrowClick}>Next arrow</button>
+            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous}
+              type="button"
+              ref={(el) => this.prevBtn = el as HTMLButtonElement}>
+                Previous arrow
+            </button>
+            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Next}
+              type="button"
+              onClick={this.nextArrowClick}
+              ref={(el) => this.nextBtn = el as HTMLButtonElement}>
+                Next arrow
+            </button>
           </div>
         )}
 
