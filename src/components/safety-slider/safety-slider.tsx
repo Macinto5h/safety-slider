@@ -31,15 +31,9 @@ export class SafetySlider {
 
   @Method()
   async setActiveSlide(newActiveSlide: number) {
-    if (this.slideCount > 0) {
-      this.slideContainer.children[this.activeSlide].classList.remove(SliderClasses.Active);
-      this.slideContainer.children[newActiveSlide].classList.add(SliderClasses.Active);
-
-      if (this.slideCount > 1 && !this.noArrows)
-        this.setArrowBtnDisability(newActiveSlide);
-
-      this.activeSlide = newActiveSlide;
-    }
+    this.assignActiveSlideClass(newActiveSlide);
+    this.setArrowBtnDisability(newActiveSlide);
+    this.activeSlide = newActiveSlide;
   }
 
   private assignSlideClasses() {
@@ -47,9 +41,18 @@ export class SafetySlider {
       this.slideContainer.children[i].classList.add(SliderClasses.Slide);
   }
 
+  private assignActiveSlideClass(newActiveSlide: number) {
+    if (this.slideCount > 0) {
+      this.slideContainer.children[this.activeSlide].classList.remove(SliderClasses.Active);
+      this.slideContainer.children[newActiveSlide].classList.add(SliderClasses.Active);
+    }
+  }
+
   private setArrowBtnDisability(newActiveSlide: number) {
-    this.prevBtn.disabled = newActiveSlide === 0;
-    this.nextBtn.disabled = newActiveSlide === this.slideCount - 1;
+    if (this.slideCount > 1 && !this.noArrows) {
+      this.prevBtn.disabled = newActiveSlide === 0;
+      this.nextBtn.disabled = newActiveSlide === this.slideCount - 1;
+    }
   }
 
   private dotClick = (event: MouseEvent) => {
