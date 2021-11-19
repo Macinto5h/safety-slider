@@ -60,6 +60,10 @@ export class SafetySlider {
     this.setActiveSlide(activeSlide);
   }
 
+  private prevArrowClick = () => {
+    this.setActiveSlide(this.activeSlide - 1);
+  }
+
   private nextArrowClick = () => {
     this.setActiveSlide(this.activeSlide + 1);
   }
@@ -75,6 +79,7 @@ export class SafetySlider {
           <div class={SliderClasses.ArrowContainer}>
             <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous}
               type="button"
+              onClick={this.prevArrowClick}
               ref={(el) => this.prevBtn = el as HTMLButtonElement}>
                 Previous arrow
             </button>
