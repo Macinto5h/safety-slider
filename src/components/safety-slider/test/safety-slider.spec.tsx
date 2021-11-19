@@ -85,8 +85,10 @@ describe('safety-slider', () => {
   });
 
   describe('public method tests', () => {
-    it('The active slide should be changed when setActiveSlide is called', async () => {
-      const page = await newSpecPage({
+    let page;
+
+    beforeEach(async () => {
+      page = await newSpecPage({
         components: [SafetySlider],
         html:
           `<safety-slider>
@@ -95,7 +97,9 @@ describe('safety-slider', () => {
             <img src="https://picsum.photos/100/100" alt="Randomly generated image">
           </safety-slider>`
       });
+    });
 
+    it('The active slide should be changed when setActiveSlide is called', async () => {
       page.rootInstance.setActiveSlide(1);
 
       expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[1]).toHaveClass(SliderClasses.Active);
@@ -103,8 +107,10 @@ describe('safety-slider', () => {
   });
 
   describe('event tests', () => {
-    it('The active slide should be changed when a dot button is clicked', async () => {
-      const page = await newSpecPage({
+    let page;
+
+    beforeEach(async () => {
+      page = await newSpecPage({
         components: [SafetySlider],
         html:
           `<safety-slider>
@@ -113,7 +119,9 @@ describe('safety-slider', () => {
             <img src="https://picsum.photos/100/100" alt="Randomly generated image">
           </safety-slider>`
       });
+    });
 
+    it('The active slide should be changed when a dot button is clicked', async () => {
       const secondDotBtn = page.root.querySelectorAll(`.${SliderClasses.Dot}`)[1] as HTMLButtonElement;
       secondDotBtn.click();
 
@@ -121,16 +129,6 @@ describe('safety-slider', () => {
     });
 
     it('The active slide should change to next slide when the next arrow button is clicked. The previous arrow button should be enabled.', async () => {
-      const page = await newSpecPage({
-        components: [SafetySlider],
-        html:
-          `<safety-slider>
-            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
-            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
-            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
-          </safety-slider>`
-      });
-
       (page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`) as HTMLButtonElement).click();
       await page.waitForChanges();
 
@@ -141,16 +139,6 @@ describe('safety-slider', () => {
     });
 
     it('The next arrow button should be disabled when the active slide is the last slide.', async () => {
-      const page = await newSpecPage({
-        components: [SafetySlider],
-        html:
-          `<safety-slider>
-            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
-            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
-            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
-          </safety-slider>`
-      });
-
       page.rootInstance.setActiveSlide(2);
       await page.waitForChanges();
 
