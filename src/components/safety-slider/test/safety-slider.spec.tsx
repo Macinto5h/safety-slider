@@ -30,7 +30,7 @@ describe('safety-slider', () => {
 
     expect(arrows.length).toBe(2);
     expect(page.root.querySelectorAll(`.${SliderClasses.Dot}`).length).toBe(3);
-    expect((arrows[0] as HTMLButtonElement)).toHaveAttribute('disabled');
+    expect((arrows[0] as HTMLButtonElement).disabled).toBeTruthy();
   });
   it('does not render arrow buttons and dots when there is only one slide', async () => {
     const page = await newSpecPage({

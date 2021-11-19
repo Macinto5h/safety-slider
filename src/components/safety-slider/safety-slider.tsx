@@ -74,7 +74,7 @@ export class SafetySlider {
 
         {this.slideCount > 1 && !this.noArrows && (
           <div class={SliderClasses.ArrowContainer}>
-            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous} type="button" disabled>Previous arrow</button>
+            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous} type="button">Previous arrow</button>
             <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Next} type="button" onClick={this.nextArrowClick}>Next arrow</button>
           </div>
         )}
@@ -91,5 +91,4 @@ export class SafetySlider {
       </Host>
     );
   }
-
 }
