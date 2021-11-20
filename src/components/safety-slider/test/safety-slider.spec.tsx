@@ -121,11 +121,12 @@ describe('safety-slider', () => {
       });
     });
 
-    it('The active slide should be changed when a dot button is clicked', async () => {
+    it('The active slide should be changed when a dot button is clicked. The dot should be disabled afterwards.', async () => {
       const secondDotBtn = page.root.querySelectorAll(`.${SliderClasses.Dot}`)[1] as HTMLButtonElement;
       secondDotBtn.click();
 
       expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[1]).toHaveClass(SliderClasses.Active);
+      expect(secondDotBtn.disabled).toBeTruthy();
     });
 
     it('The active slide should change to next slide when the next arrow button is clicked. The previous arrow button should be enabled.', async () => {
