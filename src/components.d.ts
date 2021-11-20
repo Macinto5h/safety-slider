@@ -7,8 +7,8 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface SafetySlider {
-        "noArrows": boolean;
-        "noDots": boolean;
+        "hasNoArrows": boolean;
+        "hasNoDots": boolean;
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
     }
 }
@@ -25,8 +25,8 @@ declare global {
 }
 declare namespace LocalJSX {
     interface SafetySlider {
-        "noArrows"?: boolean;
-        "noDots"?: boolean;
+        "hasNoArrows"?: boolean;
+        "hasNoDots"?: boolean;
     }
     interface IntrinsicElements {
         "safety-slider": SafetySlider;

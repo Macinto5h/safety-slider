@@ -17,8 +17,8 @@ export class SafetySlider {
 
   @Element() root: HTMLSafetySliderElement;
 
-  @Prop() readonly noArrows: boolean;
-  @Prop() readonly noDots: boolean;
+  @Prop({attribute: 'no-arrows'}) readonly hasNoArrows: boolean;
+  @Prop({attribute: 'no-dots'}) readonly hasNoDots: boolean;
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
@@ -49,7 +49,7 @@ export class SafetySlider {
   }
 
   private setArrowBtnDisability(newActiveSlide: number) {
-    if (this.slideCount > 1 && !this.noArrows) {
+    if (this.slideCount > 1 && !this.hasNoArrows) {
       this.prevBtn.disabled = newActiveSlide === 0;
       this.nextBtn.disabled = newActiveSlide === this.slideCount - 1;
     }
@@ -75,7 +75,7 @@ export class SafetySlider {
           <slot></slot>
         </div>
 
-        {this.slideCount > 1 && !this.noArrows && (
+        {this.slideCount > 1 && !this.hasNoArrows && (
           <div class={SliderClasses.ArrowContainer}>
             <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous}
               type="button"
@@ -92,7 +92,7 @@ export class SafetySlider {
           </div>
         )}
 
-        {this.slideCount > 1 && !this.noDots && (
+        {this.slideCount > 1 && !this.hasNoDots && (
           <div class={SliderClasses.DotContainer}>
             {[...new Array(this.slideCount)].map((x, i) =>
               <button class={SliderClasses.Dot} type="button" onClick={this.dotClick} data-slide={i}>
