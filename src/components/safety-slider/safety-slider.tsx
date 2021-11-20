@@ -14,6 +14,7 @@ export class SafetySlider {
   private activeSlide = 0;
   private prevBtn: HTMLButtonElement;
   private nextBtn: HTMLButtonElement;
+  private dotBtns: Array<HTMLButtonElement>;
 
   @Element() root: HTMLSafetySliderElement;
 
@@ -22,6 +23,7 @@ export class SafetySlider {
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
+    this.dotBtns = new Array<HTMLButtonElement>();
   }
 
   componentDidLoad() {
@@ -33,6 +35,7 @@ export class SafetySlider {
   async setActiveSlide(newActiveSlide: number) {
     this.assignActiveSlideClass(newActiveSlide);
     this.setArrowBtnDisability(newActiveSlide);
+    this.setDotBtnDisability(newActiveSlide);
     this.activeSlide = newActiveSlide;
   }
 
@@ -52,6 +55,13 @@ export class SafetySlider {
     if (this.slideCount > 1 && !this.hasNoArrows) {
       this.prevBtn.disabled = newActiveSlide === 0;
       this.nextBtn.disabled = newActiveSlide === this.slideCount - 1;
+    }
+  }
+
+  private setDotBtnDisability(newActiveSlide: number) {
+    if (this.slideCount > 1 && !this.hasNoDots) {
+      this.dotBtns[this.activeSlide].disabled = false;
+      this.dotBtns[newActiveSlide].disabled = true;
     }
   }
 
@@ -95,8 +105,12 @@ export class SafetySlider {
         {this.slideCount > 1 && !this.hasNoDots && (
           <div class={SliderClasses.DotContainer}>
             {[...new Array(this.slideCount)].map((x, i) =>
-              <button class={SliderClasses.Dot} type="button" onClick={this.dotClick} data-slide={i}>
-                {i}
+              <button class={SliderClasses.Dot}
+                type="button"
+                onClick={this.dotClick}
+                data-slide={i}
+                ref={(el) => this.dotBtns = [...this.dotBtns, el as HTMLButtonElement]}>
+                  {i}
               </button>
             )}
           </div>
