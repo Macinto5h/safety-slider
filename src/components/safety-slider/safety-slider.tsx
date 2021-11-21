@@ -4,7 +4,7 @@ import { SliderClasses } from './enum/safety-slider.selectors';
 
 @Component({
   tag: 'safety-slider',
-  styleUrl: 'safety-slider.css',
+  styleUrl: 'safety-slider.scss',
   shadow: false,
 })
 export class SafetySlider {
