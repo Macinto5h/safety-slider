@@ -1,5 +1,7 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { postcss } from '@stencil/postcss';
+import autoprefixer from 'autoprefixer';
 
 export const config: Config = {
   namespace: 'safety-slider',
@@ -20,6 +22,9 @@ export const config: Config = {
     },
   ],
   plugins: [
-    sass()
+    sass(),
+    postcss({
+      plugins: [autoprefixer()]
+    })
   ]
 };
