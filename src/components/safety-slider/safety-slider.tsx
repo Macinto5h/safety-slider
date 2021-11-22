@@ -80,7 +80,7 @@ export class SafetySlider {
 
   render() {
     return (
-      <Host>
+      <Host class="safety-slider">
         <div class={SliderClasses.SlideContainer} ref={(el) => this.slideContainer = el as HTMLDivElement}>
           <slot></slot>
         </div>
@@ -91,13 +91,13 @@ export class SafetySlider {
               type="button"
               onClick={this.prevArrowClick}
               ref={(el) => this.prevBtn = el as HTMLButtonElement}>
-                Previous arrow
+                ←
             </button>
             <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Next}
               type="button"
               onClick={this.nextArrowClick}
               ref={(el) => this.nextBtn = el as HTMLButtonElement}>
-                Next arrow
+                →
             </button>
           </div>
         )}
@@ -110,7 +110,6 @@ export class SafetySlider {
                 onClick={this.dotClick}
                 data-slide={i}
                 ref={(el) => this.dotBtns = [...this.dotBtns, el as HTMLButtonElement]}>
-                  {i}
               </button>
             )}
           </div>
