@@ -1,7 +1,8 @@
 {
   "name": "safety-slider",
   "version": "0.0.1",
-  "description": "Stencil Component Starter",
+  "description": "An efficient, accessible, and framework independent slider",
+  "author": "Macallan Camara",
   "main": "dist/index.cjs.js",
   "module": "dist/custom-elements/index.js",
   "es2015": "dist/esm/index.mjs",
