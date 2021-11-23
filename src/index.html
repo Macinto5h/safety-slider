@@ -3,16 +3,80 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-    <title>Stencil Component Starter</title>
+    <title>Safety Slider</title>
 
     <script type="module" src="/build/safety-slider.esm.js"></script>
     <script nomodule src="/build/safety-slider.js"></script>
   </head>
   <body>
-    <safety-slider>
-      <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-      <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-      <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
-    </safety-slider>
+    <style>
+      main {
+        max-width: 80ch;
+        margin: 0 auto;
+      }
+    </style>
+    <main>
+      <h1>safety-slider</h1>
+      <em>An efficient, accessible, and framework independent slider.</em>
+      <br>
+      <br>
+      <safety-slider>
+        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+      </safety-slider>
+
+      <h2>Table of Contents</h2>
+      <ul>
+        <li><a href="#properties">Properties</a></li>
+        <li><a href="#public-methods">Public Methods</a></li>
+      </ul>
+
+      <h2 id="properties">Properties</h2>
+      <h3>no-arrows</h3>
+      <em>since v0.0.1</em>
+      <pre>
+        <code>
+          &lt;safety-slider no-arrows&gt;
+            ...
+          &lt;/safety-slider&gt;
+        </code>
+      </pre>
+      <safety-slider no-arrows>
+        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+      </safety-slider>
+
+      <h3>no-dots</h3>
+      <em>since v0.0.1</em>
+      <pre>
+        <code>
+          &lt;safety-slider no-dots&gt;
+            ...
+          &lt;/safety-slider&gt;
+        </code>
+      </pre>
+      <safety-slider no-dots>
+        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+      </safety-slider>
+
+      <h2 id="public-methods">Public Methods</h2>
+      <h3>setActiveSlide</h3>
+      <em>since v0.0.1</em>
+      <pre>
+        <code>
+          &lt;script&gt;
+            (async () => {
+              await customElements.whenDefined('safety-slider');
+              const safetySliderElement = document.querySelector('safety-slider');
+              await safetySliderElement.setActiveSlide(1);
+            })();
+          &lt;/script&gt;
+        </code>
+      </pre>
+    </main>
   </body>
 </html>
