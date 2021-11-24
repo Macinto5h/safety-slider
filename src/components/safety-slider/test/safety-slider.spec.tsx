@@ -82,6 +82,23 @@ describe('safety-slider', () => {
 
       expect(page.root.querySelectorAll(`.${SliderClasses.Dot}`).length).toBe(0);
     });
+
+    it('should go to the last slide when previous button is clicked and infinite property is present', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider infinite>
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      const prevBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Active}`) as HTMLButtonElement;
+      prevBtn.click();
+
+      expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[2]).toHaveClass(SliderClasses.Active);
+    });
   });
 
   describe('public method tests', () => {
