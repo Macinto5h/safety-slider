@@ -96,7 +96,11 @@ export class SafetySlider {
   }
 
   private nextArrowClick = () => {
-    this.setActiveSlide(this.activeSlide + 1);
+    try {
+      this.applyActiveSlideChanges(this.activeSlide + 1);
+    } catch(e) {
+      this.applyActiveSlideChanges(0);
+    }
   }
 
   render() {
