@@ -101,6 +101,28 @@ describe('safety-slider', () => {
 
       expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[2]).toHaveClass(SliderClasses.Active);
     });
+
+    it('should go to the first slide when the next button is clicked and infinite property is present', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider infinite>
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      page.rootInstance.setActiveSlide(2);
+      await page.waitForChanges();
+
+      const nextBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`) as HTMLButtonElement;
+      nextBtn.click();
+      await page.waitForChanges();
+
+
+      expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[0]).toHaveClass(SliderClasses.Active);
+    });
   });
 
   describe('public method tests', () => {
