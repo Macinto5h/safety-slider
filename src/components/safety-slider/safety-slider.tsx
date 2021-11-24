@@ -18,6 +18,7 @@ export class SafetySlider {
 
   @Element() root: HTMLSafetySliderElement;
 
+  @Prop({attribute: 'infinite'}) readonly isInfinite: boolean;
   @Prop({attribute: 'no-arrows'}) readonly hasNoArrows: boolean;
   @Prop({attribute: 'no-dots'}) readonly hasNoDots: boolean;
 
@@ -28,11 +29,27 @@ export class SafetySlider {
 
   componentDidLoad() {
     this.assignSlideClasses();
-    this.setActiveSlide(this.activeSlide);
+
+    try {
+      this.applyActiveSlideChanges(this.activeSlide);
+    } catch(e) {
+      console.error('safety-slider: no content has been provided in the slot.');
+    }
   }
 
   @Method()
   async setActiveSlide(newActiveSlide: number) {
+    try {
+      this.applyActiveSlideChanges(newActiveSlide);
+    } catch(e) {
+      console.error(e);
+    }
+  }
+
+  private applyActiveSlideChanges(newActiveSlide: number) {
+    if (newActiveSlide < 0 || newActiveSlide >= this.slideCount)
+      throw 'safety-slider: newActiveSlide index is out of range.';
+
     this.assignActiveSlideClass(newActiveSlide);
     this.setArrowBtnDisability(newActiveSlide);
     this.setDotBtnDisability(newActiveSlide);
@@ -52,7 +69,7 @@ export class SafetySlider {
   }
 
   private setArrowBtnDisability(newActiveSlide: number) {
-    if (this.slideCount > 1 && !this.hasNoArrows) {
+    if (this.slideCount > 1 && !this.hasNoArrows && !this.isInfinite) {
       this.prevBtn.disabled = newActiveSlide === 0;
       this.nextBtn.disabled = newActiveSlide === this.slideCount - 1;
     }
@@ -71,7 +88,11 @@ export class SafetySlider {
   }
 
   private prevArrowClick = () => {
-    this.setActiveSlide(this.activeSlide - 1);
+    try {
+      this.applyActiveSlideChanges(this.activeSlide - 1);
+    } catch(e) {
+      this.applyActiveSlideChanges(this.slideCount - 1);
+    }
   }
 
   private nextArrowClick = () => {

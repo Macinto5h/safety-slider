@@ -11,7 +11,7 @@ describe('safety-slider', () => {
         html: `<safety-slider></safety-slider>`,
       });
       expect(page.root).toEqualHtml(`
-        <safety-slider>
+        <safety-slider class="safety-slider">
           <div class="safety-slider__slides"></div>
         </safety-slider>
       `);
@@ -94,8 +94,10 @@ describe('safety-slider', () => {
           </safety-slider>`
       });
 
-      const prevBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Active}`) as HTMLButtonElement;
+      const prevBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`) as HTMLButtonElement;
       prevBtn.click();
+      await page.waitForChanges();
+
 
       expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[2]).toHaveClass(SliderClasses.Active);
     });
