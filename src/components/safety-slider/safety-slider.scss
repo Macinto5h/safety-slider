@@ -1,8 +1,6 @@
-:root {
-  --safety-slider-view-width: 0;
-}
-
 .safety-slider {
+  --safety-slider-slide-width: var(--safety-slider-view-width);
+
   display: block;
   position: relative;
   padding: 0 2rem 1rem;
@@ -21,10 +19,11 @@
     display: flex;
     box-sizing: border-box;
     transition: transform .25s ease;
+    transform: translateX(var(--safety-slider-view-offset));
   }
 
   &__slide {
-    min-width: var(--safety-slider-view-width);
+    min-width: var(--safety-slider-slide-width);
   }
 
   &__arrows {

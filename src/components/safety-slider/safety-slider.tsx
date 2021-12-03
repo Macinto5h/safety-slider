@@ -85,8 +85,8 @@ export class SafetySlider {
 
   private setSlideViewOffset(newActiveSlide: number) {
     const viewWidth = this.slideContainer.offsetWidth;
-    document.documentElement.style.setProperty('--safety-slider-view-width', viewWidth + 'px');
-    this.slideContainer.style.transform = `translateX(${viewWidth * newActiveSlide * -1}px)`;
+    this.root.style.setProperty('--safety-slider-view-width', viewWidth + 'px');
+    this.root.style.setProperty('--safety-slider-view-offset', `${viewWidth * newActiveSlide * -1}px`);
   }
 
   private dotClick = (event: MouseEvent) => {
