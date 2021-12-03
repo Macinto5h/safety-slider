@@ -53,6 +53,7 @@ export class SafetySlider {
     this.assignActiveSlideClass(newActiveSlide);
     this.setArrowBtnDisability(newActiveSlide);
     this.setDotBtnDisability(newActiveSlide);
+    this.setSlideViewOffset(newActiveSlide);
     this.activeSlide = newActiveSlide;
   }
 
@@ -82,6 +83,12 @@ export class SafetySlider {
     }
   }
 
+  private setSlideViewOffset(newActiveSlide: number) {
+    const viewWidth = this.slideContainer.offsetWidth;
+    document.documentElement.style.setProperty('--safety-slider-view-width', viewWidth + 'px');
+    this.slideContainer.style.transform = `translateX(${viewWidth * newActiveSlide * -1}px)`;
+  }
+
   private dotClick = (event: MouseEvent) => {
     const activeSlide = parseInt((event.target as HTMLButtonElement).getAttribute('data-slide'));
     this.setActiveSlide(activeSlide);
@@ -106,8 +113,10 @@ export class SafetySlider {
   render() {
     return (
       <Host class="safety-slider">
-        <div class={SliderClasses.SlideContainer} ref={(el) => this.slideContainer = el as HTMLDivElement}>
-          <slot></slot>
+        <div class="safety-slider__window">
+          <div class={SliderClasses.SlideContainer} ref={(el) => this.slideContainer = el as HTMLDivElement}>
+            <slot></slot>
+          </div>
         </div>
 
         {this.slideCount > 1 && !this.hasNoArrows && (

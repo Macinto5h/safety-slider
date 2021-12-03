@@ -12,7 +12,9 @@ describe('safety-slider', () => {
       });
       expect(page.root).toEqualHtml(`
         <safety-slider class="safety-slider">
-          <div class="safety-slider__slides"></div>
+          <div class="safety-slider__window">
+            <div class="safety-slider__slides"></div>
+          </div>
         </safety-slider>
       `);
     });
