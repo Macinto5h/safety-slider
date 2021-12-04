@@ -142,6 +142,22 @@ describe('safety-slider', () => {
       expect(prevArrowBtn.innerHTML).toEqualHtml("<i class='fa fa-chevron-left'></i>");
     });
 
+    it('should render right arrow content based on the value given to the right-arrow property', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider right-arrow="<i class='fa fa-chevron-left'></i>">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      const nextArrowBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`);
+
+      expect(nextArrowBtn.innerHTML).toEqualHtml("<i class='fa fa-chevron-left'></i>");
+    });
+
   });
 
   describe('public method tests', () => {
