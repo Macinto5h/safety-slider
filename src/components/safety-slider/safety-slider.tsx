@@ -22,6 +22,7 @@ export class SafetySlider {
   @Prop({attribute: 'left-arrow'}) readonly leftArrowInnerHTML: string;
   @Prop({attribute: 'no-arrows'}) readonly hasNoArrows: boolean;
   @Prop({attribute: 'no-dots'}) readonly hasNoDots: boolean;
+  @Prop({attribute: 'right-arrow'}) readonly rightArrowInnerHTML: string;
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
@@ -131,8 +132,8 @@ export class SafetySlider {
             <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Next}
               type="button"
               onClick={this.nextArrowClick}
-              ref={(el) => this.nextBtn = el as HTMLButtonElement}>
-                →
+              ref={(el) => this.nextBtn = el as HTMLButtonElement}
+              innerHTML={this.rightArrowInnerHTML}>
             </button>
           </div>
         )}

@@ -11,6 +11,7 @@ export namespace Components {
         "hasNoDots": boolean;
         "isInfinite": boolean;
         "leftArrowInnerHTML": string;
+        "rightArrowInnerHTML": string;
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
     }
 }
@@ -31,6 +32,7 @@ declare namespace LocalJSX {
         "hasNoDots"?: boolean;
         "isInfinite"?: boolean;
         "leftArrowInnerHTML"?: string;
+        "rightArrowInnerHTML"?: string;
     }
     interface IntrinsicElements {
         "safety-slider": SafetySlider;
