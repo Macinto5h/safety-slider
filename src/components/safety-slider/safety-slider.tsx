@@ -19,6 +19,7 @@ export class SafetySlider {
   @Element() root: HTMLSafetySliderElement;
 
   @Prop({attribute: 'infinite'}) readonly isInfinite: boolean;
+  @Prop({attribute: 'left-arrow'}) readonly leftArrowInnerHTML: string;
   @Prop({attribute: 'no-arrows'}) readonly hasNoArrows: boolean;
   @Prop({attribute: 'no-dots'}) readonly hasNoDots: boolean;
 
@@ -124,8 +125,8 @@ export class SafetySlider {
             <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous}
               type="button"
               onClick={this.prevArrowClick}
-              ref={(el) => this.prevBtn = el as HTMLButtonElement}>
-                ←
+              ref={(el) => this.prevBtn = el as HTMLButtonElement}
+              innerHTML={this.leftArrowInnerHTML}>
             </button>
             <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Next}
               type="button"
