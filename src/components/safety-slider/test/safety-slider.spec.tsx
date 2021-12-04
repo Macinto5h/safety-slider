@@ -158,6 +158,24 @@ describe('safety-slider', () => {
       expect(nextArrowBtn.innerHTML).toEqualHtml("<i class='fa fa-chevron-left'></i>");
     });
 
+    it('should render default values of the left and right arrow content if properties are not set', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider>
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      const prevArrowBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`);
+      const nextArrowBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`);
+
+      expect(prevArrowBtn.innerHTML).toEqual('←');
+      expect(nextArrowBtn.innerHTML).toEqual('→');
+    });
+
   });
 
   describe('public method tests', () => {
