@@ -19,10 +19,10 @@ export class SafetySlider {
   @Element() root: HTMLSafetySliderElement;
 
   @Prop({attribute: 'infinite'}) readonly isInfinite: boolean;
-  @Prop({attribute: 'left-arrow'}) readonly leftArrowInnerHTML: string;
+  @Prop({attribute: 'left-arrow'}) readonly leftArrowInnerHTML: string = '←';
   @Prop({attribute: 'no-arrows'}) readonly hasNoArrows: boolean;
   @Prop({attribute: 'no-dots'}) readonly hasNoDots: boolean;
-  @Prop({attribute: 'right-arrow'}) readonly rightArrowInnerHTML: string;
+  @Prop({attribute: 'right-arrow'}) readonly rightArrowInnerHTML: string = '→';
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
