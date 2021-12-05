@@ -1,6 +1,6 @@
 {
   "name": "safety-slider",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An efficient, accessible, and framework independent slider",
   "author": "Macallan Camara",
   "main": "dist/index.cjs.js",

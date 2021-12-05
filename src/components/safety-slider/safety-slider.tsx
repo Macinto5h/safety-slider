@@ -18,8 +18,11 @@ export class SafetySlider {
 
   @Element() root: HTMLSafetySliderElement;
 
+  @Prop({attribute: 'infinite'}) readonly isInfinite: boolean;
+  @Prop({attribute: 'left-arrow'}) readonly leftArrowInnerHTML: string = '←';
   @Prop({attribute: 'no-arrows'}) readonly hasNoArrows: boolean;
   @Prop({attribute: 'no-dots'}) readonly hasNoDots: boolean;
+  @Prop({attribute: 'right-arrow'}) readonly rightArrowInnerHTML: string = '→';
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
@@ -28,14 +31,31 @@ export class SafetySlider {
 
   componentDidLoad() {
     this.assignSlideClasses();
-    this.setActiveSlide(this.activeSlide);
+
+    try {
+      this.applyActiveSlideChanges(this.activeSlide);
+    } catch(e) {
+      console.error('safety-slider: no content has been provided in the slot.');
+    }
   }
 
   @Method()
   async setActiveSlide(newActiveSlide: number) {
+    try {
+      this.applyActiveSlideChanges(newActiveSlide);
+    } catch(e) {
+      console.error(e);
+    }
+  }
+
+  private applyActiveSlideChanges(newActiveSlide: number) {
+    if (newActiveSlide < 0 || newActiveSlide >= this.slideCount)
+      throw 'safety-slider: newActiveSlide index is out of range.';
+
     this.assignActiveSlideClass(newActiveSlide);
     this.setArrowBtnDisability(newActiveSlide);
     this.setDotBtnDisability(newActiveSlide);
+    this.setSlideViewOffset(newActiveSlide);
     this.activeSlide = newActiveSlide;
   }
 
@@ -52,7 +72,7 @@ export class SafetySlider {
   }
 
   private setArrowBtnDisability(newActiveSlide: number) {
-    if (this.slideCount > 1 && !this.hasNoArrows) {
+    if (this.slideCount > 1 && !this.hasNoArrows && !this.isInfinite) {
       this.prevBtn.disabled = newActiveSlide === 0;
       this.nextBtn.disabled = newActiveSlide === this.slideCount - 1;
     }
@@ -65,24 +85,40 @@ export class SafetySlider {
     }
   }
 
+  private setSlideViewOffset(newActiveSlide: number) {
+    const viewWidth = this.slideContainer.offsetWidth;
+    this.root.style.setProperty('--safety-slider-view-width', viewWidth + 'px');
+    this.root.style.setProperty('--safety-slider-view-offset', `${viewWidth * newActiveSlide * -1}px`);
+  }
+
   private dotClick = (event: MouseEvent) => {
     const activeSlide = parseInt((event.target as HTMLButtonElement).getAttribute('data-slide'));
     this.setActiveSlide(activeSlide);
   }
 
   private prevArrowClick = () => {
-    this.setActiveSlide(this.activeSlide - 1);
+    try {
+      this.applyActiveSlideChanges(this.activeSlide - 1);
+    } catch(e) {
+      this.applyActiveSlideChanges(this.slideCount - 1);
+    }
   }
 
   private nextArrowClick = () => {
-    this.setActiveSlide(this.activeSlide + 1);
+    try {
+      this.applyActiveSlideChanges(this.activeSlide + 1);
+    } catch(e) {
+      this.applyActiveSlideChanges(0);
+    }
   }
 
   render() {
     return (
       <Host class="safety-slider">
-        <div class={SliderClasses.SlideContainer} ref={(el) => this.slideContainer = el as HTMLDivElement}>
-          <slot></slot>
+        <div class="safety-slider__window">
+          <div class={SliderClasses.SlideContainer} ref={(el) => this.slideContainer = el as HTMLDivElement}>
+            <slot></slot>
+          </div>
         </div>
 
         {this.slideCount > 1 && !this.hasNoArrows && (
@@ -90,14 +126,14 @@ export class SafetySlider {
             <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous}
               type="button"
               onClick={this.prevArrowClick}
-              ref={(el) => this.prevBtn = el as HTMLButtonElement}>
-                ←
+              ref={(el) => this.prevBtn = el as HTMLButtonElement}
+              innerHTML={this.leftArrowInnerHTML}>
             </button>
             <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Next}
               type="button"
               onClick={this.nextArrowClick}
-              ref={(el) => this.nextBtn = el as HTMLButtonElement}>
-                →
+              ref={(el) => this.nextBtn = el as HTMLButtonElement}
+              innerHTML={this.rightArrowInnerHTML}>
             </button>
           </div>
         )}

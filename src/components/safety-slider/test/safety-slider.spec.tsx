@@ -11,8 +11,10 @@ describe('safety-slider', () => {
         html: `<safety-slider></safety-slider>`,
       });
       expect(page.root).toEqualHtml(`
-        <safety-slider>
-          <div class="safety-slider__slides"></div>
+        <safety-slider class="safety-slider">
+          <div class="safety-slider__window">
+            <div class="safety-slider__slides"></div>
+          </div>
         </safety-slider>
       `);
     });
@@ -82,6 +84,98 @@ describe('safety-slider', () => {
 
       expect(page.root.querySelectorAll(`.${SliderClasses.Dot}`).length).toBe(0);
     });
+
+    it('should go to the last slide when previous button is clicked and infinite property is present', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider infinite>
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      const prevBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`) as HTMLButtonElement;
+      prevBtn.click();
+      await page.waitForChanges();
+
+
+      expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[2]).toHaveClass(SliderClasses.Active);
+    });
+
+    it('should go to the first slide when the next button is clicked and infinite property is present', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider infinite>
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      page.rootInstance.setActiveSlide(2);
+      await page.waitForChanges();
+
+      const nextBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`) as HTMLButtonElement;
+      nextBtn.click();
+      await page.waitForChanges();
+
+
+      expect(page.root.querySelector(`.${SliderClasses.SlideContainer}`).children[0]).toHaveClass(SliderClasses.Active);
+    });
+
+    it('should render left arrow content based on the value given to the left-arrow property', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider left-arrow="<i class='fa fa-chevron-left'></i>">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      const prevArrowBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`);
+
+      expect(prevArrowBtn.innerHTML).toEqualHtml("<i class='fa fa-chevron-left'></i>");
+    });
+
+    it('should render right arrow content based on the value given to the right-arrow property', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider right-arrow="<i class='fa fa-chevron-left'></i>">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      const nextArrowBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`);
+
+      expect(nextArrowBtn.innerHTML).toEqualHtml("<i class='fa fa-chevron-left'></i>");
+    });
+
+    it('should render default values of the left and right arrow content if properties are not set', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider>
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      const prevArrowBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Previous}`);
+      const nextArrowBtn = page.root.querySelector(`.${SliderClasses.ArrowButton}.${SliderClasses.Next}`);
+
+      expect(prevArrowBtn.innerHTML).toEqual('←');
+      expect(nextArrowBtn.innerHTML).toEqual('→');
+    });
+
   });
 
   describe('public method tests', () => {
