@@ -1,5 +1,5 @@
 /*global HTMLSafetySliderElement*/
-import { Component, Host, h, Element, Prop, Method } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Method, State } from '@stencil/core';
 import { SliderClasses } from './enum/safety-slider.selectors';
 
 @Component({
@@ -10,13 +10,15 @@ import { SliderClasses } from './enum/safety-slider.selectors';
 export class SafetySlider {
 
   private slideCount: number;
-  private slideContainer: HTMLDivElement;
+  private slideContainer: HTMLSafetySliderSlidesElement;
   private activeSlide = 0;
   private prevBtn: HTMLButtonElement;
   private nextBtn: HTMLButtonElement;
   private dotBtns: Array<HTMLButtonElement>;
 
   @Element() root: HTMLSafetySliderElement;
+
+  @State() containerActiveSlide = 0;
 
   @Prop({attribute: 'infinite'}) readonly isInfinite: boolean;
   @Prop({attribute: 'left-arrow'}) readonly leftArrowInnerHTML: string = '←';
@@ -30,8 +32,6 @@ export class SafetySlider {
   }
 
   componentDidLoad() {
-    this.assignSlideClasses();
-
     try {
       this.applyActiveSlideChanges(this.activeSlide);
     } catch(e) {
@@ -52,23 +52,11 @@ export class SafetySlider {
     if (newActiveSlide < 0 || newActiveSlide >= this.slideCount)
       throw 'safety-slider: newActiveSlide index is out of range.';
 
-    this.assignActiveSlideClass(newActiveSlide);
     this.setArrowBtnDisability(newActiveSlide);
     this.setDotBtnDisability(newActiveSlide);
     this.setSlideViewOffset(newActiveSlide);
     this.activeSlide = newActiveSlide;
-  }
-
-  private assignSlideClasses() {
-    for (let i = 0; i < this.slideCount; i++)
-      this.slideContainer.children[i].classList.add(SliderClasses.Slide);
-  }
-
-  private assignActiveSlideClass(newActiveSlide: number) {
-    if (this.slideCount > 0) {
-      this.slideContainer.children[this.activeSlide].classList.remove(SliderClasses.Active);
-      this.slideContainer.children[newActiveSlide].classList.add(SliderClasses.Active);
-    }
+    this.containerActiveSlide = newActiveSlide;
   }
 
   private setArrowBtnDisability(newActiveSlide: number) {
@@ -116,9 +104,9 @@ export class SafetySlider {
     return (
       <Host class="safety-slider">
         <div class="safety-slider__window">
-          <div class={SliderClasses.SlideContainer} ref={(el) => this.slideContainer = el as HTMLDivElement}>
+          <safety-slider-slides ref={(el) => this.slideContainer = el as HTMLSafetySliderSlidesElement} activeSlide={this.containerActiveSlide}>
             <slot></slot>
-          </div>
+          </safety-slider-slides>
         </div>
 
         {this.slideCount > 1 && !this.hasNoArrows && (
