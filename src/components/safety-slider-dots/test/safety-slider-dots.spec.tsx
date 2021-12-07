@@ -23,4 +23,15 @@ describe('safety-slider-dots', () => {
 
     expect(dotBtns.length).toBe(3);
   });
+
+  it('renders the dot button representing the active slide as disabled', async () => {
+    const page = await newSpecPage({
+      components: [SafetySliderDots],
+      html: `<safety-slider-dots active-dot="1" dot-count="3"></safety-slider-dots>`,
+    });
+
+    const secondDotBtn = page.root.querySelectorAll('button')[1] as HTMLButtonElement;
+
+    expect(secondDotBtn.disabled).toBeTruthy();
+  });
 });
