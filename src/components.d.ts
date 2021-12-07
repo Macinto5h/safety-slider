@@ -14,8 +14,10 @@ export namespace Components {
         "rightArrowInnerHTML": string;
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
     }
+    interface SafetySliderDots {
+    }
     interface SafetySliderSlides {
-        "activeSlide": number;
+        "activeSlide": 0;
     }
 }
 declare global {
@@ -25,6 +27,12 @@ declare global {
         prototype: HTMLSafetySliderElement;
         new (): HTMLSafetySliderElement;
     };
+    interface HTMLSafetySliderDotsElement extends Components.SafetySliderDots, HTMLStencilElement {
+    }
+    var HTMLSafetySliderDotsElement: {
+        prototype: HTMLSafetySliderDotsElement;
+        new (): HTMLSafetySliderDotsElement;
+    };
     interface HTMLSafetySliderSlidesElement extends Components.SafetySliderSlides, HTMLStencilElement {
     }
     var HTMLSafetySliderSlidesElement: {
@@ -33,6 +41,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "safety-slider": HTMLSafetySliderElement;
+        "safety-slider-dots": HTMLSafetySliderDotsElement;
         "safety-slider-slides": HTMLSafetySliderSlidesElement;
     }
 }
@@ -44,11 +53,14 @@ declare namespace LocalJSX {
         "leftArrowInnerHTML"?: string;
         "rightArrowInnerHTML"?: string;
     }
+    interface SafetySliderDots {
+    }
     interface SafetySliderSlides {
-        "activeSlide"?: number;
+        "activeSlide"?: 0;
     }
     interface IntrinsicElements {
         "safety-slider": SafetySlider;
+        "safety-slider-dots": SafetySliderDots;
         "safety-slider-slides": SafetySliderSlides;
     }
 }
@@ -57,6 +69,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "safety-slider": LocalJSX.SafetySlider & JSXBase.HTMLAttributes<HTMLSafetySliderElement>;
+            "safety-slider-dots": LocalJSX.SafetySliderDots & JSXBase.HTMLAttributes<HTMLSafetySliderDotsElement>;
             "safety-slider-slides": LocalJSX.SafetySliderSlides & JSXBase.HTMLAttributes<HTMLSafetySliderSlidesElement>;
         }
     }
