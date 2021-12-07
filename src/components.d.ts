@@ -15,6 +15,7 @@ export namespace Components {
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
     }
     interface SafetySliderDots {
+        "activeDot": number;
         "dotCount": number;
     }
     interface SafetySliderSlides {
@@ -55,6 +56,7 @@ declare namespace LocalJSX {
         "rightArrowInnerHTML"?: string;
     }
     interface SafetySliderDots {
+        "activeDot"?: number;
         "dotCount"?: number;
     }
     interface SafetySliderSlides {

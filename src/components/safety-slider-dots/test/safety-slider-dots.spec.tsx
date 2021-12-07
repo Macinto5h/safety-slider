@@ -32,6 +32,6 @@ describe('safety-slider-dots', () => {
 
     const secondDotBtn = page.root.querySelectorAll('button')[1] as HTMLButtonElement;
 
-    expect(secondDotBtn.disabled).toBeTruthy();
+    expect(secondDotBtn).toHaveAttribute('disabled');
   });
 });

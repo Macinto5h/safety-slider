@@ -8,6 +8,7 @@ export class SafetySliderDots {
 
   private dotButtons: Array<HTMLButtonElement>;
 
+  @Prop() readonly activeDot: number
   @Prop() readonly dotCount: number;
 
   componentWillLoad() {
@@ -21,6 +22,7 @@ export class SafetySliderDots {
           <button
             class="safety-slider__dot"
             type="button"
+            disabled={i === this.activeDot}
             data-slide={i}
             ref={(el) => this.dotButtons = [...this.dotButtons, el]}
           >
