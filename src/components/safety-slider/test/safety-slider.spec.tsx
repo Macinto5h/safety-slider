@@ -18,24 +18,6 @@ describe('safety-slider', () => {
         </safety-slider>
       `);
     });
-
-    it('renders arrow buttons and dots when there is more than 1 items in the slot, left arrow by default is disabled', async () => {
-      const page = await newSpecPage({
-        components: [SafetySlider],
-        html:
-          `<safety-slider>
-            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
-            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
-            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
-          </safety-slider>`
-      });
-
-      const arrows = page.root.querySelectorAll(`.${SliderClasses.ArrowButton}`);
-
-      expect(arrows.length).toBe(2);
-      expect(page.root.querySelectorAll(`.${SliderClasses.Dot}`).length).toBe(3);
-      expect((arrows[0] as HTMLButtonElement).disabled).toBeTruthy();
-    });
   });
 
   describe('property tests', () => {

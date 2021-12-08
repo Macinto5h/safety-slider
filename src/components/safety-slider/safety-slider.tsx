@@ -1,5 +1,5 @@
 /*global HTMLSafetySliderElement*/
-import { Component, Host, h, Element, Prop, Method, State } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Method, State, Listen } from '@stencil/core';
 import { SliderClasses } from './enum/safety-slider.selectors';
 
 @Component({
@@ -14,7 +14,6 @@ export class SafetySlider {
   private activeSlide = 0;
   private prevBtn: HTMLButtonElement;
   private nextBtn: HTMLButtonElement;
-  private dotBtns: Array<HTMLButtonElement>;
 
   @Element() root: HTMLSafetySliderElement;
 
@@ -28,7 +27,6 @@ export class SafetySlider {
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
-    this.dotBtns = new Array<HTMLButtonElement>();
   }
 
   componentDidLoad() {
@@ -37,6 +35,11 @@ export class SafetySlider {
     } catch(e) {
       console.error('safety-slider: no content has been provided in the slot.');
     }
+  }
+
+  @Listen('safetySliderDotClick')
+  onSafetySliderDotClick(event: CustomEvent<number>) {
+    this.setActiveSlide(event.detail);
   }
 
   @Method()
@@ -53,7 +56,6 @@ export class SafetySlider {
       throw 'safety-slider: newActiveSlide index is out of range.';
 
     this.setArrowBtnDisability(newActiveSlide);
-    this.setDotBtnDisability(newActiveSlide);
     this.setSlideViewOffset(newActiveSlide);
     this.activeSlide = newActiveSlide;
     this.containerActiveSlide = newActiveSlide;
@@ -66,22 +68,10 @@ export class SafetySlider {
     }
   }
 
-  private setDotBtnDisability(newActiveSlide: number) {
-    if (this.slideCount > 1 && !this.hasNoDots) {
-      this.dotBtns[this.activeSlide].disabled = false;
-      this.dotBtns[newActiveSlide].disabled = true;
-    }
-  }
-
   private setSlideViewOffset(newActiveSlide: number) {
     const viewWidth = this.slideContainer.offsetWidth;
     this.root.style.setProperty('--safety-slider-view-width', viewWidth + 'px');
     this.root.style.setProperty('--safety-slider-view-offset', `${viewWidth * newActiveSlide * -1}px`);
-  }
-
-  private dotClick = (event: MouseEvent) => {
-    const activeSlide = parseInt((event.target as HTMLButtonElement).getAttribute('data-slide'));
-    this.setActiveSlide(activeSlide);
   }
 
   private prevArrowClick = () => {
@@ -127,16 +117,7 @@ export class SafetySlider {
         )}
 
         {this.slideCount > 1 && !this.hasNoDots && (
-          <div class={SliderClasses.DotContainer}>
-            {[...new Array(this.slideCount)].map((x, i) =>
-              <button class={SliderClasses.Dot}
-                type="button"
-                onClick={this.dotClick}
-                data-slide={i}
-                ref={(el) => this.dotBtns = [...this.dotBtns, el as HTMLButtonElement]}>
-              </button>
-            )}
-          </div>
+          <safety-slider-dots activeDot={this.containerActiveSlide} dotCount={this.slideCount}></safety-slider-dots>
         )}
       </Host>
     );

@@ -195,4 +195,25 @@ describe('safety-slider', () => {
     expect(arrows.length).toBe(0);
     expect(dots.length).toBe(0);
   });
+
+  it('renders arrow buttons and dots when there is more than 1 items in the slot, left arrow by default is disabled', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+        <safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>
+    `);
+
+    const arrows = await page.findAll(`.safety-slider__arrow`);
+    const dots = await page.find('safety-slider-dots');
+
+    const dotCount = await dots.getProperty('dotCount');
+    const activeDot = await dots.getProperty('activeDot');
+
+    expect(arrows.length).toBe(2);
+    expect(dotCount).toBe(3);
+    expect(activeDot).toBe(0);
+  });
 });
