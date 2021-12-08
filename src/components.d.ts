@@ -19,7 +19,7 @@ export namespace Components {
         "dotCount": number;
     }
     interface SafetySliderSlides {
-        "activeSlide": 0;
+        "activeSlide": number;
     }
 }
 declare global {
@@ -61,7 +61,7 @@ declare namespace LocalJSX {
         "onSafetySliderDotClick"?: (event: CustomEvent<number>) => void;
     }
     interface SafetySliderSlides {
-        "activeSlide"?: 0;
+        "activeSlide"?: number;
     }
     interface IntrinsicElements {
         "safety-slider": SafetySlider;

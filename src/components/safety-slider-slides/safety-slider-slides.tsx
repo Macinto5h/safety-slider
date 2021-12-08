@@ -10,7 +10,7 @@ export class SafetySliderSlides {
 
   @Element() root: HTMLSafetySliderSlidesElement;
 
-  @Prop() readonly activeSlide = 0;
+  @Prop() readonly activeSlide: number = 0;
 
   @Watch('activeSlide')
   activeSlideChanged(newActiveSlide: number, oldActiveSlide: number) {

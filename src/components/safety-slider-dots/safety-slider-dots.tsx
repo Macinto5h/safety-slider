@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'safety-slider-dots',
+  styleUrl: 'safety-slider-dots.scss',
   shadow: false,
 })
 export class SafetySliderDots {
@@ -22,10 +23,9 @@ export class SafetySliderDots {
       <Host>
         {[...new Array(this.dotCount)].map((x, i) =>
           <button
-            class="safety-slider__dot"
+            class="dot"
             type="button"
             disabled={i === this.activeDot}
-            data-slide={i}
             onClick={() => this.safetySliderDotClick.emit(i)}
             ref={(el) => this.dotButtons = [...this.dotButtons, el]}
           >
