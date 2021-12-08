@@ -58,6 +58,7 @@ declare namespace LocalJSX {
     interface SafetySliderDots {
         "activeDot"?: number;
         "dotCount"?: number;
+        "onSafetySliderDotClick"?: (event: CustomEvent<number>) => void;
     }
     interface SafetySliderSlides {
         "activeSlide"?: 0;
