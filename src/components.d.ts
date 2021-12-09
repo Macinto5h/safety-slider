@@ -21,6 +21,8 @@ export namespace Components {
     interface SafetySliderSlides {
         "activeSlide": number;
     }
+    interface SafetySliderWindow {
+    }
 }
 declare global {
     interface HTMLSafetySliderElement extends Components.SafetySlider, HTMLStencilElement {
@@ -41,10 +43,17 @@ declare global {
         prototype: HTMLSafetySliderSlidesElement;
         new (): HTMLSafetySliderSlidesElement;
     };
+    interface HTMLSafetySliderWindowElement extends Components.SafetySliderWindow, HTMLStencilElement {
+    }
+    var HTMLSafetySliderWindowElement: {
+        prototype: HTMLSafetySliderWindowElement;
+        new (): HTMLSafetySliderWindowElement;
+    };
     interface HTMLElementTagNameMap {
         "safety-slider": HTMLSafetySliderElement;
         "safety-slider-dots": HTMLSafetySliderDotsElement;
         "safety-slider-slides": HTMLSafetySliderSlidesElement;
+        "safety-slider-window": HTMLSafetySliderWindowElement;
     }
 }
 declare namespace LocalJSX {
@@ -63,10 +72,13 @@ declare namespace LocalJSX {
     interface SafetySliderSlides {
         "activeSlide"?: number;
     }
+    interface SafetySliderWindow {
+    }
     interface IntrinsicElements {
         "safety-slider": SafetySlider;
         "safety-slider-dots": SafetySliderDots;
         "safety-slider-slides": SafetySliderSlides;
+        "safety-slider-window": SafetySliderWindow;
     }
 }
 export { LocalJSX as JSX };
@@ -76,6 +88,7 @@ declare module "@stencil/core" {
             "safety-slider": LocalJSX.SafetySlider & JSXBase.HTMLAttributes<HTMLSafetySliderElement>;
             "safety-slider-dots": LocalJSX.SafetySliderDots & JSXBase.HTMLAttributes<HTMLSafetySliderDotsElement>;
             "safety-slider-slides": LocalJSX.SafetySliderSlides & JSXBase.HTMLAttributes<HTMLSafetySliderSlidesElement>;
+            "safety-slider-window": LocalJSX.SafetySliderWindow & JSXBase.HTMLAttributes<HTMLSafetySliderWindowElement>;
         }
     }
 }

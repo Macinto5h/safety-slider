@@ -9,9 +9,8 @@ describe('safety-slider-window', () => {
     });
     expect(page.root).toEqualHtml(`
       <safety-slider-window>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
+        <safety-slider-slides>
+        </safety-slider-slides>
       </safety-slider-window>
     `);
   });

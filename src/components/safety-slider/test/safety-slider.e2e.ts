@@ -123,7 +123,7 @@ describe('safety-slider', () => {
       </safety-slider>
     `);
 
-    const dots = await page.findAll('.safety-slider__dot');
+    const dots = await page.findAll('.dot');
     const slides = await page.find('safety-slider-slides');
 
     dots[1].click();

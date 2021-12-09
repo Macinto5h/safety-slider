@@ -10,7 +10,9 @@ export class SafetySliderWindow {
   render() {
     return (
       <Host>
-        <slot></slot>
+        <safety-slider-slides>
+          <slot></slot>
+        </safety-slider-slides>
       </Host>
     );
   }
