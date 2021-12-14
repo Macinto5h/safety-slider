@@ -1,12 +1,10 @@
 .safety-slider {
-  --safety-slider-slide-width: var(--safety-slider-view-width);
-
   display: block;
   position: relative;
   padding: 0 2rem 1rem;
 
   &__slide {
-    min-width: var(--safety-slider-slide-width);
+    min-width: var(--safety-slider-view-width);
   }
 
   &__arrows {

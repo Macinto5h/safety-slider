@@ -14,7 +14,7 @@ describe('safety-slider', () => {
     const page = await newE2EPage();
     await page.setContent('<safety-slider><img src="https://picsum.photos/100/"></safety-slider>');
 
-    const windowElement = await page.find('.safety-slider__window');
+    const windowElement = await page.find('safety-slider-window');
     const activeSlideElement = await page.find('.safety-slider__slide.-active');
 
     const activeSlideWidth = await activeSlideElement.getProperty('offsetWidth');

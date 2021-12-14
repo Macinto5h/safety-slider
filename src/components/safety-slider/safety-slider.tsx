@@ -10,7 +10,6 @@ import { SliderClasses } from './enum/safety-slider.selectors';
 export class SafetySlider {
 
   private slideCount: number;
-  private slideContainer: HTMLSafetySliderSlidesElement;
   private activeSlide = 0;
   private prevBtn: HTMLButtonElement;
   private nextBtn: HTMLButtonElement;
@@ -56,7 +55,6 @@ export class SafetySlider {
       throw 'safety-slider: newActiveSlide index is out of range.';
 
     this.setArrowBtnDisability(newActiveSlide);
-    this.setSlideViewOffset(newActiveSlide);
     this.activeSlide = newActiveSlide;
     this.containerActiveSlide = newActiveSlide;
   }
@@ -66,12 +64,6 @@ export class SafetySlider {
       this.prevBtn.disabled = newActiveSlide === 0;
       this.nextBtn.disabled = newActiveSlide === this.slideCount - 1;
     }
-  }
-
-  private setSlideViewOffset(newActiveSlide: number) {
-    const viewWidth = this.slideContainer.offsetWidth;
-    this.root.style.setProperty('--safety-slider-view-width', viewWidth + 'px');
-    this.root.style.setProperty('--safety-slider-view-offset', `${viewWidth * newActiveSlide * -1}px`);
   }
 
   private prevArrowClick = () => {
@@ -93,11 +85,9 @@ export class SafetySlider {
   render() {
     return (
       <Host class="safety-slider">
-        <div class="safety-slider__window">
-          <safety-slider-slides ref={(el) => this.slideContainer = el as HTMLSafetySliderSlidesElement} activeSlide={this.containerActiveSlide}>
-            <slot></slot>
-          </safety-slider-slides>
-        </div>
+        <safety-slider-window activeSlide={this.containerActiveSlide}>
+          <slot></slot>
+        </safety-slider-window>
 
         {this.slideCount > 1 && !this.hasNoArrows && (
           <div class={SliderClasses.ArrowContainer}>

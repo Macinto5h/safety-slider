@@ -8,8 +8,8 @@ describe('safety-slider-window', () => {
       html: `<safety-slider-window></safety-slider-window>`,
     });
     expect(page.root).toEqualHtml(`
-      <safety-slider-window>
-        <safety-slider-slides>
+      <safety-slider-window style="--safety-slider-view-width: ${page.root.offsetWidth}px; --safety-slider-view-offset: ${page.root.offsetWidth * 0}px;">
+        <safety-slider-slides activeslide="0">
         </safety-slider-slides>
       </safety-slider-window>
     `);
