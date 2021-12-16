@@ -14,6 +14,13 @@ export namespace Components {
         "rightArrowInnerHTML": string;
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
     }
+    interface SafetySliderArrows {
+        "activeSlide": 0;
+        "isInfinite": boolean;
+        "nextArrowInnerHTML": string;
+        "prevArrowInnerHTML": string;
+        "slideCount": 2;
+    }
     interface SafetySliderDots {
         "activeDot": number;
         "dotCount": number;
@@ -31,6 +38,12 @@ declare global {
     var HTMLSafetySliderElement: {
         prototype: HTMLSafetySliderElement;
         new (): HTMLSafetySliderElement;
+    };
+    interface HTMLSafetySliderArrowsElement extends Components.SafetySliderArrows, HTMLStencilElement {
+    }
+    var HTMLSafetySliderArrowsElement: {
+        prototype: HTMLSafetySliderArrowsElement;
+        new (): HTMLSafetySliderArrowsElement;
     };
     interface HTMLSafetySliderDotsElement extends Components.SafetySliderDots, HTMLStencilElement {
     }
@@ -52,6 +65,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "safety-slider": HTMLSafetySliderElement;
+        "safety-slider-arrows": HTMLSafetySliderArrowsElement;
         "safety-slider-dots": HTMLSafetySliderDotsElement;
         "safety-slider-slides": HTMLSafetySliderSlidesElement;
         "safety-slider-window": HTMLSafetySliderWindowElement;
@@ -64,6 +78,13 @@ declare namespace LocalJSX {
         "isInfinite"?: boolean;
         "leftArrowInnerHTML"?: string;
         "rightArrowInnerHTML"?: string;
+    }
+    interface SafetySliderArrows {
+        "activeSlide"?: 0;
+        "isInfinite"?: boolean;
+        "nextArrowInnerHTML"?: string;
+        "prevArrowInnerHTML"?: string;
+        "slideCount"?: 2;
     }
     interface SafetySliderDots {
         "activeDot"?: number;
@@ -78,6 +99,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "safety-slider": SafetySlider;
+        "safety-slider-arrows": SafetySliderArrows;
         "safety-slider-dots": SafetySliderDots;
         "safety-slider-slides": SafetySliderSlides;
         "safety-slider-window": SafetySliderWindow;
@@ -88,6 +110,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "safety-slider": LocalJSX.SafetySlider & JSXBase.HTMLAttributes<HTMLSafetySliderElement>;
+            "safety-slider-arrows": LocalJSX.SafetySliderArrows & JSXBase.HTMLAttributes<HTMLSafetySliderArrowsElement>;
             "safety-slider-dots": LocalJSX.SafetySliderDots & JSXBase.HTMLAttributes<HTMLSafetySliderDotsElement>;
             "safety-slider-slides": LocalJSX.SafetySliderSlides & JSXBase.HTMLAttributes<HTMLSafetySliderSlidesElement>;
             "safety-slider-window": LocalJSX.SafetySliderWindow & JSXBase.HTMLAttributes<HTMLSafetySliderWindowElement>;

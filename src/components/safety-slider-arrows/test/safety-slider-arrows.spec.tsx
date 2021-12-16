@@ -9,9 +9,12 @@ describe('safety-slider-arrows', () => {
     });
     expect(page.root).toEqualHtml(`
       <safety-slider-arrows>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
+        <button class="safety-slider-arrow -prev" type="button">
+          ←
+        </button>
+        <button class="safety-slider-arrow -next" type="button">
+          →
+        </button>
       </safety-slider-arrows>
     `);
   });
