@@ -6,30 +6,4 @@
   &__slide {
     min-width: var(--safety-slider-view-width);
   }
-
-  &__arrows {
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__arrow {
-    appearance: none;
-    border: 1px solid black;
-    background-color: white;
-    padding: 0;
-    color: black;
-    width: 2rem;
-    height: 2rem;
-    text-align: center;
-
-    &[disabled] {
-      opacity: .5;
-    }
-  }
 }

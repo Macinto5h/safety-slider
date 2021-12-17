@@ -1,4 +1,3 @@
-/*global describe, it, expect*/
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('safety-slider', () => {
@@ -28,7 +27,7 @@ describe('safety-slider', () => {
     await page.setContent('<safety-slider><img src="https://picsum.photos/100/"><img src="https://picsum.photos/100/"></safety-slider>');
 
     const slideContainerElement = await page.find('safety-slider-slides');
-    const nextBtn = await page.find('.safety-slider__arrow.-next');
+    const nextBtn = await page.find('.safety-slider-arrow.-next');
 
     nextBtn.click();
     await page.waitForChanges();
@@ -53,8 +52,8 @@ describe('safety-slider', () => {
       </safety-slider>
     `);
 
-    const nextBtn = await page.find('.safety-slider__arrow.-next');
-    const prevBtn = await page.find('.safety-slider__arrow.-prev');
+    const nextBtn = await page.find('.safety-slider-arrow.-next');
+    const prevBtn = await page.find('.safety-slider-arrow.-prev');
     const slides = await page.find('safety-slider-slides');
 
     nextBtn.click();
@@ -99,8 +98,8 @@ describe('safety-slider', () => {
       </safety-slider>
     `);
 
-    const prevBtn = await page.find('.safety-slider__arrow.-prev');
-    const nextBtn = await page.find('.safety-slider__arrow.-next');
+    const prevBtn = await page.find('.safety-slider-arrow.-prev');
+    const nextBtn = await page.find('.safety-slider-arrow.-next');
     const slides = await page.find('safety-slider-slides');
 
     nextBtn.click();
@@ -147,7 +146,7 @@ describe('safety-slider', () => {
     `);
 
     const safetySlider = await page.find('safety-slider');
-    const nextBtn = await page.find('.safety-slider__arrow.-next');
+    const nextBtn = await page.find('.safety-slider-arrow.-next');
     const slides = await page.find('safety-slider-slides');
 
     await safetySlider.callMethod('setActiveSlide', 2);
@@ -170,7 +169,7 @@ describe('safety-slider', () => {
       </safety-slider>
     `);
 
-    const prevBtn = await page.find('.safety-slider__arrow.-prev');
+    const prevBtn = await page.find('.safety-slider-arrow.-prev');
     const slides = await page.find('safety-slider-slides');
 
     prevBtn.click();
@@ -206,7 +205,7 @@ describe('safety-slider', () => {
         </safety-slider>
     `);
 
-    const arrows = await page.findAll(`.safety-slider__arrow`);
+    const arrows = await page.findAll(`.safety-slider-arrow`);
     const dots = await page.find('safety-slider-dots');
 
     const dotCount = await dots.getProperty('dotCount');
@@ -215,5 +214,72 @@ describe('safety-slider', () => {
     expect(arrows.length).toBe(2);
     expect(dotCount).toBe(3);
     expect(activeDot).toBe(0);
+  });
+
+  it('should render left arrow content based on the value given to the left-arrow property', async () => {
+    const page = await newE2EPage();
+    await page.setContent(
+      `<safety-slider left-arrow="<i class='fa fa-chevron-left'></i>">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+      </safety-slider>`
+    );
+
+    const prevArrowBtn = await page.find(`.safety-slider-arrow.-prev`);
+
+    expect(prevArrowBtn.innerHTML).toEqualHtml("<i class='fa fa-chevron-left'></i>");
+  });
+
+
+  it('should render right arrow content based on the value given to the right-arrow property', async () => {
+    const page = await newE2EPage();
+    await page.setContent(
+      `<safety-slider right-arrow="<i class='fa fa-chevron-right'></i>">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+      </safety-slider>`
+    );
+
+    const nextArrowBtn = await page.find(`.safety-slider-arrow.-next`);
+
+    expect(nextArrowBtn.innerHTML).toEqualHtml("<i class='fa fa-chevron-right'></i>");
+  });
+
+  it('The next arrow button should be disabled when the active slide is the last slide.', async () => {
+    const page = await newE2EPage();
+    await page.setContent(
+      `<safety-slider right-arrow="<i class='fa fa-chevron-right'></i>">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+      </safety-slider>`
+    );
+
+    const safetySlider = await page.find('safety-slider');
+
+    await safetySlider.callMethod('setActiveSlide', '2');
+
+    const nextBtn = page.find(`.safety-slider-arrow.-next[disabled]`)
+
+    expect(nextBtn).not.toBeNull();
+  });
+
+  it('should render default values of the left and right arrow content if properties are not set', async () => {
+    const page = await newE2EPage();
+    await page.setContent(
+      `<safety-slider>
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+      </safety-slider>`
+    );
+
+    const prevArrowBtn = await page.find(`.safety-slider-arrow.-prev`);
+    const nextArrowBtn = await page.find(`.safety-slider-arrow.-next`);
+
+    expect(prevArrowBtn.innerHTML).toEqual('←');
+    expect(nextArrowBtn.innerHTML).toEqual('→');
   });
 });

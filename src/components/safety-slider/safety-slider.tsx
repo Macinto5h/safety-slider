@@ -1,5 +1,4 @@
 import { Component, Host, h, Element, Prop, Method, State, Listen } from '@stencil/core';
-import { SliderClasses } from './enum/safety-slider.selectors';
 
 @Component({
   tag: 'safety-slider',
@@ -10,8 +9,6 @@ export class SafetySlider {
 
   private slideCount: number;
   private activeSlide = 0;
-  private prevBtn: HTMLButtonElement;
-  private nextBtn: HTMLButtonElement;
 
   @Element() root: HTMLSafetySliderElement;
 
@@ -40,6 +37,11 @@ export class SafetySlider {
     this.setActiveSlide(event.detail);
   }
 
+  @Listen('safetySliderButtonClick')
+  onSafetySliderButtonClick(event: CustomEvent<number>) {
+    this.setActiveSlide(event.detail);
+  }
+
   @Method()
   async setActiveSlide(newActiveSlide: number) {
     try {
@@ -53,32 +55,8 @@ export class SafetySlider {
     if (newActiveSlide < 0 || newActiveSlide >= this.slideCount)
       throw 'safety-slider: newActiveSlide index is out of range.';
 
-    this.setArrowBtnDisability(newActiveSlide);
     this.activeSlide = newActiveSlide;
     this.containerActiveSlide = newActiveSlide;
-  }
-
-  private setArrowBtnDisability(newActiveSlide: number) {
-    if (this.slideCount > 1 && !this.hasNoArrows && !this.isInfinite) {
-      this.prevBtn.disabled = newActiveSlide === 0;
-      this.nextBtn.disabled = newActiveSlide === this.slideCount - 1;
-    }
-  }
-
-  private prevArrowClick = () => {
-    try {
-      this.applyActiveSlideChanges(this.activeSlide - 1);
-    } catch(e) {
-      this.applyActiveSlideChanges(this.slideCount - 1);
-    }
-  }
-
-  private nextArrowClick = () => {
-    try {
-      this.applyActiveSlideChanges(this.activeSlide + 1);
-    } catch(e) {
-      this.applyActiveSlideChanges(0);
-    }
   }
 
   render() {
@@ -89,20 +67,13 @@ export class SafetySlider {
         </safety-slider-window>
 
         {this.slideCount > 1 && !this.hasNoArrows && (
-          <div class={SliderClasses.ArrowContainer}>
-            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Previous}
-              type="button"
-              onClick={this.prevArrowClick}
-              ref={(el) => this.prevBtn = el as HTMLButtonElement}
-              innerHTML={this.leftArrowInnerHTML}>
-            </button>
-            <button class={SliderClasses.ArrowButton + ' ' + SliderClasses.Next}
-              type="button"
-              onClick={this.nextArrowClick}
-              ref={(el) => this.nextBtn = el as HTMLButtonElement}
-              innerHTML={this.rightArrowInnerHTML}>
-            </button>
-          </div>
+          <safety-slider-arrows
+            slideCount={this.slideCount}
+            activeSlide={this.containerActiveSlide}
+            prevArrowInnerHTML={this.leftArrowInnerHTML}
+            nextArrowInnerHTML={this.rightArrowInnerHTML}
+            isInfinite={this.isInfinite}>
+          </safety-slider-arrows>
         )}
 
         {this.slideCount > 1 && !this.hasNoDots && (

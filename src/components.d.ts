@@ -15,11 +15,11 @@ export namespace Components {
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
     }
     interface SafetySliderArrows {
-        "activeSlide": 0;
+        "activeSlide": number;
         "isInfinite": boolean;
         "nextArrowInnerHTML": string;
         "prevArrowInnerHTML": string;
-        "slideCount": 2;
+        "slideCount": number;
     }
     interface SafetySliderDots {
         "activeDot": number;
@@ -29,7 +29,7 @@ export namespace Components {
         "activeSlide": number;
     }
     interface SafetySliderWindow {
-        "activeSlide": 0;
+        "activeSlide": number;
     }
 }
 declare global {
@@ -80,11 +80,12 @@ declare namespace LocalJSX {
         "rightArrowInnerHTML"?: string;
     }
     interface SafetySliderArrows {
-        "activeSlide"?: 0;
+        "activeSlide"?: number;
         "isInfinite"?: boolean;
         "nextArrowInnerHTML"?: string;
+        "onSafetySliderButtonClick"?: (event: CustomEvent<number>) => void;
         "prevArrowInnerHTML"?: string;
-        "slideCount"?: 2;
+        "slideCount"?: number;
     }
     interface SafetySliderDots {
         "activeDot"?: number;
@@ -95,7 +96,7 @@ declare namespace LocalJSX {
         "activeSlide"?: number;
     }
     interface SafetySliderWindow {
-        "activeSlide"?: 0;
+        "activeSlide"?: number;
     }
     interface IntrinsicElements {
         "safety-slider": SafetySlider;

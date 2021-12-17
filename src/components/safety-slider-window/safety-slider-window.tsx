@@ -11,7 +11,7 @@ export class SafetySliderWindow {
 
   @Element() root: HTMLSafetySliderWindowElement;
 
-  @Prop() readonly activeSlide = 0;
+  @Prop() readonly activeSlide: number = 0;
 
   componentDidRender() {
     const windowWidth = this.root.offsetWidth;
