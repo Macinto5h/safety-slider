@@ -9,7 +9,7 @@ describe('safety-slider-arrows', () => {
     });
     expect(page.root).toEqualHtml(`
       <safety-slider-arrows>
-        <button class="safety-slider-arrow -prev" type="button">
+        <button class="safety-slider-arrow -prev" disabled="" type="button">
           ←
         </button>
         <button class="safety-slider-arrow -next" type="button">

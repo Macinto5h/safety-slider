@@ -19,11 +19,13 @@ export class SafetySliderArrows {
         <button
           class="safety-slider-arrow -prev"
           type="button"
+          disabled={this.isInfinite ? false : this.activeSlide === 0}
           innerHTML={this.prevArrowInnerHTML}>
         </button>
         <button
           class="safety-slider-arrow -next"
           type="button"
+          disabled={this.isInfinite ? false : this.activeSlide === this.slideCount - 1}
           innerHTML={this.nextArrowInnerHTML}>
         </button>
       </Host>

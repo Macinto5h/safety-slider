@@ -1,4 +1,3 @@
-/*global HTMLSafetySliderElement*/
 import { Component, Host, h, Element, Prop, Method, State, Listen } from '@stencil/core';
 import { SliderClasses } from './enum/safety-slider.selectors';
 
