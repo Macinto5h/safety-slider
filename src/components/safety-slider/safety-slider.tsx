@@ -8,11 +8,10 @@ import { Component, Host, h, Element, Prop, Method, State, Listen } from '@stenc
 export class SafetySlider {
 
   private slideCount: number;
-  private activeSlide = 0;
 
   @Element() root: HTMLSafetySliderElement;
 
-  @State() containerActiveSlide = 0;
+  @State() activeSlide = 0;
 
   @Prop({attribute: 'infinite'}) readonly isInfinite: boolean;
   @Prop({attribute: 'left-arrow'}) readonly leftArrowInnerHTML: string = '←';
@@ -56,20 +55,19 @@ export class SafetySlider {
       throw 'safety-slider: newActiveSlide index is out of range.';
 
     this.activeSlide = newActiveSlide;
-    this.containerActiveSlide = newActiveSlide;
   }
 
   render() {
     return (
       <Host class="safety-slider">
-        <safety-slider-window activeSlide={this.containerActiveSlide}>
+        <safety-slider-window activeSlide={this.activeSlide}>
           <slot></slot>
         </safety-slider-window>
 
         {this.slideCount > 1 && !this.hasNoArrows && (
           <safety-slider-arrows
             slideCount={this.slideCount}
-            activeSlide={this.containerActiveSlide}
+            activeSlide={this.activeSlide}
             prevArrowInnerHTML={this.leftArrowInnerHTML}
             nextArrowInnerHTML={this.rightArrowInnerHTML}
             isInfinite={this.isInfinite}>
@@ -77,7 +75,7 @@ export class SafetySlider {
         )}
 
         {this.slideCount > 1 && !this.hasNoDots && (
-          <safety-slider-dots activeDot={this.containerActiveSlide} dotCount={this.slideCount}></safety-slider-dots>
+          <safety-slider-dots activeDot={this.activeSlide} dotCount={this.slideCount}></safety-slider-dots>
         )}
       </Host>
     );
