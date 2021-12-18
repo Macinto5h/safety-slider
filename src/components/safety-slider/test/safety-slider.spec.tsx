@@ -1,6 +1,4 @@
-/*global describe, it, expect*/
 import { newSpecPage } from '@stencil/core/testing';
-import { SliderClasses } from '../enum/safety-slider.selectors';
 import { SafetySlider } from '../safety-slider';
 
 describe('safety-slider', () => {
@@ -31,7 +29,7 @@ describe('safety-slider', () => {
           </safety-slider>`
       });
 
-      expect(page.root.querySelectorAll(`.${SliderClasses.ArrowButton}`).length).toBe(0);
+      expect(page.root.querySelectorAll(`.safety-slider-arrow`).length).toBe(0);
     });
 
     it('does not render dot buttons when the no-dots property is present', async () => {
@@ -45,7 +43,7 @@ describe('safety-slider', () => {
           </safety-slider>`
       });
 
-      expect(page.root.querySelectorAll(`.${SliderClasses.Dot}`).length).toBe(0);
+      expect(page.root.querySelectorAll(`.safety-slider-dot`).length).toBe(0);
     });
   });
 });
