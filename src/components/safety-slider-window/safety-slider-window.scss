@@ -5,3 +5,7 @@ safety-slider-window {
   height: 100%;
   overflow: hidden;
 }
+
+.safety-slider__slide {
+  min-width: var(--safety-slider-view-width);
+}
