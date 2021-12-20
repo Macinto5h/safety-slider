@@ -12,7 +12,7 @@ export class SafetySliderDots {
   @Prop() readonly activeDot: number
   @Prop() readonly dotCount: number;
 
-  @Event() safetySliderDotClick: EventEmitter<number>;
+  @Event() safetySliderNavigationClick: EventEmitter<number>;
 
   componentWillLoad() {
     this.dotButtons = new Array<HTMLButtonElement>();
@@ -26,7 +26,7 @@ export class SafetySliderDots {
             class="dot"
             type="button"
             disabled={i === this.activeDot}
-            onClick={() => this.safetySliderDotClick.emit(i)}
+            onClick={() => this.safetySliderNavigationClick.emit(i)}
             ref={(el) => this.dotButtons = [...this.dotButtons, el]}
           >
           </button>
@@ -34,5 +34,4 @@ export class SafetySliderDots {
       </Host>
     );
   }
-
 }

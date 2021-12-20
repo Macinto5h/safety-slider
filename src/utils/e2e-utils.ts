@@ -10,6 +10,10 @@ export class E2EUtils {
     return page.find('.safety-slider__slide.-active');
   }
 
+  static getNavigationClickSpy(page: E2EPage) {
+    return page.spyOnEvent('safetySliderNavigationClick');
+  }
+
   static getSlidesElement(page: E2EPage) {
     return page.find('safety-slider-slides');
   }
@@ -18,4 +22,7 @@ export class E2EUtils {
     return page.find('safety-slider-window');
   }
 
+  static waitForNavigationClick(page: E2EPage) {
+    return page.waitForEvent('safetySliderNavigationClick');
+  }
 }

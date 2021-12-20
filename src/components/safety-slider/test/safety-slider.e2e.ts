@@ -9,31 +9,6 @@ describe('safety-slider', () => {
     expect(element).toHaveClass('hydrated');
   });
 
-  it('should change the active slide when the previous button is clicked', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-      <safety-slider>
-        <img src="https://picsum.photos/100/">
-        <img src="https://picsum.photos/100/">
-        <img src="https://picsum.photos/100/">
-      </safety-slider>
-    `);
-
-    const nextBtn = await page.find('.safety-slider-arrow.-next');
-    const prevBtn = await page.find('.safety-slider-arrow.-prev');
-    const slides = await page.find('safety-slider-slides');
-
-    nextBtn.click();
-    await page.waitForChanges();
-
-    prevBtn.click();
-    await page.waitForChanges();
-
-    const activeSlide = await slides.getProperty('activeSlide');
-
-    expect(activeSlide).toBe(0);
-  });
-
   it('should change the active slide when setActiveSlide is called', async () => {
     const page = await newE2EPage();
     await page.setContent(`

@@ -13,14 +13,14 @@ export class SafetySliderArrows {
   @Prop() readonly nextArrowInnerHTML: string = '→';
   @Prop() readonly isInfinite: boolean;
 
-  @Event() safetySliderButtonClick: EventEmitter<number>;
+  @Event() safetySliderNavigationClick: EventEmitter<number>;
 
   private prevArrowClick = () => {
-    this.safetySliderButtonClick.emit(this.activeSlide - 1 >= 0 ? this.activeSlide - 1 : this.slideCount - 1);
+    this.safetySliderNavigationClick.emit(this.activeSlide - 1 >= 0 ? this.activeSlide - 1 : this.slideCount - 1);
   }
 
   private nextArrowClick = () => {
-    this.safetySliderButtonClick.emit(this.activeSlide + 1 < this.slideCount ? this.activeSlide + 1 : 0);
+    this.safetySliderNavigationClick.emit(this.activeSlide + 1 < this.slideCount ? this.activeSlide + 1 : 0);
   }
 
   render() {

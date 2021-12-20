@@ -31,13 +31,8 @@ export class SafetySlider {
     }
   }
 
-  @Listen('safetySliderDotClick')
+  @Listen('safetySliderNavigationClick')
   onSafetySliderDotClick(event: CustomEvent<number>) {
-    this.setActiveSlide(event.detail);
-  }
-
-  @Listen('safetySliderButtonClick')
-  onSafetySliderButtonClick(event: CustomEvent<number>) {
     this.setActiveSlide(event.detail);
   }
 

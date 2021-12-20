@@ -83,14 +83,14 @@ declare namespace LocalJSX {
         "activeSlide"?: number;
         "isInfinite"?: boolean;
         "nextArrowInnerHTML"?: string;
-        "onSafetySliderButtonClick"?: (event: CustomEvent<number>) => void;
+        "onSafetySliderNavigationClick"?: (event: CustomEvent<number>) => void;
         "prevArrowInnerHTML"?: string;
         "slideCount"?: number;
     }
     interface SafetySliderDots {
         "activeDot"?: number;
         "dotCount"?: number;
-        "onSafetySliderDotClick"?: (event: CustomEvent<number>) => void;
+        "onSafetySliderNavigationClick"?: (event: CustomEvent<number>) => void;
     }
     interface SafetySliderSlides {
         "activeSlide"?: number;
