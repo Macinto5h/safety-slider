@@ -9,8 +9,8 @@ export class SafetySliderArrows {
 
   @Prop() readonly slideCount: number = 2;
   @Prop() readonly activeSlide: number = 0;
-  @Prop() readonly prevArrowInnerHTML: string = '←';
-  @Prop() readonly nextArrowInnerHTML: string = '→';
+  @Prop({attribute: 'prev-arrow'}) readonly prevArrowInnerHTML: string = '←';
+  @Prop({attribute: 'next-arrow'}) readonly nextArrowInnerHTML: string = '→';
   @Prop() readonly isInfinite: boolean;
 
   @Event() safetySliderNavigationClick: EventEmitter<number>;
