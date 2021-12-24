@@ -22,29 +22,6 @@ describe('safety-slider', () => {
     expect(activeSlide).toBe(1);
   });
 
-  it('should change the active slide when a dot button is clicked. The dot should be disabled afterwards.', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-      <safety-slider>
-        <img src="https://picsum.photos/100/">
-        <img src="https://picsum.photos/100/">
-        <img src="https://picsum.photos/100/">
-      </safety-slider>
-    `);
-
-    const dots = await page.findAll('.dot');
-    const slides = await page.find('safety-slider-slides');
-
-    dots[1].click();
-    await page.waitForChanges();
-
-    const activeSlide = await slides.getProperty('activeSlide');
-    const secondDotDisabled = await dots[1].getProperty('disabled');
-
-    expect(activeSlide).toEqual(1);
-    expect(secondDotDisabled).toBeTruthy();
-  });
-
   it('renders active slide with no dots and arrows if only one item is provided', async () => {
     const page = await newE2EPage();
     await page.setContent(`

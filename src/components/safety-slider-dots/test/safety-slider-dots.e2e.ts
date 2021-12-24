@@ -2,14 +2,6 @@ import { newE2EPage } from '@stencil/core/testing';
 import { E2EUtils } from '../../../utils/e2e-utils';
 
 describe('safety-slider-dots', () => {
-  it('renders', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<safety-slider-dots></safety-slider-dots>');
-
-    const element = await page.find('safety-slider-dots');
-    expect(element).toHaveClass('hydrated');
-  });
-
   it('should emit the safetySliderNavigationClick event when a dot is clicked', async () => {
     const page = await newE2EPage();
     await page.setContent('<safety-slider-dots dot-count="3"></safety-slider-dots>');

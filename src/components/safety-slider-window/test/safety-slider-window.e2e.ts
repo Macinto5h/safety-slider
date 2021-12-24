@@ -8,13 +8,6 @@ describe('safety-slider-window', () => {
     page = await newE2EPage();
   });
 
-  it('renders', async () => {
-    await E2EUtils.setWindowContent(page);
-
-    const element = await E2EUtils.getWindowElement(page);
-    expect(element).toHaveClass('hydrated');
-  });
-
   it('should assign the slide the same width as the window element', async () => {
     await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100/">');
 

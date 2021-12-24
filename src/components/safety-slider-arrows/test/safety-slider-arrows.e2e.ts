@@ -8,13 +8,6 @@ describe('safety-slider-arrows', () => {
     page = await newE2EPage();
   });
 
-  it('renders', async () => {
-    await E2EUtils.setArrowContent(page);
-
-    const element = await page.find('safety-slider-arrows');
-    expect(element).toHaveClass('hydrated');
-  });
-
   it('should change the active slide to the preceding slide when the previous arrow is clicked', async () => {
     await E2EUtils.setArrowContent(page, 'active-slide="1"');
 

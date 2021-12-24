@@ -1,14 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('safety-slider-slides', () => {
-  it('renders', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<safety-slider-slides></safety-slider-slides>');
-
-    const element = await page.find('safety-slider-slides');
-    expect(element).toHaveClass('hydrated');
-  });
-
   it('should change the assigned active class when a value is passed to the property', async () => {
     const page = await newE2EPage();
     await page.setContent('<safety-slider-slides><img src="https://picsum.photos/100/"><img src="https://picsum.photos/100/"></safety-slider-slides>');

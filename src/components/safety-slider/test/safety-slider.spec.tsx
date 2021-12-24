@@ -2,21 +2,6 @@ import { newSpecPage } from '@stencil/core/testing';
 import { SafetySlider } from '../safety-slider';
 
 describe('safety-slider', () => {
-  describe('slot tests', () => {
-    it('renders with no content', async () => {
-      const page = await newSpecPage({
-        components: [SafetySlider],
-        html: `<safety-slider></safety-slider>`,
-      });
-      expect(page.root).toEqualHtml(`
-        <safety-slider class="safety-slider">
-          <safety-slider-window activeslide="0">
-          </safety-slider-window>
-        </safety-slider>
-      `);
-    });
-  });
-
   describe('property tests', () => {
     it('does not render arrow buttons when the no-arrows property is present', async () => {
       const page = await newSpecPage({
