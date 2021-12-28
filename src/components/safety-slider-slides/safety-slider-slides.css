@@ -7,3 +7,7 @@ safety-slider-slides {
   transition: transform .25s ease;
   transform: translateX(var(--safety-slider-view-offset));
 }
+
+.safety-slider__slide {
+  min-width: var(--safety-slider-view-width);
+}

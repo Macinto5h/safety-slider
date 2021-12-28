@@ -2,7 +2,7 @@ import { Component, Host, h, Element, Prop, Method, State, Listen } from '@stenc
 
 @Component({
   tag: 'safety-slider',
-  styleUrl: 'safety-slider.scss',
+  styleUrl: 'safety-slider.css',
   shadow: false,
 })
 export class SafetySlider {

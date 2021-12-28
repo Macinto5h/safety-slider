@@ -2,7 +2,7 @@ import { Component, Host, h, Element, Prop } from '@stencil/core';
 
 @Component({
   tag: 'safety-slider-window',
-  styleUrl: 'safety-slider-window.scss',
+  styleUrl: 'safety-slider-window.css',
   shadow: false,
 })
 export class SafetySliderWindow {

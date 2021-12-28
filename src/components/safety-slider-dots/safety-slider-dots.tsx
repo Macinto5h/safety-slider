@@ -2,7 +2,7 @@ import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'safety-slider-dots',
-  styleUrl: 'safety-slider-dots.scss',
+  styleUrl: 'safety-slider-dots.css',
   shadow: false,
 })
 export class SafetySliderDots {

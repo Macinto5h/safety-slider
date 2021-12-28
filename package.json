@@ -22,7 +22,7 @@
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "lint:typescript": "eslint src/**/*{.ts,.tsx}",
-    "lint:scss": "npx stylelint '**/*.scss'"
+    "lint:css": "npx stylelint 'src/**/*.css'"
   },
   "dependencies": {
     "@stencil/core": "^2.7.0",
@@ -31,15 +31,13 @@
   "devDependencies": {
     "@stencil/eslint-plugin": "^0.4.0",
     "@stencil/postcss": "^2.1.0",
-    "@stencil/sass": "^1.5.2",
     "@types/autoprefixer": "^10.2.0",
     "@types/jest": "^26.0.24",
     "autoprefixer": "^10.4.0",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
     "puppeteer": "^10.0.0",
-    "stylelint": "^14.1.0",
-    "stylelint-config-standard-scss": "^3.0.0"
+    "stylelint": "^14.1.0"
   },
   "license": "MIT"
 }
