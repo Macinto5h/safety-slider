@@ -28,6 +28,7 @@ export class SafetySliderDots {
             disabled={i === this.activeDot}
             onClick={() => this.safetySliderNavigationClick.emit(i)}
             ref={(el) => this.dotButtons = [...this.dotButtons, el]}
+            aria-label={`Go to slide ${i} of ${this.dotCount}`}
           >
           </button>
         )}

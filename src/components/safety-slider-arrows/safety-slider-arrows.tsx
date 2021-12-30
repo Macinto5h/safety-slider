@@ -31,14 +31,16 @@ export class SafetySliderArrows {
           type="button"
           disabled={this.isInfinite ? false : this.activeSlide === 0}
           innerHTML={this.prevArrowInnerHTML}
-          onClick={this.prevArrowClick}>
+          onClick={this.prevArrowClick}
+          aria-label="Go to previous slide">
         </button>
         <button
           class="safety-slider-arrow -next"
           type="button"
           disabled={this.isInfinite ? false : this.activeSlide === this.slideCount - 1}
           innerHTML={this.nextArrowInnerHTML}
-          onClick={this.nextArrowClick}>
+          onClick={this.nextArrowClick}
+          aria-label="Go to next slide">
         </button>
       </Host>
     );
