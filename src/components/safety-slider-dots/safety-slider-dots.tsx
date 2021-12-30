@@ -7,28 +7,36 @@ import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 })
 export class SafetySliderDots {
 
-  private dotButtons: Array<HTMLButtonElement>;
+  private dotButtons: number[];
 
   @Prop() readonly activeDot: number
   @Prop() readonly dotCount: number;
 
   @Event() safetySliderNavigationClick: EventEmitter<number>;
 
-  componentWillLoad() {
-    this.dotButtons = new Array<HTMLButtonElement>();
+  componentWillRender() {
+    this.dotButtons = [];
+    for (let i = 0; i < this.dotCount; i++)
+      this.dotButtons.push(i);
   }
+
+  private dotClick = (event: MouseEvent) => {
+    const activeSlideValue = (event.target as HTMLButtonElement).getAttribute('data-slide');
+
+    this.safetySliderNavigationClick.emit(parseInt(activeSlideValue));
+  };
 
   render() {
     return (
       <Host>
-        {[...new Array(this.dotCount)].map((x, i) =>
+        {this.dotButtons.map((i) =>
           <button
             class="dot"
             type="button"
             disabled={i === this.activeDot}
-            onClick={() => this.safetySliderNavigationClick.emit(i)}
-            ref={(el) => this.dotButtons = [...this.dotButtons, el]}
+            onClick={this.dotClick}
             aria-label={`Go to slide ${i} of ${this.dotCount}`}
+            data-slide={i}
           >
           </button>
         )}
