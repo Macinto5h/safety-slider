@@ -1,43 +1,60 @@
-/*global describe, it, expect*/
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('safety-slider', () => {
-  it('renders', async () => {
+  it('should change the active slide when setActiveSlide is called', async () => {
     const page = await newE2EPage();
-    await page.setContent('<safety-slider></safety-slider>');
+    await page.setContent(`
+      <safety-slider>
+        <img src="https://picsum.photos/100/">
+        <img src="https://picsum.photos/100/">
+        <img src="https://picsum.photos/100/">
+      </safety-slider>
+    `);
 
-    const element = await page.find('safety-slider');
-    expect(element).toHaveClass('hydrated');
-  });
-  it('renders and the active slide has the same width as the slide window', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<safety-slider><img src="https://picsum.photos/100/"></safety-slider>');
+    const safetySlider = await page.find('safety-slider');
+    await safetySlider.callMethod('setActiveSlide', 1);
 
-    const windowElement = await page.find('.safety-slider__window');
-    const activeSlideElement = await page.find('.safety-slider__slide.-active');
-
-    const activeSlideWidth = await activeSlideElement.getProperty('offsetWidth');
-    const slideWindowWidth = await windowElement.getProperty('offsetWidth');
-
-    expect(slideWindowWidth).toBe(activeSlideWidth);
-  });
-  it('should translate the slides container to the position of the active slide', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<safety-slider><img src="https://picsum.photos/100/"><img src="https://picsum.photos/100/"></safety-slider>');
-
-    const slideContainerElement = await page.find('.safety-slider__slides');
-    const nextBtn = await page.find('.safety-slider__arrow.-next');
-
-    nextBtn.click();
     await page.waitForChanges();
-    await page.waitForTimeout(250);
 
+    const slideWindow = await page.find('safety-slider-window');
+    const activeSlide = await slideWindow.getProperty('activeSlide');
 
-    const activeSlideElement = await page.find('.safety-slider__slide.-active');
+    expect(activeSlide).toBe(1);
+  });
 
-    const activeSlideWidth = await activeSlideElement.getProperty('offsetWidth');
-    const slideContainerStyle = await slideContainerElement.getComputedStyle();
+  it('renders active slide with no dots and arrows if only one item is provided', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+      <safety-slider infinite>
+        <img src="https://picsum.photos/100/">
+      </safety-slider>
+    `);
 
-    expect(slideContainerStyle.transform).toContain(`${activeSlideWidth * -1}`);
+    const arrows = await page.findAll('.safety-slider__arrow');
+    const dots = await page.findAll('.safety-slider__dot');
+
+    expect(arrows.length).toBe(0);
+    expect(dots.length).toBe(0);
+  });
+
+  it('renders arrow buttons and dots when there is more than 1 items in the slot, left arrow by default is disabled', async () => {
+    const page = await newE2EPage();
+    await page.setContent(`
+        <safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>
+    `);
+
+    const arrows = await page.findAll(`.safety-slider-arrow`);
+    const dots = await page.find('safety-slider-dots');
+
+    const dotCount = await dots.getProperty('dotCount');
+    const activeDot = await dots.getProperty('activeDot');
+
+    expect(arrows.length).toBe(2);
+    expect(dotCount).toBe(3);
+    expect(activeDot).toBe(0);
   });
 });

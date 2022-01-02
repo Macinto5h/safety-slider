@@ -1,0 +1,9 @@
+safety-slider {
+  display: block;
+  position: relative;
+  padding: 0 2rem 1rem;
+}
+
+safety-slider safety-slider-window {
+  display: block;
+}
