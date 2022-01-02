@@ -25,9 +25,6 @@ export namespace Components {
         "activeDot": number;
         "dotCount": number;
     }
-    interface SafetySliderSlides {
-        "activeSlide": number;
-    }
     interface SafetySliderWindow {
         "activeSlide": number;
     }
@@ -51,12 +48,6 @@ declare global {
         prototype: HTMLSafetySliderDotsElement;
         new (): HTMLSafetySliderDotsElement;
     };
-    interface HTMLSafetySliderSlidesElement extends Components.SafetySliderSlides, HTMLStencilElement {
-    }
-    var HTMLSafetySliderSlidesElement: {
-        prototype: HTMLSafetySliderSlidesElement;
-        new (): HTMLSafetySliderSlidesElement;
-    };
     interface HTMLSafetySliderWindowElement extends Components.SafetySliderWindow, HTMLStencilElement {
     }
     var HTMLSafetySliderWindowElement: {
@@ -67,7 +58,6 @@ declare global {
         "safety-slider": HTMLSafetySliderElement;
         "safety-slider-arrows": HTMLSafetySliderArrowsElement;
         "safety-slider-dots": HTMLSafetySliderDotsElement;
-        "safety-slider-slides": HTMLSafetySliderSlidesElement;
         "safety-slider-window": HTMLSafetySliderWindowElement;
     }
 }
@@ -92,9 +82,6 @@ declare namespace LocalJSX {
         "dotCount"?: number;
         "onSafetySliderNavigationClick"?: (event: CustomEvent<number>) => void;
     }
-    interface SafetySliderSlides {
-        "activeSlide"?: number;
-    }
     interface SafetySliderWindow {
         "activeSlide"?: number;
     }
@@ -102,7 +89,6 @@ declare namespace LocalJSX {
         "safety-slider": SafetySlider;
         "safety-slider-arrows": SafetySliderArrows;
         "safety-slider-dots": SafetySliderDots;
-        "safety-slider-slides": SafetySliderSlides;
         "safety-slider-window": SafetySliderWindow;
     }
 }
@@ -113,7 +99,6 @@ declare module "@stencil/core" {
             "safety-slider": LocalJSX.SafetySlider & JSXBase.HTMLAttributes<HTMLSafetySliderElement>;
             "safety-slider-arrows": LocalJSX.SafetySliderArrows & JSXBase.HTMLAttributes<HTMLSafetySliderArrowsElement>;
             "safety-slider-dots": LocalJSX.SafetySliderDots & JSXBase.HTMLAttributes<HTMLSafetySliderDotsElement>;
-            "safety-slider-slides": LocalJSX.SafetySliderSlides & JSXBase.HTMLAttributes<HTMLSafetySliderSlidesElement>;
             "safety-slider-window": LocalJSX.SafetySliderWindow & JSXBase.HTMLAttributes<HTMLSafetySliderWindowElement>;
         }
     }

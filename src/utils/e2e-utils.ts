@@ -7,7 +7,7 @@ export class E2EUtils {
   }
 
   static async setWindowContent(page: E2EPage, content = '') {
-    await page.setContent(`<safety-slider-window>${content}</safety-slider-window>`);
+    await page.setContent(`<safety-slider-window style="display:block;">${content}</safety-slider-window>`);
   }
 
   static getActiveSlideElement(page: E2EPage) {
@@ -27,7 +27,7 @@ export class E2EUtils {
   }
 
   static getSlidesElement(page: E2EPage) {
-    return page.find('safety-slider-slides');
+    return page.find('.safety-slider-slides');
   }
 
   static getWindowElement(page: E2EPage) {

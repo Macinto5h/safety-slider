@@ -16,8 +16,8 @@ describe('safety-slider', () => {
 
     await page.waitForChanges();
 
-    const slides = await page.find('safety-slider-slides');
-    const activeSlide = await slides.getProperty('activeSlide');
+    const slideWindow = await page.find('safety-slider-window');
+    const activeSlide = await slideWindow.getProperty('activeSlide');
 
     expect(activeSlide).toBe(1);
   });

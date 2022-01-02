@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, Prop } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Watch, State } from '@stencil/core';
 
 @Component({
   tag: 'safety-slider-window',
@@ -11,21 +11,42 @@ export class SafetySliderWindow {
 
   @Element() root: HTMLSafetySliderWindowElement;
 
+  @State() rootWidth: number;
+
   @Prop() readonly activeSlide: number = 0;
 
-  componentDidRender() {
-    const windowWidth = this.root.offsetWidth;
-    this.slidesOffset = windowWidth * this.activeSlide * -1;
-    this.root.style.setProperty('--safety-slider-view-width', windowWidth + 'px');
-    this.root.style.setProperty('--safety-slider-view-offset', this.slidesOffset + 'px');
+  @Watch('activeSlide')
+  activeSlideChanged(newActiveSlide: number, oldActiveSlide: number) {
+    const track = this.root.querySelector('.safety-slider-slides');
+
+    track.children[oldActiveSlide].classList.remove('-active');
+    track.children[newActiveSlide].classList.add('-active');
+  }
+
+  componentWillRender() {
+    this.rootWidth = this.root.offsetWidth;
+    this.slidesOffset = this.rootWidth * this.activeSlide * -1;
+  }
+
+  componentWillLoad() {
+    const slides = Array.from(this.root.children) as HTMLElement[];
+
+    slides.forEach(slide => slide.classList.add('safety-slider__slide'));
+
+    slides[this.activeSlide]?.classList.add('-active');
+
+    this.rootWidth = this.root.offsetWidth;
   }
 
   render() {
     return (
       <Host>
-        <safety-slider-slides activeSlide={this.activeSlide}>
+        <div class="safety-slider-slides" style={{
+          '--safety-slider-view-width': this.rootWidth + 'px',
+          '--safety-slider-view-offset': this.slidesOffset + 'px'
+          }}>
           <slot></slot>
-        </safety-slider-slides>
+        </div>
       </Host>
     );
   }
