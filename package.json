@@ -38,7 +38,36 @@
     "jest-cli": "^26.6.3",
     "puppeteer": "^10.0.0",
     "stylelint": "^14.1.0",
-    "stylelint-config-standard": "^24.0.0"
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-no-unsupported-browser-features": "^5.0.2"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "browserslist": [
+    ">= 0.5%",
+    "last 2 major versions",
+    "not dead",
+    "Chrome >= 60",
+    "Firefox >= 63",
+    "Firefox ESR",
+    "iOS >= 10.1",
+    "Safari >= 10.1",
+    "not Explorer <= 11",
+    "not OperaMini all"
+  ],
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "plugins": [
+      "stylelint-no-unsupported-browser-features"
+    ],
+    "rules": {
+      "plugin/no-unsupported-browser-features": [
+        true,
+        {
+          "ignorePartialSupport": true
+        }
+      ],
+      "number-leading-zero": "never",
+      "selector-class-pattern": "[a-z]+"
+    }
+  }
 }
