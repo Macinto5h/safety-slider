@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, Prop, Watch, State } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Watch, State, Listen } from '@stencil/core';
 
 @Component({
   tag: 'safety-slider-window',
@@ -35,6 +35,11 @@ export class SafetySliderWindow {
 
     slides[this.activeSlide]?.classList.add('-active');
 
+    this.rootWidth = this.root.offsetWidth;
+  }
+
+  @Listen('resize', {target: 'window'})
+  windowResizeHandler() {
     this.rootWidth = this.root.offsetWidth;
   }
 
