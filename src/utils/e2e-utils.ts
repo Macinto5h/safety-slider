@@ -6,8 +6,8 @@ export class E2EUtils {
     await page.setContent(`<safety-slider-arrows ${properties}></safety-slider-arrows>`);
   }
 
-  static async setWindowContent(page: E2EPage, content = '') {
-    await page.setContent(`<safety-slider-window style="display:block;">${content}</safety-slider-window>`);
+  static async setWindowContent(page: E2EPage, content = '', properties = '') {
+    await page.setContent(`<safety-slider-window style="display:block;" ${properties}>${content}</safety-slider-window>`);
   }
 
   static getActiveSlideElement(page: E2EPage) {
