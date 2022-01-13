@@ -27,6 +27,7 @@ export namespace Components {
     }
     interface SafetySliderWindow {
         "activeSlide": number;
+        "isInfinite": boolean;
     }
 }
 declare global {
@@ -84,6 +85,7 @@ declare namespace LocalJSX {
     }
     interface SafetySliderWindow {
         "activeSlide"?: number;
+        "isInfinite"?: boolean;
     }
     interface IntrinsicElements {
         "safety-slider": SafetySlider;

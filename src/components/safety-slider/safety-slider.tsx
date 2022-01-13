@@ -55,7 +55,7 @@ export class SafetySlider {
   render() {
     return (
       <Host class="safety-slider">
-        <safety-slider-window activeSlide={this.activeSlide}>
+        <safety-slider-window activeSlide={this.activeSlide} isInfinite={this.isInfinite}>
           <slot></slot>
         </safety-slider-window>
 

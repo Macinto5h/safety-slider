@@ -1,5 +1,6 @@
 import { E2EPage, newE2EPage } from '@stencil/core/testing';
 import { E2EUtils } from '../../../utils/e2e-utils';
+import { SLIDE_TRACK_CLASS_QUERY } from '../safety-slider-window.constants';
 
 describe('safety-slider-window', () => {
   let page: E2EPage;
@@ -22,15 +23,29 @@ describe('safety-slider-window', () => {
     expect(slideWidth).toBe(slideWindowWidth);
   });
 
-  it('should translate safety-slider-slides to the position of the active slide', async () => {
+  it('should translate safety-slider-track to the position of the active slide', async () => {
     await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100"><img src="https://picsum.photos/100">');
 
     const windowElement = await E2EUtils.getWindowElement(page);
-    const slidesElement = await windowElement.find('.safety-slider-slides');
+    const slidesElement = await windowElement.find(SLIDE_TRACK_CLASS_QUERY);
 
     windowElement.setProperty('activeSlide', 1);
     await page.waitForChanges();
     await page.waitForTimeout(250);
+
+    const activeSlideElement = await E2EUtils.getActiveSlideElement(page);
+
+    const activeSlideWidth = await activeSlideElement.getProperty('offsetWidth');
+    const slidesElementStyle = await slidesElement.getComputedStyle();
+
+    expect(slidesElementStyle.transform).toContain(`${activeSlideWidth * -1}`);
+  });
+
+  it('should translate safety-slider-track to the position of the active slide when considering clone elements', async () => {
+    await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100"><img src="https://picsum.photos/100">', 'is-infinite');
+
+    const windowElement = await E2EUtils.getWindowElement(page);
+    const slidesElement = await windowElement.find(SLIDE_TRACK_CLASS_QUERY);
 
     const activeSlideElement = await E2EUtils.getActiveSlideElement(page);
 

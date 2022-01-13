@@ -6,13 +6,13 @@ safety-slider-window {
   overflow: hidden;
 }
 
-.safety-slider-slides {
+.safety-slider-track {
   height: 100%;
   position: relative;
   z-index: 0;
   display: flex;
   box-sizing: border-box;
-  transition: transform .25s ease;
+  transition: transform var(--safety-slider-window-transition-duration) ease;
   transform: translateX(var(--safety-slider-view-offset));
 }
 
