@@ -12,6 +12,8 @@ export class SafetySliderArrows {
   @Prop({attribute: 'prev-arrow'}) readonly prevArrowInnerHTML: string = '←';
   @Prop({attribute: 'next-arrow'}) readonly nextArrowInnerHTML: string = '→';
   @Prop() readonly isInfinite: boolean;
+  @Prop() readonly prevAriaLabel: string = "Go to previous slide";
+  @Prop() readonly nextAriaLabel: string = "Go to next slide";
 
   @Event() safetySliderNavigationClick: EventEmitter<number>;
 
@@ -32,7 +34,7 @@ export class SafetySliderArrows {
           disabled={this.isInfinite ? false : this.activeSlide === 0}
           innerHTML={this.prevArrowInnerHTML}
           onClick={this.prevArrowClick}
-          aria-label="Go to previous slide">
+          aria-label={this.prevAriaLabel}>
         </button>
         <button
           class="safety-slider-arrow -next"
@@ -40,7 +42,7 @@ export class SafetySliderArrows {
           disabled={this.isInfinite ? false : this.activeSlide === this.slideCount - 1}
           innerHTML={this.nextArrowInnerHTML}
           onClick={this.nextArrowClick}
-          aria-label="Go to next slide">
+          aria-label={this.nextAriaLabel}>
         </button>
       </Host>
     );
