@@ -17,7 +17,9 @@ export namespace Components {
     interface SafetySliderArrows {
         "activeSlide": number;
         "isInfinite": boolean;
+        "nextAriaLabel": string;
         "nextArrowInnerHTML": string;
+        "prevAriaLabel": string;
         "prevArrowInnerHTML": string;
         "slideCount": number;
     }
@@ -73,8 +75,10 @@ declare namespace LocalJSX {
     interface SafetySliderArrows {
         "activeSlide"?: number;
         "isInfinite"?: boolean;
+        "nextAriaLabel"?: string;
         "nextArrowInnerHTML"?: string;
         "onSafetySliderNavigationClick"?: (event: CustomEvent<number>) => void;
+        "prevAriaLabel"?: string;
         "prevArrowInnerHTML"?: string;
         "slideCount"?: number;
     }
