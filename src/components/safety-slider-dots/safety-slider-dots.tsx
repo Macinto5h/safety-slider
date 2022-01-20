@@ -11,6 +11,7 @@ export class SafetySliderDots {
 
   @Prop() readonly activeDot: number
   @Prop() readonly dotCount: number;
+  @Prop() readonly dotAriaLabel: string = "Go to slide {0} of {1}";
 
   @Event() safetySliderNavigationClick: EventEmitter<number>;
 
@@ -18,6 +19,12 @@ export class SafetySliderDots {
     this.dotButtons = [];
     for (let i = 0; i < this.dotCount; i++)
       this.dotButtons.push(i);
+  }
+
+  private getFormattedAriaLabel(slideNumber: number) {
+    return this.dotAriaLabel
+      .replace('{0}', slideNumber)
+      .replace('{1}', this.dotCount);
   }
 
   private dotClick = (event: MouseEvent) => {
@@ -35,7 +42,7 @@ export class SafetySliderDots {
             type="button"
             disabled={i === this.activeDot}
             onClick={this.dotClick}
-            aria-label={`Go to slide ${i} of ${this.dotCount}`}
+            aria-label={this.getFormattedAriaLabel(i)}
             data-slide={i}
           >
           </button>
