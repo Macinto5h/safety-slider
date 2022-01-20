@@ -40,4 +40,17 @@ describe('safety-slider-dots', () => {
 
     expect(eventSpy).toHaveBeenCalledWith(1);
   });
+
+  it('should use the dot-aria-label property text for the dot button aria labels', async () => {
+    const dotCount = 3;
+    const ariaText = "alt {0} text {1}";
+    const page = await newSpecPage({
+      components: [SafetySliderDots],
+      html: `<safety-slider-dots dot-count="${dotCount}" dot-aria-label="${ariaText}"></safety-slider-dots>`
+    });
+
+    const dotBtn = page.root.querySelectorAll('button')[1];
+
+    expect(dotBtn.getAttribute('aria-label')).toEqual('alt 1 text ' + dotCount);
+  });
 });
