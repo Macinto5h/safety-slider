@@ -23,8 +23,8 @@ export class SafetySliderDots {
 
   private getFormattedAriaLabel(slideNumber: number) {
     return this.dotAriaLabel
-      .replace('{0}', slideNumber)
-      .replace('{1}', this.dotCount);
+      .replace('{0}', slideNumber.toString())
+      .replace('{1}', this.dotCount.toString());
   }
 
   private dotClick = (event: MouseEvent) => {

@@ -7,10 +7,13 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface SafetySlider {
+        "dotAriaLabel": string;
         "hasNoArrows": boolean;
         "hasNoDots": boolean;
         "isInfinite": boolean;
         "leftArrowInnerHTML": string;
+        "nextArrowAriaLabel": string;
+        "prevArrowAriaLabel": string;
         "rightArrowInnerHTML": string;
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
     }
@@ -67,10 +70,13 @@ declare global {
 }
 declare namespace LocalJSX {
     interface SafetySlider {
+        "dotAriaLabel"?: string;
         "hasNoArrows"?: boolean;
         "hasNoDots"?: boolean;
         "isInfinite"?: boolean;
         "leftArrowInnerHTML"?: string;
+        "nextArrowAriaLabel"?: string;
+        "prevArrowAriaLabel"?: string;
         "rightArrowInnerHTML"?: string;
     }
     interface SafetySliderArrows {

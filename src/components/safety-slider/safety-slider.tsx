@@ -18,6 +18,9 @@ export class SafetySlider {
   @Prop({attribute: 'no-arrows'}) readonly hasNoArrows: boolean;
   @Prop({attribute: 'no-dots'}) readonly hasNoDots: boolean;
   @Prop({attribute: 'right-arrow'}) readonly rightArrowInnerHTML: string = '→';
+  @Prop() readonly prevArrowAriaLabel: string;
+  @Prop() readonly nextArrowAriaLabel: string;
+  @Prop() readonly dotAriaLabel: string;
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
@@ -65,12 +68,18 @@ export class SafetySlider {
             activeSlide={this.activeSlide}
             prevArrowInnerHTML={this.leftArrowInnerHTML}
             nextArrowInnerHTML={this.rightArrowInnerHTML}
-            isInfinite={this.isInfinite}>
+            isInfinite={this.isInfinite}
+            prevAriaLabel={this.prevArrowAriaLabel}
+            nextAriaLabel={this.nextArrowAriaLabel}>
           </safety-slider-arrows>
         )}
 
         {this.slideCount > 1 && !this.hasNoDots && (
-          <safety-slider-dots activeDot={this.activeSlide} dotCount={this.slideCount}></safety-slider-dots>
+          <safety-slider-dots
+            activeDot={this.activeSlide}
+            dotCount={this.slideCount}
+            dotAriaLabel={this.dotAriaLabel}>
+          </safety-slider-dots>
         )}
       </Host>
     );
