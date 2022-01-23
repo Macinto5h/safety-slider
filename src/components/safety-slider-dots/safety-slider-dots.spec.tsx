@@ -51,6 +51,6 @@ describe('safety-slider-dots', () => {
 
     const dotBtn = page.root.querySelectorAll('button')[1];
 
-    expect(dotBtn.getAttribute('aria-label')).toEqual('alt 1 text ' + dotCount);
+    expect(dotBtn.getAttribute('aria-label')).toEqual('alt 2 text ' + dotCount);
   });
 });
