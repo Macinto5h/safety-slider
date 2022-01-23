@@ -1,0 +1,25 @@
+name: Stencil test
+
+on:
+  - pull_request
+
+jobs:
+  stencil-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 17.1.0
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Stencil test
+        run: npm run test
+
