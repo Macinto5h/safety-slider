@@ -42,7 +42,7 @@ export class SafetySliderDots {
             type="button"
             disabled={i === this.activeDot}
             onClick={this.dotClick}
-            aria-label={this.getFormattedAriaLabel(i)}
+            aria-label={this.getFormattedAriaLabel(i + 1)}
             data-slide={i}
           >
           </button>
