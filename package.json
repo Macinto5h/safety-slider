@@ -25,7 +25,8 @@
     "lint:css": "npx stylelint 'src/**/*.css'"
   },
   "dependencies": {
-    "@stencil/core": "2.7.0"
+    "@stencil/core": "2.7.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@stencil/eslint-plugin": "0.4.0",
