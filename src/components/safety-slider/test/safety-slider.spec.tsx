@@ -1,5 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { SafetySlider } from '../safety-slider';
+import { SLIDER_ID_PREFIX } from '../safety-slider.resources';
 
 describe('safety-slider', () => {
   describe('property tests', () => {
@@ -44,10 +45,9 @@ describe('safety-slider', () => {
 
       const safetySliderId = page.root.id;
       const uuidLength = 36;
-      const idPrefix = 'ss-';
 
-      expect(safetySliderId.startsWith(idPrefix)).toBeTruthy();
-      expect(safetySliderId.length).toEqual(idPrefix.length + uuidLength);
+      expect(safetySliderId.startsWith(SLIDER_ID_PREFIX)).toBeTruthy();
+      expect(safetySliderId.length).toEqual(SLIDER_ID_PREFIX.length + uuidLength);
     });
   });
 });

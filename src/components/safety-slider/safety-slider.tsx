@@ -1,5 +1,6 @@
 import { Component, Host, h, Element, Prop, Method, State, Listen } from '@stencil/core';
 import { v4 as uuidv4 } from 'uuid';
+import { SLIDER_ID_PREFIX } from './safety-slider.resources.ts';
 
 @Component({
   tag: 'safety-slider',
@@ -8,7 +9,6 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class SafetySlider {
 
-  private idPrefix: string = 'ss-';
   private uuid: string = uuidv4();
   private slideCount: number;
 
@@ -60,7 +60,7 @@ export class SafetySlider {
 
   render() {
     return (
-      <Host class="safety-slider" id={this.idPrefix + this.uuid}>
+      <Host class="safety-slider" id={SLIDER_ID_PREFIX + this.uuid}>
         <safety-slider-window activeSlide={this.activeSlide} isInfinite={this.isInfinite}>
           <slot></slot>
         </safety-slider-window>
