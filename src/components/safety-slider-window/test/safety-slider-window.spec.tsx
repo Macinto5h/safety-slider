@@ -2,6 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { SpecUtils } from '../../../utils/spec-utils';
 import { SafetySliderWindow } from '../safety-slider-window';
 import { SLIDE_CLASS_QUERY, SLIDE_CLONE_CLASS_QUERY } from '../safety-slider-window.constants';
+import { v4 as uuidv4 } from 'uuid';
 
 describe('safety-slider-window', () => {
 
@@ -61,5 +62,13 @@ describe('safety-slider-window', () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(2));
     const clones = page.root.querySelectorAll(SLIDE_CLONE_CLASS_QUERY);
     expect(clones.length).toEqual(0);
+  });
+
+  it('should add an id to the window using the uuid defined in the uuid property', async () => {
+    const uuid = uuidv4();
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(), `uuid="${uuid}"`);
+
+    const idPrefix = 'ssw-';
+    expect(page.root.id).toEqual(idPrefix + uuid);
   });
 });
