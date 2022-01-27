@@ -18,8 +18,10 @@ safety-slider-arrows {
   width: 2rem;
   height: 2rem;
   text-align: center;
+  cursor: pointer;
 }
 
 .safety-slider-arrow[disabled] {
   opacity: .5;
+  cursor: not-allowed;
 }

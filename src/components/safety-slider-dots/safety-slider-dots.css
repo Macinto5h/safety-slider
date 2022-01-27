@@ -18,8 +18,10 @@ safety-slider-dots {
   width: .5rem;
   height: .5rem;
   margin: auto .25rem 0;
+  cursor: pointer;
 }
 
 .dot[disabled] {
   opacity: .5;
+  cursor: not-allowed;
 }
