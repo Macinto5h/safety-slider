@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 import { WINDOW_ID_PREFIX } from '../safety-slider-window/safety-slider-window.resources';
+import { DOT_CLASS } from './safety-slider-dots.resources';
 
 @Component({
   tag: 'safety-slider-dots',
@@ -40,7 +41,7 @@ export class SafetySliderDots {
       <Host>
         {this.dotButtons.map((i) =>
           <button
-            class="dot"
+            class={DOT_CLASS}
             type="button"
             disabled={i === this.activeDot}
             onClick={this.dotClick}

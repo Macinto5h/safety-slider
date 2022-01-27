@@ -9,7 +9,7 @@ safety-slider-dots {
   text-align: center;
 }
 
-.dot {
+.safety-slider-dot {
   appearance: none;
   border: none;
   background-color: black;
@@ -21,7 +21,7 @@ safety-slider-dots {
   cursor: pointer;
 }
 
-.dot[disabled] {
+.safety-slider-dot[disabled] {
   opacity: .5;
   cursor: not-allowed;
 }
