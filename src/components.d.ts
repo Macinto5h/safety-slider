@@ -25,6 +25,7 @@ export namespace Components {
         "prevAriaLabel": string;
         "prevArrowInnerHTML": string;
         "slideCount": number;
+        "uuid": string;
     }
     interface SafetySliderDots {
         "activeDot": number;
@@ -90,6 +91,7 @@ declare namespace LocalJSX {
         "prevAriaLabel"?: string;
         "prevArrowInnerHTML"?: string;
         "slideCount"?: number;
+        "uuid"?: string;
     }
     interface SafetySliderDots {
         "activeDot"?: number;
