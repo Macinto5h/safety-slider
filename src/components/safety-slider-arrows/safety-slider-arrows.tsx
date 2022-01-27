@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { WINDOW_ID_PREFIX } from '../safety-slider-window/safety-slider-window.resources';
 
 @Component({
   tag: 'safety-slider-arrows',
@@ -14,6 +15,7 @@ export class SafetySliderArrows {
   @Prop() readonly isInfinite: boolean;
   @Prop() readonly prevAriaLabel: string = "Go to previous slide";
   @Prop() readonly nextAriaLabel: string = "Go to next slide";
+  @Prop() readonly uuid: string;
 
   @Event() safetySliderNavigationClick: EventEmitter<number>;
 
@@ -34,7 +36,8 @@ export class SafetySliderArrows {
           disabled={this.isInfinite ? false : this.activeSlide === 0}
           innerHTML={this.prevArrowInnerHTML}
           onClick={this.prevArrowClick}
-          aria-label={this.prevAriaLabel}>
+          aria-label={this.prevAriaLabel}
+          aria-controls={WINDOW_ID_PREFIX + this.uuid}>
         </button>
         <button
           class="safety-slider-arrow -next"
@@ -42,7 +45,8 @@ export class SafetySliderArrows {
           disabled={this.isInfinite ? false : this.activeSlide === this.slideCount - 1}
           innerHTML={this.nextArrowInnerHTML}
           onClick={this.nextArrowClick}
-          aria-label={this.nextAriaLabel}>
+          aria-label={this.nextAriaLabel}
+          aria-controls={WINDOW_ID_PREFIX + this.uuid}>
         </button>
       </Host>
     );
