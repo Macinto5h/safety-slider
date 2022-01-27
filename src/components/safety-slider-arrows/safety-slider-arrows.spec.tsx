@@ -1,5 +1,7 @@
 import { SpecUtils } from '../../utils/spec-utils';
 import { SafetySliderArrows } from './safety-slider-arrows';
+import { v4 as uuidv4 } from 'uuid';
+import { WINDOW_ID_PREFIX } from '../safety-slider-window/safety-slider-window.resources';
 
 describe('safety-slider-arrows', () => {
   it('should disable the previous slide arrow if activeSlide is zero and isInfinite is false', async () => {
@@ -111,4 +113,15 @@ describe('safety-slider-arrows', () => {
 
     expect(nextArrow.getAttribute('aria-label')).toEqual(nextAriaText);
   });
+
+  it('should add an aria-controls property to the previous and next arrows with the id of their associated window', async () => {
+    const uuid = uuidv4();
+    const page = await SpecUtils.buildArrowSpecPage(`uuid="${uuid}"`);
+
+    const prevArrow = SpecUtils.getPrevArrowElement(page);
+    const nextArrow = SpecUtils.getNextArrowElement(page);
+
+    expect(prevArrow.getAttribute('aria-controls')).toEqual(WINDOW_ID_PREFIX + uuid);
+    expect(nextArrow.getAttribute('aria-controls')).toEqual(WINDOW_ID_PREFIX + uuid);
+  })
 });
