@@ -1,6 +1,6 @@
 import { Component, Host, h, Element, Prop, Method, State, Listen } from '@stencil/core';
 import { v4 as uuidv4 } from 'uuid';
-import { SLIDER_ID_PREFIX } from './safety-slider.resources.ts';
+import { SLIDER_ID_PREFIX } from './safety-slider.resources';
 
 @Component({
   tag: 'safety-slider',
