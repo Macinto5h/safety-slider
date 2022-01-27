@@ -6,3 +6,4 @@ export const SLIDE_CLONE_CLASS = 'safety-slider-clone';
 export const SLIDE_CLONE_CLASS_QUERY = `.${SLIDE_CLONE_CLASS}`;
 export const SLIDE_TRACK_CLASS = 'safety-slider-track';
 export const SLIDE_TRACK_CLASS_QUERY = `.${SLIDE_TRACK_CLASS}`;
+export const WINDOW_ID_PREFIX = 'ssw-';

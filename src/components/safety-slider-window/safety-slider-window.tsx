@@ -1,5 +1,12 @@
 import { Component, Host, h, Element, Prop, Watch, State, Listen } from '@stencil/core';
-import { SLIDE_ACTIVE_CLASS, SLIDE_CLASS, SLIDE_CLASS_QUERY, SLIDE_CLONE_CLASS, SLIDE_TRACK_CLASS } from './safety-slider-window.constants';
+import {
+  SLIDE_ACTIVE_CLASS,
+  SLIDE_CLASS,
+  SLIDE_CLASS_QUERY,
+  SLIDE_CLONE_CLASS,
+  SLIDE_TRACK_CLASS,
+  WINDOW_ID_PREFIX
+} from './safety-slider-window.resources';
 
 @Component({
   tag: 'safety-slider-window',
@@ -16,7 +23,6 @@ export class SafetySliderWindow {
   private infiniteLoopToFront: boolean = false;
   private infiniteLoopToBack: boolean = false;
   private trackTransitionDuration: number = 250;
-  private idPrefix: string = 'ssw-';
 
   @Element() root: HTMLSafetySliderWindowElement;
 
@@ -87,7 +93,7 @@ export class SafetySliderWindow {
 
   render() {
     return (
-      <Host id={this.idPrefix + this.uuid} style={{
+      <Host id={WINDOW_ID_PREFIX + this.uuid} style={{
         '--safety-slider-view-width': this.rootWidth + 'px',
         '--safety-slider-view-offset': this.slidesOffset + 'px',
         '--safety-slider-window-transition-duration': this.trackTransitionDuration + 'ms'

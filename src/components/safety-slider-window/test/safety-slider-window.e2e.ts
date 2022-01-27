@@ -1,6 +1,6 @@
 import { E2EPage, newE2EPage } from '@stencil/core/testing';
 import { E2EUtils } from '../../../utils/e2e-utils';
-import { SLIDE_TRACK_CLASS_QUERY } from '../safety-slider-window.constants';
+import { SLIDE_TRACK_CLASS_QUERY } from '../safety-slider-window.resources';
 
 describe('safety-slider-window', () => {
   let page: E2EPage;
