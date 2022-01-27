@@ -30,6 +30,7 @@ export namespace Components {
         "activeDot": number;
         "dotAriaLabel": string;
         "dotCount": number;
+        "uuid": string;
     }
     interface SafetySliderWindow {
         "activeSlide": number;
@@ -95,6 +96,7 @@ declare namespace LocalJSX {
         "dotAriaLabel"?: string;
         "dotCount"?: number;
         "onSafetySliderNavigationClick"?: (event: CustomEvent<number>) => void;
+        "uuid"?: string;
     }
     interface SafetySliderWindow {
         "activeSlide"?: number;
