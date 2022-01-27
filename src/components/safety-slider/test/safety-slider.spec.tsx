@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { SafetySlider } from '../safety-slider';
 import { SLIDER_ID_PREFIX } from '../safety-slider.resources';
+import { v4 as uuidv4 } from 'uuid';
 
 describe('safety-slider', () => {
   describe('property tests', () => {
@@ -48,6 +49,26 @@ describe('safety-slider', () => {
 
       expect(safetySliderId.startsWith(SLIDER_ID_PREFIX)).toBeTruthy();
       expect(safetySliderId.length).toEqual(SLIDER_ID_PREFIX.length + uuidLength);
+    });
+
+    it('should set the uuid property of arrows, dots, and window to the same value', async () => {
+      const page = await newSpecPage({
+        components: [SafetySlider],
+        html:
+          `<safety-slider>
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+            <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          </safety-slider>`
+      });
+
+      const sliderWindow = page.root.querySelector('safety-slider-window');
+      const sliderDots = page.root.querySelector('safety-slider-dots');
+      const sliderArrows = page.root.querySelector('safety-slider-arrows');
+
+      expect(sliderWindow.getAttribute('uuid').length).toEqual(uuidv4().length);
+      expect(sliderWindow.getAttribute('uuid')).toEqual(sliderDots.getAttribute('uuid'));
+      expect(sliderWindow.getAttribute('uuid')).toEqual(sliderArrows.getAttribute('uuid'));
     });
   });
 });
