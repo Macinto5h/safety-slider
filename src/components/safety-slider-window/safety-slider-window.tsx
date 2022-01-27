@@ -16,6 +16,7 @@ export class SafetySliderWindow {
   private infiniteLoopToFront: boolean = false;
   private infiniteLoopToBack: boolean = false;
   private trackTransitionDuration: number = 250;
+  private idPrefix: string = 'ssw-';
 
   @Element() root: HTMLSafetySliderWindowElement;
 
@@ -23,6 +24,7 @@ export class SafetySliderWindow {
 
   @Prop() readonly activeSlide: number = 0;
   @Prop({reflect: true}) readonly isInfinite: boolean = false;
+  @Prop() readonly uuid: string;
 
   @Watch('activeSlide')
   activeSlideChanged(newActiveSlide: number, oldActiveSlide: number) {
@@ -85,7 +87,7 @@ export class SafetySliderWindow {
 
   render() {
     return (
-      <Host style={{
+      <Host id={this.idPrefix + this.uuid} style={{
         '--safety-slider-view-width': this.rootWidth + 'px',
         '--safety-slider-view-offset': this.slidesOffset + 'px',
         '--safety-slider-window-transition-duration': this.trackTransitionDuration + 'ms'

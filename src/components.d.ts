@@ -34,6 +34,7 @@ export namespace Components {
     interface SafetySliderWindow {
         "activeSlide": number;
         "isInfinite": boolean;
+        "uuid": string;
     }
 }
 declare global {
@@ -98,6 +99,7 @@ declare namespace LocalJSX {
     interface SafetySliderWindow {
         "activeSlide"?: number;
         "isInfinite"?: boolean;
+        "uuid"?: string;
     }
     interface IntrinsicElements {
         "safety-slider": SafetySlider;
