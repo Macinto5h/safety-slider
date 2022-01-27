@@ -20,9 +20,9 @@ export class SafetySliderWindow {
   private trackElement: HTMLDivElement;
   private beginningClone: string;
   private endingClone: string;
-  private infiniteLoopToFront: boolean = false;
-  private infiniteLoopToBack: boolean = false;
-  private trackTransitionDuration: number = 250;
+  private infiniteLoopToFront = false;
+  private infiniteLoopToBack = false;
+  private trackTransitionDuration = 250;
 
   @Element() root: HTMLSafetySliderWindowElement;
 
