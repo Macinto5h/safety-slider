@@ -1,6 +1,6 @@
 import { E2EPage, newE2EPage } from '@stencil/core/testing';
 import { E2EUtils } from '../../../utils/e2e-utils';
-import { SLIDE_TRACK_CLASS_QUERY } from '../safety-slider-window.resources';
+import { SLIDE_TRACK_CLASS_QUERY, SLIDE_CLASS_QUERY } from '../safety-slider-window.resources';
 
 describe('safety-slider-window', () => {
   let page: E2EPage;
@@ -64,7 +64,7 @@ describe('safety-slider-window', () => {
     });
 
     await page.waitForChanges();
-    const children = await page.findAll('.safety-slider__slide');
+    const children = await page.findAll(SLIDE_CLASS_QUERY);
 
     expect(children[0].classList.contains('-active')).toBeFalsy();
     expect(children[1].classList.contains('-active')).toBeTruthy();

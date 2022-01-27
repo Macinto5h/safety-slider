@@ -4,7 +4,8 @@ import { SafetySliderWindow } from '../safety-slider-window';
 import {
   SLIDE_CLASS_QUERY,
   SLIDE_CLONE_CLASS_QUERY,
-  WINDOW_ID_PREFIX
+  WINDOW_ID_PREFIX,
+  SLIDE_ACTIVE_CLASS_QUERY
 } from '../safety-slider-window.resources';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -22,7 +23,7 @@ describe('safety-slider-window', () => {
       html: `<safety-slider-window><img src="https://picsum.photos/100/"></safety-slider-window>`,
     });
 
-    expect(page.body.querySelector('.safety-slider__slide.-active')).not.toBeNull();
+    expect(page.body.querySelector(SLIDE_ACTIVE_CLASS_QUERY)).not.toBeNull();
   });
 
   it('should reassign the slide width when a window resize occurs', async () => {
