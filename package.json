@@ -63,7 +63,8 @@
       "plugin/no-unsupported-browser-features": [
         true,
         {
-          "ignorePartialSupport": true
+          "ignorePartialSupport": true,
+          "severity": "warning"
         }
       ],
       "number-leading-zero": "never",
