@@ -61,7 +61,7 @@ export class SafetySlider {
   render() {
     return (
       <Host class="safety-slider" id={SLIDER_ID_PREFIX + this.uuid}>
-        <safety-slider-window activeSlide={this.activeSlide} isInfinite={this.isInfinite}>
+        <safety-slider-window activeSlide={this.activeSlide} isInfinite={this.isInfinite} uuid={this.uuid}>
           <slot></slot>
         </safety-slider-window>
 
@@ -73,7 +73,8 @@ export class SafetySlider {
             nextArrowInnerHTML={this.rightArrowInnerHTML}
             isInfinite={this.isInfinite}
             prevAriaLabel={this.prevArrowAriaLabel}
-            nextAriaLabel={this.nextArrowAriaLabel}>
+            nextAriaLabel={this.nextArrowAriaLabel}
+            uuid={this.uuid}>
           </safety-slider-arrows>
         )}
 
@@ -81,7 +82,8 @@ export class SafetySlider {
           <safety-slider-dots
             activeDot={this.activeSlide}
             dotCount={this.slideCount}
-            dotAriaLabel={this.dotAriaLabel}>
+            dotAriaLabel={this.dotAriaLabel}
+            uuid={this.uuid}>
           </safety-slider-dots>
         )}
       </Host>
