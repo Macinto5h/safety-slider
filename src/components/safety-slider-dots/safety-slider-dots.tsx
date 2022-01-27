@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { WINDOW_ID_PREFIX } from '../safety-slider-window/safety-slider-window.resources';
 
 @Component({
   tag: 'safety-slider-dots',
@@ -12,6 +13,7 @@ export class SafetySliderDots {
   @Prop() readonly activeDot: number
   @Prop() readonly dotCount: number;
   @Prop() readonly dotAriaLabel: string = "Go to slide {0} of {1}";
+  @Prop() readonly uuid: string;
 
   @Event() safetySliderNavigationClick: EventEmitter<number>;
 
@@ -43,6 +45,7 @@ export class SafetySliderDots {
             disabled={i === this.activeDot}
             onClick={this.dotClick}
             aria-label={this.getFormattedAriaLabel(i + 1)}
+            aria-controls={WINDOW_ID_PREFIX + this.uuid}
             data-slide={i}
           >
           </button>
