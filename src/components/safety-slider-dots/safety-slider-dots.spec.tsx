@@ -1,5 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { SafetySliderDots } from './safety-slider-dots';
+import { SpecUtils } from '../../utils/spec-utils';
+import { v4 as uuidv4 } from 'uuid';
+import { WINDOW_ID_PREFIX } from '../safety-slider-window/safety-slider-window.resources';
 
 describe('safety-slider-dots', () => {
   it('renders a number of dot buttons based on the value passed to dotCount', async () => {
@@ -52,5 +55,14 @@ describe('safety-slider-dots', () => {
     const dotBtn = page.root.querySelectorAll('button')[1];
 
     expect(dotBtn.getAttribute('aria-label')).toEqual('alt 2 text ' + dotCount);
+  });
+
+  it('should have an aria-controls property on each button with the id of the associated window', async () => {
+    const uuid = uuidv4();
+    const page = await SpecUtils.buildDotSpecPage(`uuid=${uuid} dot-count="3"`);
+
+    const dotBtn = page.root.querySelectorAll('button')[0];
+
+    expect(dotBtn.getAttribute('aria-controls')).toEqual(WINDOW_ID_PREFIX + uuid);
   });
 });

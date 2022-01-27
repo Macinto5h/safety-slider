@@ -1,5 +1,6 @@
 import { newSpecPage } from "@stencil/core/testing";
 import { SafetySliderArrows } from "../components/safety-slider-arrows/safety-slider-arrows";
+import { SafetySliderDots } from "../components/safety-slider-dots/safety-slider-dots";
 import { SafetySliderWindow } from "../components/safety-slider-window/safety-slider-window";
 
 export class SpecUtils {
@@ -8,6 +9,13 @@ export class SpecUtils {
     return newSpecPage({
       components: [SafetySliderArrows],
       html: `<safety-slider-arrows ${properties}></safety-slider-arrows>`
+    });
+  }
+
+  static buildDotSpecPage(properties = '') {
+    return newSpecPage({
+      components: [SafetySliderDots],
+      html: `<safety-slider-dots ${properties}></safety-slider-dots>`
     });
   }
 
