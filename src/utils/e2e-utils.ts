@@ -1,4 +1,5 @@
 import { E2EPage } from "@stencil/core/testing";
+import { SLIDE_ACTIVE_CLASS_QUERY } from '../components/safety-slider-window/safety-slider-window.resources';
 
 export class E2EUtils {
 
@@ -7,7 +8,7 @@ export class E2EUtils {
   }
 
   static getActiveSlideElement(page: E2EPage) {
-    return page.find('.safety-slider__slide.-active');
+    return page.find(SLIDE_ACTIVE_CLASS_QUERY);
   }
 
   static getWindowElement(page: E2EPage) {

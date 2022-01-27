@@ -16,6 +16,6 @@ safety-slider-window {
   transform: translateX(var(--safety-slider-view-offset));
 }
 
-.safety-slider__slide {
+.safety-slider-slide {
   min-width: var(--safety-slider-view-width);
 }

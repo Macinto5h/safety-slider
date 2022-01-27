@@ -1,4 +1,4 @@
-export const SLIDE_CLASS = 'safety-slider__slide';
+export const SLIDE_CLASS = 'safety-slider-slide';
 export const SLIDE_CLASS_QUERY = `.${SLIDE_CLASS}`;
 export const SLIDE_ACTIVE_CLASS = '-active';
 export const SLIDE_ACTIVE_CLASS_QUERY = `${SLIDE_CLASS_QUERY}.${SLIDE_ACTIVE_CLASS}`;
