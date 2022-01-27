@@ -7,3 +7,6 @@ export const SLIDE_CLONE_CLASS_QUERY = `.${SLIDE_CLONE_CLASS}`;
 export const SLIDE_TRACK_CLASS = 'safety-slider-track';
 export const SLIDE_TRACK_CLASS_QUERY = `.${SLIDE_TRACK_CLASS}`;
 export const WINDOW_ID_PREFIX = 'ssw-';
+export const TRACK_TRANSITION_DURATION_CSS_VAR = '--safety-slider-track-transition-duration';
+export const TRACK_OFFSET_CSS_VAR = '--safety-slider-track-offset';
+export const WINDOW_WIDTH_CSS_VAR = '--safety-slider-window-width';

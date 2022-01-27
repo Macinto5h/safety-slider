@@ -5,7 +5,10 @@ import {
   SLIDE_CLASS_QUERY,
   SLIDE_CLONE_CLASS,
   SLIDE_TRACK_CLASS,
-  WINDOW_ID_PREFIX
+  WINDOW_ID_PREFIX,
+  TRACK_TRANSITION_DURATION_CSS_VAR,
+  TRACK_OFFSET_CSS_VAR,
+  WINDOW_WIDTH_CSS_VAR
 } from './safety-slider-window.resources';
 
 @Component({
@@ -65,10 +68,10 @@ export class SafetySliderWindow {
   componentDidUpdate() {
     if (this.infiniteLoopToFront || this.infiniteLoopToBack) {
       setTimeout(() => {
-        this.root.style.setProperty('--safety-slider-window-transition-duration', `0ms`);
-        this.root.style.setProperty('--safety-slider-view-offset', `${this.rootWidth * (this.activeSlide + 1) * -1}px`);
+        this.root.style.setProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `0ms`);
+        this.root.style.setProperty(TRACK_OFFSET_CSS_VAR, `${this.rootWidth * (this.activeSlide + 1) * -1}px`);
         setTimeout(() => {
-          this.root.style.setProperty('--safety-slider-window-transition-duration', `${this.trackTransitionDuration}ms`);
+          this.root.style.setProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
         }, this.trackTransitionDuration);
       }, this.trackTransitionDuration);
     }
@@ -94,9 +97,9 @@ export class SafetySliderWindow {
   render() {
     return (
       <Host id={WINDOW_ID_PREFIX + this.uuid} style={{
-        '--safety-slider-view-width': this.rootWidth + 'px',
-        '--safety-slider-view-offset': this.slidesOffset + 'px',
-        '--safety-slider-window-transition-duration': this.trackTransitionDuration + 'ms'
+        [WINDOW_WIDTH_CSS_VAR]: this.rootWidth + 'px',
+        [TRACK_OFFSET_CSS_VAR]: this.slidesOffset + 'px',
+        [TRACK_TRANSITION_DURATION_CSS_VAR]: this.trackTransitionDuration + 'ms'
         }}>
         <div class={SLIDE_TRACK_CLASS} ref={(el) => this.trackElement = el as HTMLDivElement}>
           {this.isInfinite && this.slideCount > 1 && (
