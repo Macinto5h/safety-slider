@@ -12,10 +12,10 @@ safety-slider-window {
   z-index: 0;
   display: flex;
   box-sizing: border-box;
-  transition: transform var(--safety-slider-window-transition-duration) ease;
-  transform: translateX(var(--safety-slider-view-offset));
+  transition: transform var(--safety-slider-track-transition-duration) ease;
+  transform: translateX(var(--safety-slider-track-offset));
 }
 
 .safety-slider-slide {
-  min-width: var(--safety-slider-view-width);
+  min-width: var(--safety-slider-window-width);
 }
