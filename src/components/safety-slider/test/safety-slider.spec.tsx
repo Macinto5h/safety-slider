@@ -71,4 +71,57 @@ describe('safety-slider', () => {
       expect(sliderWindow.getAttribute('uuid')).toEqual(sliderArrows.getAttribute('uuid'));
     });
   });
+
+  it('should change the active slide when setActiveSlide is called', async () => {
+    const page = await newSpecPage({
+      components: [SafetySlider],
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>`
+    });
+
+    const safetySlider = page.rootInstance;
+    safetySlider.setActiveSlide(1);
+
+    await page.waitForChanges();
+
+    expect(safetySlider.activeSlide).toEqual(1);
+  });
+
+  it('should render with no dots and arrows if only one item is provided', async () => {
+    const page = await newSpecPage({
+      components: [SafetySlider],
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100/ alt="Randomly generated image">
+        </safety-slider>`
+    });
+
+    const arrows = page.root.querySelector('safety-slider-arrows');
+    const dots = page.root.querySelector('safety-slider-dots');
+
+    expect(arrows).toBeNull();
+    expect(dots).toBeNull();
+  });
+
+  it('should render with dots and arrows if there are more than one items in the slot', async () => {
+    const page = await newSpecPage({
+      components: [SafetySlider],
+      html:
+        `<safety-slider>
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+          <img src="https://picsum.photos/100/100" alt="Randomly generated image">
+        </safety-slider>`
+    });
+
+    const arrows = page.root.querySelector('safety-slider-arrows');
+    const dots = page.root.querySelector('safety-slider-dots');
+
+    expect(arrows).not.toBeNull();
+    expect(dots).not.toBeNull();
+  });
 });
