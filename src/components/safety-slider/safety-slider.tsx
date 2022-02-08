@@ -17,10 +17,10 @@ export class SafetySlider {
   @State() activeSlide = 0;
 
   @Prop({attribute: 'infinite'}) readonly isInfinite: boolean;
-  @Prop({attribute: 'left-arrow'}) readonly leftArrowInnerHTML: string = '←';
+  @Prop({attribute: 'prev-arrow'}) readonly prevArrowInnerHTML: string = '←';
   @Prop({attribute: 'no-arrows'}) readonly hasNoArrows: boolean;
   @Prop({attribute: 'no-dots'}) readonly hasNoDots: boolean;
-  @Prop({attribute: 'right-arrow'}) readonly rightArrowInnerHTML: string = '→';
+  @Prop({attribute: 'next-arrow'}) readonly nextArrowInnerHTML: string = '→';
   @Prop() readonly prevArrowAriaLabel: string;
   @Prop() readonly nextArrowAriaLabel: string;
   @Prop() readonly dotAriaLabel: string;
@@ -69,8 +69,8 @@ export class SafetySlider {
           <safety-slider-arrows
             slideCount={this.slideCount}
             activeSlide={this.activeSlide}
-            prevArrowInnerHTML={this.leftArrowInnerHTML}
-            nextArrowInnerHTML={this.rightArrowInnerHTML}
+            prevArrowInnerHTML={this.prevArrowInnerHTML}
+            nextArrowInnerHTML={this.nextArrowInnerHTML}
             isInfinite={this.isInfinite}
             prevAriaLabel={this.prevArrowAriaLabel}
             nextAriaLabel={this.nextArrowAriaLabel}

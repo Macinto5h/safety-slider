@@ -11,10 +11,10 @@ export namespace Components {
         "hasNoArrows": boolean;
         "hasNoDots": boolean;
         "isInfinite": boolean;
-        "leftArrowInnerHTML": string;
         "nextArrowAriaLabel": string;
+        "nextArrowInnerHTML": string;
         "prevArrowAriaLabel": string;
-        "rightArrowInnerHTML": string;
+        "prevArrowInnerHTML": string;
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
     }
     interface SafetySliderArrows {
@@ -77,10 +77,10 @@ declare namespace LocalJSX {
         "hasNoArrows"?: boolean;
         "hasNoDots"?: boolean;
         "isInfinite"?: boolean;
-        "leftArrowInnerHTML"?: string;
         "nextArrowAriaLabel"?: string;
+        "nextArrowInnerHTML"?: string;
         "prevArrowAriaLabel"?: string;
-        "rightArrowInnerHTML"?: string;
+        "prevArrowInnerHTML"?: string;
     }
     interface SafetySliderArrows {
         "activeSlide"?: number;
