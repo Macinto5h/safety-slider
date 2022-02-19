@@ -103,6 +103,8 @@ declare namespace LocalJSX {
     interface SafetySliderWindow {
         "activeSlide"?: number;
         "isInfinite"?: boolean;
+        "onSafetySliderApplyTransitionDuration"?: (event: CustomEvent<any>) => void;
+        "onSafetySliderInfiniteLoopAdjustment"?: (event: CustomEvent<any>) => void;
         "uuid"?: string;
     }
     interface IntrinsicElements {
