@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, Prop, Watch, State, Listen } from '@stencil/core';
+import { Component, Host, h, Element, Prop, Watch, State, Listen, Event, EventEmitter } from '@stencil/core';
 import {
   SLIDE_ACTIVE_CLASS,
   SLIDE_CLASS,
@@ -37,26 +37,21 @@ export class SafetySliderWindow {
 
   @Watch('activeSlide')
   activeSlideChanged(newActiveSlide: number, oldActiveSlide: number) {
-    this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY)[oldActiveSlide].classList.remove(SLIDE_ACTIVE_CLASS);
-    this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY)[newActiveSlide].classList.add(SLIDE_ACTIVE_CLASS);
-    this.infiniteLoopToFront = this.isInfinite
-      && newActiveSlide === 0
-      && oldActiveSlide === this.slideCount - 1;
-    this.infiniteLoopToBack = this.isInfinite
-      && newActiveSlide === this.slideCount - 1
-      && oldActiveSlide === 0;
+    this.moveActiveSlideClass(newActiveSlide, oldActiveSlide);
+    this.setInfiniteLoopToFront(newActiveSlide, oldActiveSlide);
+    this.setInfiniteLoopToBack(newActiveSlide, oldActiveSlide);
   }
+  
+  @Event() safetySliderInfiniteLoopAdjustment: EventEmitter;
+  @Event() safetySliderApplyTransitionDuration: EventEmitter;
 
   componentWillRender() {
-    this.rootWidth = this.root.offsetWidth;
     this.slidesOffset = this.calculateTrackOffset();
   }
 
   componentWillLoad() {
     const slides = Array.from(this.root.children) as HTMLElement[];
-
     slides.forEach(slide => slide.classList.add(SLIDE_CLASS));
-
     slides[this.activeSlide]?.classList.add(SLIDE_ACTIVE_CLASS);
 
     this.rootWidth = this.root.offsetWidth;
@@ -67,19 +62,26 @@ export class SafetySliderWindow {
 
   componentDidUpdate() {
     if (this.infiniteLoopToFront || this.infiniteLoopToBack) {
-      setTimeout(() => {
-        this.root.style.setProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `0ms`);
-        this.root.style.setProperty(TRACK_OFFSET_CSS_VAR, `${this.rootWidth * (this.activeSlide + 1) * -1}px`);
-        setTimeout(() => {
-          this.root.style.setProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
-        }, this.trackTransitionDuration);
-      }, this.trackTransitionDuration);
+      setTimeout(() => this.safetySliderInfiniteLoopAdjustment.emit(), this.trackTransitionDuration);
     }
   }
 
   @Listen('resize', {target: 'window'})
   windowResizeHandler() {
     this.rootWidth = this.root.offsetWidth;
+  }
+  
+  @Listen('safetySliderInfiniteLoopAdjustment')
+  infiniteLoopAdjustmentHandler() {
+    this.setCSSProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `0ms`);
+    this.setCSSProperty(TRACK_OFFSET_CSS_VAR, `${this.rootWidth * (this.activeSlide + 1) * -1}px`);
+    
+    setTimeout(() => this.safetySliderApplyTransitionDuration.emit(), this.trackTransitionDuration);
+  }
+  
+  @Listen('safetySliderApplyTransitionDuration')
+  applyTransitionDurationHandler() {
+    this.setCSSProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
   }
 
   private calculateTrackOffset() {
@@ -92,6 +94,27 @@ export class SafetySliderWindow {
     } else {
       return this.rootWidth * this.activeSlide * -1;
     }
+  }
+  
+  private setCSSProperty(key: string, value: string) {
+    this.root.style.setProperty(key, value);
+  }
+  
+  private setInfiniteLoopToFront(newActiveSlide: number, oldActiveSlide: number) {
+    this.infiniteLoopToFront = this.isInfinite
+      && newActiveSlide === 0
+      && oldActiveSlide === this.slideCount - 1;
+  }
+  
+  private setInfiniteLoopToBack(newActiveSlide: number, oldActiveSlide: number) {
+    this.infiniteLoopToBack = this.isInfinite
+      && newActiveSlide === this.slideCount - 1
+      && oldActiveSlide === 0;
+  }
+  
+  private moveActiveSlideClass(newActiveSlide: number, oldActiveSlide: number) {
+    this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY)[oldActiveSlide].classList.remove(SLIDE_ACTIVE_CLASS);
+    this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY)[newActiveSlide].classList.add(SLIDE_ACTIVE_CLASS);
   }
 
   render() {

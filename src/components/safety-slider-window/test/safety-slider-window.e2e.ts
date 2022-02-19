@@ -69,4 +69,36 @@ describe('safety-slider-window', () => {
     expect(children[0].classList.contains('-active')).toBeFalsy();
     expect(children[1].classList.contains('-active')).toBeTruthy();
   });
+
+  it('should emit the infinite slider adjustment events when moving from the last slide to the first slide', async () => {
+    await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100"><img src="https://picsum.photos/100"><img src="https://picsum.photos/100">', 'is-infinite active-slide="2"');
+    const window = await page.find('safety-slider-window');
+
+    const cloneShiftEventSpy = await window.spyOnEvent('safetySliderInfiniteLoopAdjustment');
+    const applyDurationEventSpy = await window.spyOnEvent('safetySliderApplyTransitionDuration');
+
+    window.setProperty('activeSlide', 0);
+
+    await page.waitForChanges();
+    await page.waitForTimeout(500);
+
+    expect(cloneShiftEventSpy).toHaveReceivedEventTimes(1);
+    expect(cloneShiftEventSpy).toHaveReceivedEventTimes(1);
+  });
+
+  it('should emit the infinite slider adjustment events when moving from the first slide to the last slide', async () => {
+    await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100"><img src="https://picsum.photos/100"><img src="https://picsum.photos/100">', 'is-infinite');
+    const window = await page.find('safety-slider-window');
+
+    const cloneShiftEventSpy = await window.spyOnEvent('safetySliderInfiniteLoopAdjustment');
+    const applyDurationEventSpy = await window.spyOnEvent('safetySliderApplyTransitionDuration');
+
+    window.setProperty('activeSlide', 2);
+
+    await page.waitForChanges();
+    await page.waitForTimeout(500);
+
+    expect(cloneShiftEventSpy).toHaveReceivedEventTimes(1);
+    expect(cloneShiftEventSpy).toHaveReceivedEventTimes(1);
+  });
 });
