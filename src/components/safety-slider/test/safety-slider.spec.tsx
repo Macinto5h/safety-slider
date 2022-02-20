@@ -1,5 +1,3 @@
-import { newSpecPage } from '@stencil/core/testing';
-import { SafetySlider } from '../safety-slider';
 import { SLIDER_ID_PREFIX } from '../safety-slider.resources';
 import { v4 as uuidv4 } from 'uuid';
 import { SpecUtils } from '../../../utils/spec-utils';

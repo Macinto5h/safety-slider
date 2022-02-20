@@ -1,4 +1,3 @@
-import { newSpecPage } from '@stencil/core/testing';
 import { SafetySliderDots } from '../safety-slider-dots';
 import { SpecUtils } from '../../../utils/spec-utils';
 import { v4 as uuidv4 } from 'uuid';

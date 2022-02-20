@@ -82,7 +82,7 @@ describe('safety-slider-window', () => {
     await page.waitForTimeout(500);
 
     expect(cloneShiftEventSpy).toHaveReceivedEventTimes(1);
-    expect(cloneShiftEventSpy).toHaveReceivedEventTimes(1);
+    expect(applyDurationEventSpy).toHaveReceivedEventTimes(1);
   });
 
   it('should emit the infinite slider adjustment events when moving from the first slide to the last slide', async () => {
@@ -98,6 +98,6 @@ describe('safety-slider-window', () => {
     await page.waitForTimeout(500);
 
     expect(cloneShiftEventSpy).toHaveReceivedEventTimes(1);
-    expect(cloneShiftEventSpy).toHaveReceivedEventTimes(1);
+    expect(applyDurationEventSpy).toHaveReceivedEventTimes(1);
   });
 });
