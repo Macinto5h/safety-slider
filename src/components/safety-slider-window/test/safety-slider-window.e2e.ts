@@ -1,6 +1,6 @@
 import { E2EPage, newE2EPage } from '@stencil/core/testing';
 import { E2EUtils } from '../../../utils/e2e-utils';
-import { SLIDE_TRACK_CLASS_QUERY, SLIDE_CLASS_QUERY } from '../safety-slider-window.resources';
+import { SLIDE_TRACK_CLASS_QUERY, SLIDE_CLASS_QUERY, SLIDE_ACTIVE_CLASS } from '../safety-slider-window.resources';
 
 describe('safety-slider-window', () => {
   let page: E2EPage;
@@ -10,7 +10,7 @@ describe('safety-slider-window', () => {
   });
 
   it('should assign the slide the same width as the window element', async () => {
-    await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100/">');
+    await E2EUtils.setWindowContent(page, E2EUtils.buildWindowContent(1));
 
     await page.waitForChanges();
 
@@ -24,7 +24,7 @@ describe('safety-slider-window', () => {
   });
 
   it('should translate safety-slider-track to the position of the active slide', async () => {
-    await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100"><img src="https://picsum.photos/100">');
+    await E2EUtils.setWindowContent(page, E2EUtils.buildWindowContent(2));
 
     const windowElement = await E2EUtils.getWindowElement(page);
     const slidesElement = await windowElement.find(SLIDE_TRACK_CLASS_QUERY);
@@ -42,7 +42,7 @@ describe('safety-slider-window', () => {
   });
 
   it('should translate safety-slider-track to the position of the active slide when considering clone elements', async () => {
-    await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100"><img src="https://picsum.photos/100">', 'is-infinite');
+    await E2EUtils.setWindowContent(page, E2EUtils.buildWindowContent(2), 'is-infinite');
 
     const windowElement = await E2EUtils.getWindowElement(page);
     const slidesElement = await windowElement.find(SLIDE_TRACK_CLASS_QUERY);
@@ -56,8 +56,7 @@ describe('safety-slider-window', () => {
   });
 
   it('should change the assigned active class when a value is passed to the property', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<safety-slider-window><img src="https://picsum.photos/100/"><img src="https://picsum.photos/100/"></safety-slider-window>');
+    await E2EUtils.setWindowContent(page, E2EUtils.buildWindowContent(2));
 
     await page.$eval('safety-slider-window', (elm: HTMLSafetySliderWindowElement) => {
       elm.activeSlide = 1;
@@ -66,12 +65,12 @@ describe('safety-slider-window', () => {
     await page.waitForChanges();
     const children = await page.findAll(SLIDE_CLASS_QUERY);
 
-    expect(children[0].classList.contains('-active')).toBeFalsy();
-    expect(children[1].classList.contains('-active')).toBeTruthy();
+    expect(children[0].classList.contains(SLIDE_ACTIVE_CLASS)).toBeFalsy();
+    expect(children[1].classList.contains(SLIDE_ACTIVE_CLASS)).toBeTruthy();
   });
 
   it('should emit the infinite slider adjustment events when moving from the last slide to the first slide', async () => {
-    await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100"><img src="https://picsum.photos/100"><img src="https://picsum.photos/100">', 'is-infinite active-slide="2"');
+    await E2EUtils.setWindowContent(page, E2EUtils.buildWindowContent(3), 'is-infinite active-slide="2"');
     const window = await page.find('safety-slider-window');
 
     const cloneShiftEventSpy = await window.spyOnEvent('safetySliderInfiniteLoopAdjustment');
@@ -87,7 +86,7 @@ describe('safety-slider-window', () => {
   });
 
   it('should emit the infinite slider adjustment events when moving from the first slide to the last slide', async () => {
-    await E2EUtils.setWindowContent(page, '<img src="https://picsum.photos/100"><img src="https://picsum.photos/100"><img src="https://picsum.photos/100">', 'is-infinite');
+    await E2EUtils.setWindowContent(page, E2EUtils.buildWindowContent(3), 'is-infinite');
     const window = await page.find('safety-slider-window');
 
     const cloneShiftEventSpy = await window.spyOnEvent('safetySliderInfiniteLoopAdjustment');

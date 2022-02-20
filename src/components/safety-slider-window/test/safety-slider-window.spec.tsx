@@ -18,19 +18,13 @@ describe('safety-slider-window', () => {
   });
 
   it('should render slot content with slide classes', async () => {
-    const page = await newSpecPage({
-      components: [SafetySliderWindow],
-      html: `<safety-slider-window><img src="https://picsum.photos/100/"></safety-slider-window>`,
-    });
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
 
     expect(page.body.querySelector(SLIDE_ACTIVE_CLASS_QUERY)).not.toBeNull();
   });
 
   it('should reassign the slide width when a window resize occurs', async () => {
-    const page = await newSpecPage({
-      components: [SafetySliderWindow],
-      html: `<safety-slider-window><img src="https://picsum.photos/100/"></safety-slider-window>`,
-    });
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
 
     const component: SafetySliderWindow = page.rootInstance;
     const windowWidth = 375;
