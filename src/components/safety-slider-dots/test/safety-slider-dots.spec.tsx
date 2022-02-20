@@ -1,15 +1,12 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { SafetySliderDots } from './safety-slider-dots';
-import { SpecUtils } from '../../utils/spec-utils';
+import { SafetySliderDots } from '../safety-slider-dots';
+import { SpecUtils } from '../../../utils/spec-utils';
 import { v4 as uuidv4 } from 'uuid';
-import { WINDOW_ID_PREFIX } from '../safety-slider-window/safety-slider-window.resources';
+import { WINDOW_ID_PREFIX } from '../../safety-slider-window/safety-slider-window.resources';
 
 describe('safety-slider-dots', () => {
   it('renders a number of dot buttons based on the value passed to dotCount', async () => {
-    const page = await newSpecPage({
-      components: [SafetySliderDots],
-      html: `<safety-slider-dots dot-count="3"></safety-slider-dots>`,
-    });
+    const page = await SpecUtils.buildDotSpecPage(`dot-count="3"`);
 
     const dotBtns = page.root.querySelectorAll('button');
 
@@ -17,10 +14,7 @@ describe('safety-slider-dots', () => {
   });
 
   it('renders the dot button representing the active slide as disabled', async () => {
-    const page = await newSpecPage({
-      components: [SafetySliderDots],
-      html: `<safety-slider-dots active-dot="1" dot-count="3"></safety-slider-dots>`,
-    });
+    const page = await SpecUtils.buildDotSpecPage(`active-dot="1" dot-count="3"`);
 
     const secondDotBtn = page.root.querySelectorAll('button')[1] as HTMLButtonElement;
 
@@ -28,10 +22,7 @@ describe('safety-slider-dots', () => {
   });
 
   it('should emit the safetySliderNavigationClick event when a dot is clicked', async () => {
-    const page = await newSpecPage({
-      components: [SafetySliderDots],
-      html: `<safety-slider-dots dot-count="3"></safety-slider-dots>`
-    });
+    const page = await SpecUtils.buildDotSpecPage(`dot-count="3"`);
 
     const dotInstance: SafetySliderDots = page.rootInstance;
     const eventSpy = jest.spyOn(dotInstance.safetySliderNavigationClick, 'emit');
@@ -47,10 +38,7 @@ describe('safety-slider-dots', () => {
   it('should use the dot-aria-label property text for the dot button aria labels', async () => {
     const dotCount = 3;
     const ariaText = "alt {0} text {1}";
-    const page = await newSpecPage({
-      components: [SafetySliderDots],
-      html: `<safety-slider-dots dot-count="${dotCount}" dot-aria-label="${ariaText}"></safety-slider-dots>`
-    });
+    const page = await SpecUtils.buildDotSpecPage(`dot-count="${dotCount}" dot-aria-label="${ariaText}"`);
 
     const dotBtn = page.root.querySelectorAll('button')[1];
 

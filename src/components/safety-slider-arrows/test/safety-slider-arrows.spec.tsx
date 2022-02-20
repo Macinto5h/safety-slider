@@ -1,7 +1,7 @@
-import { SpecUtils } from '../../utils/spec-utils';
-import { SafetySliderArrows } from './safety-slider-arrows';
+import { SpecUtils } from '../../../utils/spec-utils';
+import { SafetySliderArrows } from '../safety-slider-arrows';
 import { v4 as uuidv4 } from 'uuid';
-import { WINDOW_ID_PREFIX } from '../safety-slider-window/safety-slider-window.resources';
+import { WINDOW_ID_PREFIX } from '../../safety-slider-window/safety-slider-window.resources';
 
 describe('safety-slider-arrows', () => {
   it('should disable the previous slide button if activeSlide is zero and isInfinite is false', async () => {

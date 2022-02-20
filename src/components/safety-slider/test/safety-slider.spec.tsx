@@ -39,7 +39,7 @@ describe('safety-slider', () => {
   });
 
   it('should change the active slide when setActiveSlide is called', async () => {
-    const page = await SpecUtils.buildSliderSpecPage(SpecUtils.buildRandomSlotData());
+    const page = await SpecUtils.buildSliderSpecPage(SpecUtils.buildRandomSlotData(2));
 
     const safetySlider = page.rootInstance;
     safetySlider.setActiveSlide(1);
