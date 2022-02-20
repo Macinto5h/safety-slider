@@ -1,4 +1,3 @@
-import { newSpecPage } from '@stencil/core/testing';
 import { SpecUtils } from '../../../utils/spec-utils';
 import { SafetySliderWindow } from '../safety-slider-window';
 import {
