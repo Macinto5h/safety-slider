@@ -49,7 +49,7 @@ export class SpecUtils {
   }
 
   static getDotsComponent(page) {
-    return page.root.querySelector(DOTS_COMPONENT_QUERY)
+    return page.root.querySelector(DOTS_COMPONENT_QUERY);
   }
 
   static getNextArrowElement(page) {
