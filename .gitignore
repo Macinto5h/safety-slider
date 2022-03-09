@@ -1,7 +1,4 @@
 coverage/
-dist/
-www/
-loader/
 
 *~
 *.sw[mnpcod]

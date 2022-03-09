@@ -1,0 +1,31 @@
+import { EventEmitter } from '../../stencil-public-runtime';
+export declare class SafetySliderWindow {
+  private slidesOffset;
+  private slideCount;
+  private trackElement;
+  private beginningClone;
+  private endingClone;
+  private infiniteLoopToFront;
+  private infiniteLoopToBack;
+  private trackTransitionDuration;
+  root: HTMLSafetySliderWindowElement;
+  rootWidth: number;
+  readonly activeSlide: number;
+  readonly isInfinite: boolean;
+  readonly uuid: string;
+  activeSlideChanged(newActiveSlide: number, oldActiveSlide: number): void;
+  safetySliderInfiniteLoopAdjustment: EventEmitter;
+  safetySliderApplyTransitionDuration: EventEmitter;
+  componentWillRender(): void;
+  componentWillLoad(): void;
+  componentDidUpdate(): void;
+  windowResizeHandler(): void;
+  infiniteLoopAdjustmentHandler(): void;
+  applyTransitionDurationHandler(): void;
+  private calculateTrackOffset;
+  private setCSSProperty;
+  private setInfiniteLoopToFront;
+  private setInfiniteLoopToBack;
+  private moveActiveSlideClass;
+  render(): any;
+}
