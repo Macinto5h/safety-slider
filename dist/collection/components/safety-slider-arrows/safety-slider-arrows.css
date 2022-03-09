@@ -1,0 +1,29 @@
+safety-slider-arrows {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+}
+
+.safety-slider-arrow {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: 1px solid black;
+  background-color: white;
+  padding: 0;
+  color: black;
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.safety-slider-arrow[disabled] {
+  opacity: .5;
+  cursor: not-allowed;
+}

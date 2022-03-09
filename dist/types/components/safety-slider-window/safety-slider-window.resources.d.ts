@@ -1,0 +1,13 @@
+export declare const SLIDE_CLASS = "safety-slider-slide";
+export declare const SLIDE_CLASS_QUERY: string;
+export declare const SLIDE_ACTIVE_CLASS = "-active";
+export declare const SLIDE_ACTIVE_CLASS_QUERY: string;
+export declare const SLIDE_CLONE_CLASS = "safety-slider-clone";
+export declare const SLIDE_CLONE_CLASS_QUERY: string;
+export declare const SLIDE_TRACK_CLASS = "safety-slider-track";
+export declare const SLIDE_TRACK_CLASS_QUERY: string;
+export declare const TRACK_TRANSITION_DURATION_CSS_VAR = "--safety-slider-track-transition-duration";
+export declare const TRACK_OFFSET_CSS_VAR = "--safety-slider-track-offset";
+export declare const WINDOW_COMPONENT_QUERY = "safety-slider-window";
+export declare const WINDOW_ID_PREFIX = "ssw-";
+export declare const WINDOW_WIDTH_CSS_VAR = "--safety-slider-window-width";

@@ -1,0 +1,12 @@
+.git/
+.github/
+coverage/
+.editorconfig
+.eslintignore
+.eslintrc.json
+.gitignore
+.nvmrc
+.prettierrc.json
+package-lock.json
+stencil.config.ts
+tsconfig.json

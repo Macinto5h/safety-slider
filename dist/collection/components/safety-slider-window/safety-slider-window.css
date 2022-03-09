@@ -1,0 +1,21 @@
+safety-slider-window {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.safety-slider-track {
+  height: 100%;
+  position: relative;
+  z-index: 0;
+  display: flex;
+  box-sizing: border-box;
+  transition: transform var(--safety-slider-track-transition-duration) ease;
+  transform: translateX(var(--safety-slider-track-offset));
+}
+
+.safety-slider-slide {
+  min-width: var(--safety-slider-window-width);
+}
