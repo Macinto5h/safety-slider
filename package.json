@@ -17,7 +17,9 @@
   "unpkg": "dist/safety-slider/safety-slider.esm.js",
   "files": [
     "dist/",
-    "loader/"
+    "loader/",
+    "src/",
+    "www/"
   ],
   "scripts": {
     "build": "stencil build --docs",
