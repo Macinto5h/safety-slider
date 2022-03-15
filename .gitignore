@@ -16,6 +16,8 @@ log.txt
 .sass-cache/
 .versions/
 node_modules/
+dist/
+www/
 $RECYCLE.BIN/
 
 .DS_Store
