@@ -16,25 +16,50 @@
       }
     </style>
     <main>
-      <h1>safety-slider</h1>
-      <em>An efficient, accessible, and framework independent slider.</em>
+
+      <div style="text-align:center;">
+        <h1>&lt;safety-slider&gt;</h1>
+        <em>An efficient, accessible, and framework independent slider.</em>
+      </div>
+
       <br>
       <br>
+
       <safety-slider>
-        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
+      <br>
+      <br>
+
       <h2>Table of Contents</h2>
-      <ul>
-        <li><a href="#properties">Properties</a></li>
-        <li><a href="#public-methods">Public Methods</a></li>
-      </ul>
 
-      <h2 id="properties">Properties</h2>
+      <ol>
+        <li>
+          <a href="#api">API</a>
+          <ol>
+            <li><a href="#properties">Properties</a></li>
+            <li><a href="#public-methods">Public Methods</a></li>
+          </ol>
+        </li>
+        <li>
+          <a href="#integrations">Integrations</a>
+          <ol>
+            <li><a href="#website-integration">Website integration</a></li>
+          </ol>
+        </li>
+        <li><a href="#styling">Styling</a></li>
+      </ol>
 
-      <h3>dot-aria-label</h3>
+      <hr>
+
+      <h2 id="api">API</h2>
+
+      <h3 id="properties">Properties</h3>
+
+      <h4>dot-aria-label</h4>
       <em>since v0.3.0</em>
       <pre>
         <code>
@@ -44,12 +69,12 @@
         </code>
       </pre>
       <safety-slider dot-aria-label="This is dot {0} of {1}">
-        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h3>infinite</h3>
+      <h4>infinite</h4>
       <em>since v0.1.0</em>
       <pre>
         <code>
@@ -59,12 +84,12 @@
         </code>
       </pre>
       <safety-slider infinite>
-        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h3>next-arrow</h3>
+      <h4>next-arrow</h4>
       <em>since v0.4.0</em>
       <pre>
         <code>
@@ -74,12 +99,12 @@
         </code>
       </pre>
       <safety-slider next-arrow=">">
-        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h3>next-arrow-aria-label</h3>
+      <h4>next-arrow-aria-label</h4>
       <em>since v0.3.0</em>
       <pre>
         <code>
@@ -89,12 +114,12 @@
         </code>
       </pre>
       <safety-slider next-arrow-aria-label="Next arrow aria-label">
-        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h3>no-arrows</h3>
+      <h4>no-arrows</h4>
       <em>since v0.0.1</em>
       <pre>
         <code>
@@ -104,12 +129,12 @@
         </code>
       </pre>
       <safety-slider no-arrows>
-        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h3>no-dots</h3>
+      <h4>no-dots</h4>
       <em>since v0.0.1</em>
       <pre>
         <code>
@@ -119,12 +144,12 @@
         </code>
       </pre>
       <safety-slider no-dots>
-        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h3>prev-arrow</h3>
+      <h4>prev-arrow</h4>
       <em>since v0.4.0</em>
       <pre>
         <code>
@@ -134,12 +159,12 @@
         </code>
       </pre>
       <safety-slider prev-arrow="<">
-        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h3>prev-arrow-aria-label</h3>
+      <h4>prev-arrow-aria-label</h4>
       <em>since v0.3.0</em>
       <pre>
         <code>
@@ -149,13 +174,14 @@
         </code>
       </pre>
       <safety-slider prev-arrow-aria-label="Prev arrow aria-label">
-        <img src="https://picsum.photos/id/40/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/50/500" alt="Randomly generated image">
-        <img src="https://picsum.photos/id/60/500" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
+        <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h2 id="public-methods">Public Methods</h2>
-      <h3>setActiveSlide</h3>
+      <h3 id="public-methods">Public Methods</h3>
+
+      <h4>setActiveSlide</h4>
       <em>since v0.0.1</em>
       <pre>
         <code>
@@ -168,6 +194,35 @@
           &lt;/script&gt;
         </code>
       </pre>
+
+      <hr>
+
+      <h2 id="integrations">Integrations</h2>
+
+      <h3 id="website-integration">Website integration</h3>
+
+      <p>safety-slider has files specifically generated for website usage in the
+        <code>www/build</code> directory. Place those files together where you would
+        like them to be, then add the following script tags to the end of the
+        HTML body tag.
+      </p>
+      <pre>
+        <code>
+          &lt;script type="module" src="/path-to-files/safety-slider.esm.js"&gt;&lt;/script&gt;
+          &lt;script nomodule src="/path-to-files/safety-slider.js"&gt;&lt;/script&gt;
+        </code>
+      </pre>
+
+      <hr>
+
+      <h2 id="styling">Styling</h2>
+
+      <p>The styling of <code>safety-slider</code> is the bare minimum. This is
+        intentional as many will prefer to add their own styling anyway.
+      </p>
+      <p>Note that hiding or altering the content of buttons can be achieved by
+        the API properties defined above.
+      </p>
     </main>
   </body>
 </html>
