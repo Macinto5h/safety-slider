@@ -1,7 +1,18 @@
 safety-slider {
+  --safety-slider-bottom-padding: 2rem;
+  --safety-slider-x-padding: 3rem;
+
   display: block;
   position: relative;
-  padding: 0 3rem 2rem;
+}
+
+safety-slider:not([no-arrows]) {
+  padding-left: var(--safety-slider-x-padding);
+  padding-right: var(--safety-slider-x-padding);
+}
+
+safety-slider:not([no-dots]) {
+  padding-bottom: var(--safety-slider-bottom-padding);
 }
 
 safety-slider safety-slider-window {
