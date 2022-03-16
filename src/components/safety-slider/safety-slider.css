@@ -1,6 +1,8 @@
 safety-slider {
   --safety-slider-bottom-padding: 2rem;
   --safety-slider-x-padding: 3rem;
+  --safety-slider-btn-color: black;
+  --safety-slider-btn-disabled-color: gainsboro;
 
   display: block;
   position: relative;
