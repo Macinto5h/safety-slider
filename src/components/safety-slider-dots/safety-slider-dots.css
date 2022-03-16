@@ -1,27 +1,35 @@
 safety-slider-dots {
+  --safety-slider-dots-container-height: calc(var(--safety-slider-bottom-padding) / 2);
+  --safety-slider-dots-container-position-bottom: calc(var(--safety-slider-bottom-padding) / 8);
+  --safety-slider-dot-background-color: black;
+  --safety-slider-dot-width: .5rem;
+  --safety-slider-dot-height: var(--safety-slider-dot-width);
+  --safety-slider-dot-x-margin: calc(var(--safety-slider-dot-width) / 2);
+  --safety-slider-dot-disabled-background-color: gainsboro;
+
   display: block;
   width: 100%;
-  height: 1rem;
+  height: var(--safety-slider-dots-container-height);
   position: absolute;
   z-index: 1;
   left: 0;
-  bottom: .25rem;
+  bottom: var(--safety-slider-dots-container-position-bottom);
   text-align: center;
 }
 
 .safety-slider-dot {
   appearance: none;
   border: none;
-  background-color: black;
+  background-color: var(--safety-slider-dot-background-color);
   padding: 0;
   border-radius: 50%;
-  width: .5rem;
-  height: .5rem;
-  margin: auto .25rem 0;
+  width: var(--safety-slider-dot-width);
+  height: var(--safety-slider-dot-height);
+  margin: auto var(--safety-slider-dot-x-margin) 0;
   cursor: pointer;
 }
 
 .safety-slider-dot[disabled] {
-  opacity: .5;
+  background-color: var(--safety-slider-dot-disabled-background-color);
   cursor: not-allowed;
 }
