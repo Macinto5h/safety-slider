@@ -1,4 +1,13 @@
 safety-slider-arrows {
+  --safety-slider-arrow-border-width: 1px;
+  --safety-slider-arrow-border-color: black;
+  --safety-slider-arrow-background-color: white;
+  --safety-slider-arrow-padding: 0;
+  --safety-slider-arrow-color: black;
+  --safety-slider-arrow-width: 2rem;
+  --safety-slider-arrow-height: var(--safety-slider-arrow-width);
+  --safety-slider-arrow-disabled-background-color: gainsboro;
+
   width: 100%;
   position: absolute;
   z-index: 1;
@@ -11,17 +20,17 @@ safety-slider-arrows {
 
 .safety-slider-arrow {
   appearance: none;
-  border: 1px solid black;
-  background-color: white;
-  padding: 0;
-  color: black;
-  width: 2rem;
-  height: 2rem;
+  border: var(--safety-slider-arrow-border-width) solid var(--safety-slider-arrow-border-color);
+  background-color: var(--safety-slider-arrow-background-color);
+  padding: var(--safety-slider-arrow-padding);
+  color: var(--safety-slider-arrow-color);
+  width: var(--safety-slider-arrow-width);
+  height: var(--safety-slider-arrow-height);
   text-align: center;
   cursor: pointer;
 }
 
 .safety-slider-arrow[disabled] {
-  opacity: .5;
+  background-color: var(--safety-slider-arrow-disabled-background-color);
   cursor: not-allowed;
 }
