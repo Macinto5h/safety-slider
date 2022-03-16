@@ -57,33 +57,61 @@
           &lt;script nomodule src="/path-to-files/safety-slider.js"&gt;&lt;/script&gt;
         </code>
       </pre> <hr> <h2 id="styling">Styling</h2> <p>The styling of <code>safety-slider</code> is the bare minimum. This is
-        intentional as many will prefer to add their own styling anyway. </p> <p>Note that hiding or altering the content of buttons can be achieved by
-        the API properties defined above. </p> <p>The following CSS variables are available to change from their default
-        values. </p> <pre>        <code>
+        intentional as many will prefer to add their own styling anyway. </p> <p>Custom styling can be easily achieved by changing the values of the CSS
+        variables used within the slider. See the example below. </p> <pre>        <code>
+          &lt;style&gt;
+            safety-slider.custom-styling-example {
+              --safety-slider-btn-color: darkgreen;
+              --safety-slider-btn-disabled-color: darkseagreen;
+            }
+
+            safety-slider.custom-styling-example safety-slider-arrows {
+              --safety-slider-arrow-border-width: 3px;
+            }
+          &lt;/style&gt;
+
+          &lt;safety-slider class="custom-styling-example"&gt;
+            ...
+          &lt;/safety-slider&gt;
+        </code>
+      </pre> <style>safety-slider.custom-styling-example {
+          --safety-slider-btn-color: darkgreen;
+          --safety-slider-btn-disabled-color: darkseagreen;
+        }
+
+        safety-slider.custom-styling-example safety-slider-arrows {
+          --safety-slider-arrow-border-width: 3px;
+        }</style> <safety-slider class="custom-styling-example"> <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image"> <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image"> <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image"> </safety-slider> <br> <p>Below lists all of the available CSS variables that can be altered to
+        fit a custom style. </p> <pre>        <code>
           // Scoped to &lt;safety-slider&gt;
           --safety-slider-bottom-padding: 2rem;
           --safety-slider-x-padding: 3rem;
+          --safety-slider-btn-color: black;
+          --safety-slider-btn-disabled-color: gainsboro;
 
           // Scoped to &lt;safety-slider-arrows&gt;
           --safety-slider-arrow-border-width: 1px;
-          --safety-slider-arrow-border-color: black;
+          --safety-slider-arrow-border-color: var(--safety-slider-btn-color);
           --safety-slider-arrow-background-color: white;
           --safety-slider-arrow-padding: 0;
-          --safety-slider-arrow-color: black;
+          --safety-slider-arrow-color: var(--safety-slider-btn-color);
           --safety-slider-arrow-width: 2rem;
           --safety-slider-arrow-height: var(--safety-slider-arrow-width);
-          --safety-slider-arrow-disabled-background-color: gainsboro;
+          --safety-slider-arrow-disabled-background-color: var(--safety-slider-btn-disabled-color);
 
           // Scoped to &lt;safety-slider-dots&gt;
           --safety-slider-dots-container-height: calc(var(--safety-slider-bottom-padding) / 2);
           --safety-slider-dots-container-position-bottom: calc(var(--safety-slider-bottom-padding) / 8);
-          --safety-slider-dot-background-color: black;
+          --safety-slider-dot-background-color: var(--safety-slider-btn-color);
           --safety-slider-dot-width: .5rem;
           --safety-slider-dot-height: var(--safety-slider-dot-width);
           --safety-slider-dot-x-margin: calc(var(--safety-slider-dot-width) / 2);
-          --safety-slider-dot-disabled-background-color: gainsboro;
+          --safety-slider-dot-disabled-background-color: var(--safety-slider-btn-disabled-color);
         </code>
-      </pre> </main> <script>
+      </pre> <p>The CSS variables only encompass styling properties that are already
+        defined by <code>safety-slider</code>'s minimum styling. Any properties
+        beyond them can simply be added by creating a rule using that element's
+        class as a selector. For example, arrow buttons use <code>safety-slider-arrow</code> and dot buttons use <code>safety-slider-dot</code>. </p> </main> <script>
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   // auto-unregister service worker during dev mode
   navigator.serviceWorker.getRegistration().then(function(registration) {

@@ -1,12 +1,12 @@
 safety-slider-arrows {
   --safety-slider-arrow-border-width: 1px;
-  --safety-slider-arrow-border-color: black;
+  --safety-slider-arrow-border-color: var(--safety-slider-btn-color);
   --safety-slider-arrow-background-color: white;
   --safety-slider-arrow-padding: 0;
-  --safety-slider-arrow-color: black;
+  --safety-slider-arrow-color: var(--safety-slider-btn-color);
   --safety-slider-arrow-width: 2rem;
   --safety-slider-arrow-height: var(--safety-slider-arrow-width);
-  --safety-slider-arrow-disabled-background-color: gainsboro;
+  --safety-slider-arrow-disabled-background-color: var(--safety-slider-btn-disabled-color);
 
   width: 100%;
   position: absolute;
