@@ -45,7 +45,8 @@
     "puppeteer": "10.0.0",
     "stylelint": "14.1.0",
     "stylelint-config-standard": "24.0.0",
-    "stylelint-no-unsupported-browser-features": "5.0.2"
+    "stylelint-no-unsupported-browser-features": "5.0.2",
+    "tailwindcss": "3.0.23"
   },
   "license": "MIT",
   "browserslist": [

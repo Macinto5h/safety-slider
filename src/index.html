@@ -4,62 +4,48 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
     <title>Safety Slider</title>
-
+    <link rel="stylesheet" href="/build/safety-slider.css">
     <script type="module" src="/build/safety-slider.esm.js"></script>
     <script nomodule src="/build/safety-slider.js"></script>
   </head>
   <body>
-    <style>
-      main {
-        max-width: 80ch;
-        margin: 0 auto;
-      }
-    </style>
-    <main>
-
-      <div style="text-align:center;">
-        <h1>&lt;safety-slider&gt;</h1>
+    <header class="max-w-4xl mx-auto">
+      <h1 class="font-mono my-4 text-5xl text-center">&lt;safety-slider&gt;</h1>
+      <p class="mb-8 text-center">
         <em>An efficient, accessible, and framework independent slider.</em>
-      </div>
-
-      <br>
-      <br>
-
-      <safety-slider>
+      </p>
+    </header>
+    <main class="max-w-4xl mx-auto">
+      <safety-slider class="mb-16">
         <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
         <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <br>
-      <br>
+      <h2 class="mb-4 text-4xl">Table of Contents</h2>
 
-      <h2>Table of Contents</h2>
-
-      <ol>
+      <ol class="list-decimal mb-4">
         <li>
           <a href="#api">API</a>
-          <ol>
+          <ol class="list-decimal ml-2">
             <li><a href="#properties">Properties</a></li>
             <li><a href="#public-methods">Public Methods</a></li>
           </ol>
         </li>
         <li>
           <a href="#integrations">Integrations</a>
-          <ol>
+          <ol class="list-decimal ml-2">
             <li><a href="#website-integration">Website integration</a></li>
           </ol>
         </li>
         <li><a href="#styling">Styling</a></li>
       </ol>
 
-      <hr>
+      <h2 class="mb-4 text-4xl" id="api">API</h2>
 
-      <h2 id="api">API</h2>
+      <h3 class="mb-4 text-3xl" id="properties">Properties</h3>
 
-      <h3 id="properties">Properties</h3>
-
-      <h4>dot-aria-label</h4>
+      <h4 class="text-2xl">dot-aria-label</h4>
       <em>since v0.3.0</em>
       <pre>
         <code>
@@ -74,7 +60,7 @@
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h4>infinite</h4>
+      <h4 class="text-2xl">infinite</h4>
       <em>since v0.1.0</em>
       <pre>
         <code>
@@ -89,7 +75,7 @@
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h4>next-arrow</h4>
+      <h4 class="text-2xl">next-arrow</h4>
       <em>since v0.4.0</em>
       <pre>
         <code>
@@ -104,7 +90,7 @@
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h4>next-arrow-aria-label</h4>
+      <h4 class="text-2xl">next-arrow-aria-label</h4>
       <em>since v0.3.0</em>
       <pre>
         <code>
@@ -119,7 +105,7 @@
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h4>no-arrows</h4>
+      <h4 class="text-2xl">no-arrows</h4>
       <em>since v0.0.1</em>
       <pre>
         <code>
@@ -134,7 +120,7 @@
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h4>no-dots</h4>
+      <h4 class="text-2xl">no-dots</h4>
       <em>since v0.0.1</em>
       <pre>
         <code>
@@ -149,7 +135,7 @@
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h4>prev-arrow</h4>
+      <h4 class="text-2xl">prev-arrow</h4>
       <em>since v0.4.0</em>
       <pre>
         <code>
@@ -164,7 +150,7 @@
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h4>prev-arrow-aria-label</h4>
+      <h4 class="text-2xl">prev-arrow-aria-label</h4>
       <em>since v0.3.0</em>
       <pre>
         <code>
@@ -179,9 +165,9 @@
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h3 id="public-methods">Public Methods</h3>
+      <h3 class="mb-4 text-3xl" id="public-methods">Public Methods</h3>
 
-      <h4>setActiveSlide</h4>
+      <h4 class="text-2xl">setActiveSlide</h4>
       <em>since v0.0.1</em>
       <pre>
         <code>
@@ -195,11 +181,9 @@
         </code>
       </pre>
 
-      <hr>
+      <h2 class="mb-4 text-4xl" id="integrations">Integrations</h2>
 
-      <h2 id="integrations">Integrations</h2>
-
-      <h3 id="website-integration">Website integration</h3>
+      <h3 class="mb-4 text-3xl" id="website-integration">Website integration</h3>
 
       <p>safety-slider has files specifically generated for website usage in the
         <code>www/build</code> directory. Place those files together where you would
@@ -213,9 +197,7 @@
         </code>
       </pre>
 
-      <hr>
-
-      <h2 id="styling">Styling</h2>
+      <h2 class="mb-4 text-4xl" id="styling">Styling</h2>
 
       <p>The styling of <code>safety-slider</code> is the bare minimum. This is
         intentional as many will prefer to add their own styling anyway.
@@ -303,5 +285,8 @@
         and dot buttons use <code>safety-slider-dot</code>.
       </p>
     </main>
+    <footer class="font-mono max-w-4xl mx-auto my-5 text-5xl text-center">
+      &lt;/safety-slider&gt;
+    </footer>
   </body>
 </html>
