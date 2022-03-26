@@ -1,6 +1,6 @@
 {
   "name": "safety-slider",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "An efficient, accessible, and framework independent slider.",
   "author": "Macallan Camara",
   "repository": {
@@ -28,24 +28,24 @@
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "lint:typescript": "eslint src/**/*{.ts,.tsx}",
-    "lint:css": "npx stylelint 'src/**/*.css'"
+    "lint:css": "npx stylelint 'src/component/**/*.css'"
   },
   "dependencies": {
-    "@stencil/core": "2.7.0",
+    "@stencil/core": "2.14.2",
     "uuid": "8.3.2"
   },
   "devDependencies": {
     "@stencil/eslint-plugin": "0.4.0",
     "@stencil/postcss": "2.1.0",
     "@types/autoprefixer": "10.2.0",
-    "@types/jest": "26.0.24",
-    "autoprefixer": "10.4.0",
-    "jest": "26.6.3",
-    "jest-cli": "26.6.3",
+    "@types/jest": "27.4.1",
+    "autoprefixer": "10.4.4",
+    "jest": "27.5.1",
+    "jest-cli": "27.5.1",
     "puppeteer": "10.0.0",
-    "stylelint": "14.1.0",
-    "stylelint-config-standard": "24.0.0",
-    "stylelint-no-unsupported-browser-features": "5.0.2",
+    "stylelint": "14.6.1",
+    "stylelint-config-standard": "25.0.0",
+    "stylelint-no-unsupported-browser-features": "5.0.3",
     "tailwindcss": "3.0.23"
   },
   "license": "MIT",
