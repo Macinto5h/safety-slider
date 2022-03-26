@@ -7,7 +7,7 @@ describe('safety-slider-dots', () => {
   it('renders a number of dot buttons based on the value passed to dotCount', async () => {
     const page = await SpecUtils.buildDotSpecPage(`dot-count="3"`);
 
-    const dotBtns = page.root.querySelectorAll('button');
+    const dotBtns = page.root.shadowRoot.querySelectorAll('button');
 
     expect(dotBtns.length).toBe(3);
   });
@@ -15,7 +15,7 @@ describe('safety-slider-dots', () => {
   it('renders the dot button representing the active slide as disabled', async () => {
     const page = await SpecUtils.buildDotSpecPage(`active-dot="1" dot-count="3"`);
 
-    const secondDotBtn = page.root.querySelectorAll('button')[1] as HTMLButtonElement;
+    const secondDotBtn = page.root.shadowRoot.querySelectorAll('button')[1] as HTMLButtonElement;
 
     expect(secondDotBtn).toHaveAttribute('disabled');
   });
@@ -26,7 +26,7 @@ describe('safety-slider-dots', () => {
     const dotInstance: SafetySliderDots = page.rootInstance;
     const eventSpy = jest.spyOn(dotInstance.safetySliderNavigationClick, 'emit');
 
-    const dotBtn = page.root.querySelectorAll('button')[1];
+    const dotBtn = page.root.shadowRoot.querySelectorAll('button')[1];
 
     dotBtn.click();
     await page.waitForChanges();
@@ -39,7 +39,7 @@ describe('safety-slider-dots', () => {
     const ariaText = "alt {0} text {1}";
     const page = await SpecUtils.buildDotSpecPage(`dot-count="${dotCount}" dot-aria-label="${ariaText}"`);
 
-    const dotBtn = page.root.querySelectorAll('button')[1];
+    const dotBtn = page.root.shadowRoot.querySelectorAll('button')[1];
 
     expect(dotBtn.getAttribute('aria-label')).toEqual('alt 2 text ' + dotCount);
   });
@@ -48,7 +48,7 @@ describe('safety-slider-dots', () => {
     const uuid = uuidv4();
     const page = await SpecUtils.buildDotSpecPage(`uuid=${uuid} dot-count="3"`);
 
-    const dotBtn = page.root.querySelectorAll('button')[0];
+    const dotBtn = page.root.shadowRoot.querySelectorAll('button')[0];
 
     expect(dotBtn.getAttribute('aria-controls')).toEqual(WINDOW_ID_PREFIX + uuid);
   });
