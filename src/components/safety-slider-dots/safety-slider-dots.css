@@ -1,4 +1,4 @@
-safety-slider-dots {
+:host {
   --safety-slider-dots-container-height: calc(var(--safety-slider-bottom-padding) / 2);
   --safety-slider-dots-container-position-bottom: calc(var(--safety-slider-bottom-padding) / 8);
   --safety-slider-dot-background-color: var(--safety-slider-btn-color);

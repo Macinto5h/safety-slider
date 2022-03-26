@@ -28,7 +28,7 @@
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "lint:typescript": "eslint src/**/*{.ts,.tsx}",
-    "lint:css": "npx stylelint 'src/component/**/*.css'"
+    "lint:css": "npx stylelint 'src/components/**/*.css'"
   },
   "dependencies": {
     "@stencil/core": "2.14.2",
