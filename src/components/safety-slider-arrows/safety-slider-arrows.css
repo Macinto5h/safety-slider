@@ -1,4 +1,4 @@
-safety-slider-arrows {
+:host {
   --safety-slider-arrow-border-width: 1px;
   --safety-slider-arrow-border-color: var(--safety-slider-btn-color);
   --safety-slider-arrow-background-color: white;
