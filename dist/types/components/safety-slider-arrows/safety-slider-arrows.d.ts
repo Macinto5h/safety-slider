@@ -10,6 +10,8 @@ export declare class SafetySliderArrows {
   readonly uuid: string;
   safetySliderNavigationClick: EventEmitter<number>;
   private prevArrowClick;
+  private getPrevSlideNumber;
   private nextArrowClick;
+  private getNextSlideNumber;
   render(): any;
 }

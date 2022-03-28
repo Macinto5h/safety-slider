@@ -4,7 +4,7 @@ import { WINDOW_ID_PREFIX } from '../safety-slider-window/safety-slider-window.r
 @Component({
   tag: 'safety-slider-arrows',
   styleUrl: 'safety-slider-arrows.css',
-  shadow: false,
+  shadow: true,
 })
 export class SafetySliderArrows {
 
@@ -20,11 +20,21 @@ export class SafetySliderArrows {
   @Event() safetySliderNavigationClick: EventEmitter<number>;
 
   private prevArrowClick = () => {
-    this.safetySliderNavigationClick.emit(this.activeSlide - 1 >= 0 ? this.activeSlide - 1 : this.slideCount - 1);
+    this.safetySliderNavigationClick.emit(this.getPrevSlideNumber());
+  }
+
+  private getPrevSlideNumber() {
+    return this.activeSlide - 1 >= 0
+      ? this.activeSlide - 1
+      : this.slideCount - 1;
   }
 
   private nextArrowClick = () => {
-    this.safetySliderNavigationClick.emit(this.activeSlide + 1 < this.slideCount ? this.activeSlide + 1 : 0);
+    this.safetySliderNavigationClick.emit(this.getNextSlideNumber());
+  }
+
+  private getNextSlideNumber() {
+    return this.activeSlide + 1 < this.slideCount ? this.activeSlide + 1 : 0;
   }
 
   render() {
