@@ -15,6 +15,26 @@
         <em>An efficient, accessible, and framework independent slider.</em>
       </p>
     </header>
+
+    <aside class="w-xl px-4">
+      <ol class="mb-4">
+        <li>
+          <a href="#api">API</a>
+          <ol class="ml-2">
+            <li><a href="#properties">Properties</a></li>
+            <li><a href="#public-methods">Public Methods</a></li>
+          </ol>
+        </li>
+        <li>
+          <a href="#integrations">Integrations</a>
+          <ol class="ml-2">
+            <li><a href="#website-integration">Website integration</a></li>
+          </ol>
+        </li>
+        <li><a href="#styling">Styling</a></li>
+      </ol>
+    </aside>
+
     <main class="max-w-4xl mx-auto">
       <safety-slider class="mb-16">
         <img src="https://picsum.photos/id/10/720/360" alt="Randomly generated image">
@@ -22,31 +42,14 @@
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
 
-      <h2 class="mb-4 text-4xl">Table of Contents</h2>
-
-      <ol class="list-decimal mb-4">
-        <li>
-          <a href="#api">API</a>
-          <ol class="list-decimal ml-2">
-            <li><a href="#properties">Properties</a></li>
-            <li><a href="#public-methods">Public Methods</a></li>
-          </ol>
-        </li>
-        <li>
-          <a href="#integrations">Integrations</a>
-          <ol class="list-decimal ml-2">
-            <li><a href="#website-integration">Website integration</a></li>
-          </ol>
-        </li>
-        <li><a href="#styling">Styling</a></li>
-      </ol>
-
       <h2 class="mb-4 text-4xl" id="api">API</h2>
 
       <h3 class="mb-4 text-3xl" id="properties">Properties</h3>
 
       <h4 class="text-2xl">dot-aria-label</h4>
       <em>since v0.3.0</em>
+      <br>
+      <em>default value: "Go to slide {0} of {1}"</em>
       <pre>
         <code>
           &lt;safety-slider dot-aria-label="This is dot {0} of {1}"&gt;
@@ -77,6 +80,8 @@
 
       <h4 class="text-2xl">next-arrow</h4>
       <em>since v0.4.0</em>
+      <br>
+      <em>default value: "→"</em>
       <pre>
         <code>
           &lt;safety-slider next-arrow=">"&gt;
@@ -92,6 +97,8 @@
 
       <h4 class="text-2xl">next-arrow-aria-label</h4>
       <em>since v0.3.0</em>
+      <br>
+      <em>default value: "Go to next slide"</em>
       <pre>
         <code>
           &lt;safety-slider next-arrow-aria-label="Next arrow aria-label"&gt;
@@ -134,9 +141,12 @@
         <img src="https://picsum.photos/id/1016/720/360" alt="Randomly generated image">
         <img src="https://picsum.photos/id/1002/720/360" alt="Randomly generated image">
       </safety-slider>
+      <br>
 
       <h4 class="text-2xl">prev-arrow</h4>
       <em>since v0.4.0</em>
+      <br>
+      <em>default value: "←"</em>
       <pre>
         <code>
           &lt;safety-slider prev-arrow="<"&gt;
@@ -152,6 +162,8 @@
 
       <h4 class="text-2xl">prev-arrow-aria-label</h4>
       <em>since v0.3.0</em>
+      <br>
+      <em>default value: "Go to previous slide"</em>
       <pre>
         <code>
           &lt;safety-slider prev-arrow-aria-label="Prev arrow aria-label"&gt;
