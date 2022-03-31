@@ -16,10 +16,13 @@ describe('safety-slider-window', () => {
     });
   });
 
-  it('should render slot content with slide classes', async () => {
+  it('should render slot content with slide classes and attributes', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const activeSlide = page.body.querySelector(SLIDE_ACTIVE_CLASS_QUERY) as HTMLElement;
 
-    expect(page.body.querySelector(SLIDE_ACTIVE_CLASS_QUERY)).not.toBeNull();
+    expect(activeSlide).not.toBeNull();
+    expect(activeSlide.tabIndex).toEqual(0);
+    expect(activeSlide.getAttribute('aria-hidden')).toBeFalsy();
   });
 
   it('should reassign the slide width when a window resize occurs', async () => {

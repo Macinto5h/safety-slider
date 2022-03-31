@@ -41,7 +41,7 @@ export class SafetySliderWindow {
     this.setInfiniteLoopToFront(newActiveSlide, oldActiveSlide);
     this.setInfiniteLoopToBack(newActiveSlide, oldActiveSlide);
   }
-  
+
   @Event() safetySliderInfiniteLoopAdjustment: EventEmitter;
   @Event() safetySliderApplyTransitionDuration: EventEmitter;
 
@@ -53,6 +53,7 @@ export class SafetySliderWindow {
     const slides = Array.from(this.root.children) as HTMLElement[];
     slides.forEach(slide => slide.classList.add(SLIDE_CLASS));
     slides[this.activeSlide]?.classList.add(SLIDE_ACTIVE_CLASS);
+    slides[this.activeSlide]?.tabIndex = "0";
 
     this.rootWidth = this.root.offsetWidth;
     this.slideCount = this.root.children.length;
@@ -70,15 +71,15 @@ export class SafetySliderWindow {
   windowResizeHandler() {
     this.rootWidth = this.root.offsetWidth;
   }
-  
+
   @Listen('safetySliderInfiniteLoopAdjustment')
   infiniteLoopAdjustmentHandler() {
     this.setCSSProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `0ms`);
     this.setCSSProperty(TRACK_OFFSET_CSS_VAR, `${this.rootWidth * (this.activeSlide + 1) * -1}px`);
-    
+
     setTimeout(() => this.safetySliderApplyTransitionDuration.emit(), this.trackTransitionDuration);
   }
-  
+
   @Listen('safetySliderApplyTransitionDuration')
   applyTransitionDurationHandler() {
     this.setCSSProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
@@ -95,23 +96,23 @@ export class SafetySliderWindow {
       return this.rootWidth * this.activeSlide * -1;
     }
   }
-  
+
   private setCSSProperty(key: string, value: string) {
     this.root.style.setProperty(key, value);
   }
-  
+
   private setInfiniteLoopToFront(newActiveSlide: number, oldActiveSlide: number) {
     this.infiniteLoopToFront = this.isInfinite
       && newActiveSlide === 0
       && oldActiveSlide === this.slideCount - 1;
   }
-  
+
   private setInfiniteLoopToBack(newActiveSlide: number, oldActiveSlide: number) {
     this.infiniteLoopToBack = this.isInfinite
       && newActiveSlide === this.slideCount - 1
       && oldActiveSlide === 0;
   }
-  
+
   private moveActiveSlideClass(newActiveSlide: number, oldActiveSlide: number) {
     this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY)[oldActiveSlide].classList.remove(SLIDE_ACTIVE_CLASS);
     this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY)[newActiveSlide].classList.add(SLIDE_ACTIVE_CLASS);
