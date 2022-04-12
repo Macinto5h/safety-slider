@@ -27,5 +27,7 @@ export declare class SafetySliderWindow {
   private setInfiniteLoopToFront;
   private setInfiniteLoopToBack;
   private moveActiveSlideClass;
+  private updateSlideToBeInactive;
+  private updateSlideToBeActive;
   render(): any;
 }
