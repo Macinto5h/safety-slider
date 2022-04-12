@@ -63,10 +63,18 @@ describe('safety-slider-window', () => {
     });
 
     await page.waitForChanges();
-    const children = await page.findAll(SLIDE_CLASS_QUERY);
 
-    expect(children[0].classList.contains(SLIDE_ACTIVE_CLASS)).toBeFalsy();
-    expect(children[1].classList.contains(SLIDE_ACTIVE_CLASS)).toBeTruthy();
+    const children = await page.findAll(SLIDE_CLASS_QUERY);
+    const prevActiveSlide = children[0];
+    const currentActiveSlide = children[1];
+
+    expect(prevActiveSlide.classList.contains(SLIDE_ACTIVE_CLASS)).toBeFalsy();
+    expect(prevActiveSlide.tabIndex).toEqual(-1);
+    expect(prevActiveSlide.getAttribute('aria-hidden')).toBe('true');
+
+    expect(currentActiveSlide.classList.contains(SLIDE_ACTIVE_CLASS)).toBeTruthy();
+    expect(currentActiveSlide.tabIndex).toEqual(0);
+    expect(currentActiveSlide.getAttribute('aria-hidden')).toBe('false');
   });
 
   it('should emit the infinite slider adjustment events when moving from the last slide to the first slide', async () => {
