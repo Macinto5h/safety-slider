@@ -51,9 +51,12 @@ export class SafetySliderWindow {
 
   componentWillLoad() {
     const slides = Array.from(this.root.children) as HTMLElement[];
-    slides.forEach(slide => slide.classList.add(SLIDE_CLASS));
-    slides[this.activeSlide]?.classList.add(SLIDE_ACTIVE_CLASS);
-    slides[this.activeSlide]?.tabIndex = "0";
+    slides.forEach(slide => {
+      slide.classList.add(SLIDE_CLASS);
+      this.updateSlideToBeInactive(slide);
+    });
+
+    this.updateSlideToBeActive(slides[this.activeSlide]);
 
     this.rootWidth = this.root.offsetWidth;
     this.slideCount = this.root.children.length;
@@ -114,7 +117,7 @@ export class SafetySliderWindow {
   }
 
   private moveActiveSlideClass(newActiveSlide: number, oldActiveSlide: number) {
-    const slides = this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY);
+    const slides = this.trackElement.querySelectorAll<HTMLElement>(SLIDE_CLASS_QUERY);
 
     this.updateSlideToBeInactive(slides[oldActiveSlide]);
     this.updateSlideToBeActive(slides[newActiveSlide]);
@@ -122,14 +125,14 @@ export class SafetySliderWindow {
 
   private updateSlideToBeInactive(slide: HTMLElement) {
     slide.classList.remove(SLIDE_ACTIVE_CLASS);
-    slide.tabIndex = "-1";
-    slide.setAttribute('aria-hidden', true);
+    slide.tabIndex = -1;
+    slide.setAttribute('aria-hidden', 'true');
   }
 
   private updateSlideToBeActive(slide: HTMLElement) {
     slide.classList.add(SLIDE_ACTIVE_CLASS);
-    slide.tabIndex = '0';
-    slide.setAttribute('aria-hidden', false);
+    slide.tabIndex = 0;
+    slide.setAttribute('aria-hidden', 'false');
   }
 
   render() {
