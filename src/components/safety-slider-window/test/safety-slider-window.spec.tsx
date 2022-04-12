@@ -4,7 +4,7 @@ import {
   SLIDE_CLASS_QUERY,
   SLIDE_CLONE_CLASS_QUERY,
   WINDOW_ID_PREFIX,
-  SLIDE_ACTIVE_CLASS_QUERY
+  SLIDE_ACTIVE_CLASS
 } from '../safety-slider-window.resources';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -18,11 +18,17 @@ describe('safety-slider-window', () => {
 
   it('should render slot content with slide classes and attributes', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
-    const activeSlide = page.body.querySelector(SLIDE_ACTIVE_CLASS_QUERY) as HTMLElement;
+    const slides = page.body.querySelectorAll(SLIDE_CLASS_QUERY);
 
-    expect(activeSlide).not.toBeNull();
-    expect(activeSlide.tabIndex).toEqual(0);
-    expect(activeSlide.getAttribute('aria-hidden')).toBeFalsy();
+    slides.forEach(element => {
+      if (element.classList.contains(SLIDE_ACTIVE_CLASS)) {
+        expect(element.tabIndex).toEqual(0);
+        expect(element.getAttribute('aria-hidden')).toBe('false');
+      } else {
+        expect(element.tabIndex).toEqual(-1);
+        expect(element.getAttribute('aria-hidden')).toBe('true');
+      }
+    });
   });
 
   it('should reassign the slide width when a window resize occurs', async () => {
