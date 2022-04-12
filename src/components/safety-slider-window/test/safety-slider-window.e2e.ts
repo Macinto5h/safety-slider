@@ -55,7 +55,7 @@ describe('safety-slider-window', () => {
     expect(slidesElementStyle.transform).toContain(`${activeSlideWidth * -1}`);
   });
 
-  it('should change the assigned active class when a value is passed to the property', async () => {
+  it('should change the assigned active class and attributes when a value is passed to the property', async () => {
     await E2EUtils.setWindowContent(page, E2EUtils.buildWindowContent(2));
 
     await page.$eval('safety-slider-window', (elm: HTMLSafetySliderWindowElement) => {
