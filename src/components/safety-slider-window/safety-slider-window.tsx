@@ -114,8 +114,17 @@ export class SafetySliderWindow {
   }
 
   private moveActiveSlideClass(newActiveSlide: number, oldActiveSlide: number) {
-    this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY)[oldActiveSlide].classList.remove(SLIDE_ACTIVE_CLASS);
-    this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY)[newActiveSlide].classList.add(SLIDE_ACTIVE_CLASS);
+    const slides = this.trackElement.querySelectorAll(SLIDE_CLASS_QUERY);
+    const oldActiveSlideElement = slides[oldActiveSlide];
+    const newActiveSlideElement = slides[newActiveSlide];
+
+    oldActiveSlideElement.classList.remove(SLIDE_ACTIVE_CLASS);
+    oldActiveSlideElement.tabIndex = "-1";
+    oldActiveSlideElement.setAttribute('aria-hidden', true);
+
+    newActiveSlideElement.classList.add(SLIDE_ACTIVE_CLASS);
+    newActiveSlideElement.tabIndex = "0";
+    newActiveSlideElement.setAttribute('aria-hidden', false);
   }
 
   render() {

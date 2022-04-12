@@ -24,6 +24,7 @@ describe('safety-slider', () => {
     expect(safetySliderId.length).toEqual(SLIDER_ID_PREFIX.length + uuidv4().length);
   });
 
+  // TODO: fix this test as it has flaky results with retrieving the slider dots.
   it('should set the uuid property of arrows, dots, and window to the same value', async () => {
     const page = await SpecUtils.buildSliderSpecPage(SpecUtils.buildRandomSlotData());
 
