@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
-## [0.6.0] - 2022
+## [0.6.0] - 2022-04-18
 ### Added
 - Documentation for website integration.
 - Documentation for custom styling.
@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changelog
 ### Changed
 - Dot and arrow buttons to be in the shadow DOM.
+- Default size of dot buttons to be larger.
 ### Removed
 - `dist` and `www` from being tracked in git.
 ### Security

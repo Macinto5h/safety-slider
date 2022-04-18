@@ -2,7 +2,7 @@
   --safety-slider-dots-container-height: calc(var(--safety-slider-bottom-padding) / 2);
   --safety-slider-dots-container-position-bottom: calc(var(--safety-slider-bottom-padding) / 8);
   --safety-slider-dot-background-color: var(--safety-slider-btn-color);
-  --safety-slider-dot-width: .5rem;
+  --safety-slider-dot-width: .75rem;
   --safety-slider-dot-height: var(--safety-slider-dot-width);
   --safety-slider-dot-x-margin: calc(var(--safety-slider-dot-width) / 2);
   --safety-slider-dot-disabled-background-color: var(--safety-slider-btn-disabled-color);
