@@ -2,17 +2,15 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@stencil/recommended"
-  ],
+  "extends": ["plugin:@typescript-eslint/recommended", "plugin:@stencil/recommended", "prettier"],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@stencil/async-methods": "error",
     "@stencil/ban-prefix": ["error", ["stencil", "stnl", "st"]],
     "@stencil/decorators-context": "error",
     "@stencil/decorators-style": [
-      "error", {
+      "error",
+      {
         "prop": "inline",
         "state": "inline",
         "element": "inline",
@@ -20,7 +18,8 @@
         "method": "multiline",
         "watch": "multiline",
         "listen": "multiline"
-      }],
+      }
+    ],
     "@stencil/element-type": "error",
     "@stencil/host-data-deprecated": "error",
     "@stencil/methods-must-be-public": "error",
