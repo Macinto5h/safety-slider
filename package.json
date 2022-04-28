@@ -28,7 +28,11 @@
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "lint:typescript": "eslint src/**/*{.ts,.tsx}",
-    "lint:css": "npx stylelint 'src/components/**/*.css'"
+    "lint:css": "npx stylelint 'src/components/**/*.css'",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@stencil/core": "2.14.2",
@@ -40,11 +44,15 @@
     "@types/autoprefixer": "10.2.0",
     "@types/jest": "27.4.1",
     "autoprefixer": "10.4.4",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^7.0.4",
     "jest": "27.5.1",
     "jest-cli": "27.5.1",
+    "lint-staged": "^12.4.1",
     "prettier": "2.6.2",
     "puppeteer": "10.0.0",
     "stylelint": "14.6.1",
+    "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "25.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.3",
     "tailwindcss": "3.0.23"
@@ -63,7 +71,10 @@
     "not OperaMini all"
   ],
   "stylelint": {
-    "extends": "stylelint-config-standard",
+    "extends": [
+      "stylelint-config-standard",
+      "stylelint-config-prettier"
+    ],
     "plugins": [
       "stylelint-no-unsupported-browser-features"
     ],
