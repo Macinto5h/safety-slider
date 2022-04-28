@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+- Invalid value for aria-controls by no longer using Shadow DOM.
 ### Security
 
 ## [0.6.0] - 2022-04-18
