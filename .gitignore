@@ -17,6 +17,7 @@ log.txt
 .versions/
 node_modules/
 dist/
+loader/
 www/
 $RECYCLE.BIN/
 
