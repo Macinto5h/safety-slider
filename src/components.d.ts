@@ -36,6 +36,7 @@ export namespace Components {
     interface SafetySliderWindow {
         "activeSlide": number;
         "isInfinite": boolean;
+        "trackTransitionDuration": number;
         "uuid": string;
     }
 }
@@ -105,6 +106,7 @@ declare namespace LocalJSX {
         "isInfinite"?: boolean;
         "onSafetySliderApplyTransitionDuration"?: (event: CustomEvent<any>) => void;
         "onSafetySliderInfiniteLoopAdjustment"?: (event: CustomEvent<any>) => void;
+        "trackTransitionDuration"?: number;
         "uuid"?: string;
     }
     interface IntrinsicElements {

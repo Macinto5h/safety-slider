@@ -108,4 +108,19 @@ describe('safety-slider-window', () => {
     expect(cloneShiftEventSpy).toHaveReceivedEventTimes(1);
     expect(applyDurationEventSpy).toHaveReceivedEventTimes(1);
   });
+
+  it('should set the track transition duration when the window property changes value', async () => {
+    await E2EUtils.setWindowContent(page, E2EUtils.buildWindowContent(3));
+    const window = await page.find('safety-slider-window');
+    const transitionDurationInMilliseconds = 100;
+    const transitionDurationInSeconds = transitionDurationInMilliseconds / 1000;
+
+    window.setProperty('trackTransitionDuration', transitionDurationInMilliseconds);
+    await page.waitForChanges();
+
+    const track = await page.find('.safety-slider-track');
+    const trackStyle = await track.getComputedStyle();
+
+    expect(trackStyle.transitionDuration).toBe(transitionDurationInSeconds + 's');
+  });
 });
