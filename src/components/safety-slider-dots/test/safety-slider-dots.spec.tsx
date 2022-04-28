@@ -36,7 +36,7 @@ describe('safety-slider-dots', () => {
 
   it('should use the dot-aria-label property text for the dot button aria labels', async () => {
     const dotCount = 3;
-    const ariaText = "alt {0} text {1}";
+    const ariaText = 'alt {0} text {1}';
     const page = await SpecUtils.buildDotSpecPage(`dot-count="${dotCount}" dot-aria-label="${ariaText}"`);
 
     const dotBtn = page.root.querySelectorAll('button')[1];

@@ -96,7 +96,7 @@ describe('safety-slider-arrows', () => {
     expect(eventSpy).toHaveBeenCalledWith(2);
   });
 
-  it('should change the previous arrow\'s aria label text when prev-aria-label property is given a value', async () => {
+  it("should change the previous arrow's aria label text when prev-aria-label property is given a value", async () => {
     const prevAriaText = 'different prevAriaText';
     const page = await SpecUtils.buildArrowSpecPage(`prev-aria-label="${prevAriaText}"`);
 
@@ -105,7 +105,7 @@ describe('safety-slider-arrows', () => {
     expect(prevArrow.getAttribute('aria-label')).toEqual(prevAriaText);
   });
 
-  it('should change the next arrow\'s aria label text when next-aria-label property is given a value', async () => {
+  it("should change the next arrow's aria label text when next-aria-label property is given a value", async () => {
     const nextAriaText = 'different nextAriaText';
     const page = await SpecUtils.buildArrowSpecPage(`next-aria-label="${nextAriaText}"`);
 
@@ -123,5 +123,5 @@ describe('safety-slider-arrows', () => {
 
     expect(prevArrow.getAttribute('aria-controls')).toEqual(WINDOW_ID_PREFIX + uuid);
     expect(nextArrow.getAttribute('aria-controls')).toEqual(WINDOW_ID_PREFIX + uuid);
-  })
+  });
 });
