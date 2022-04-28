@@ -86,7 +86,6 @@
           "severity": "warning"
         }
       ],
-      "number-leading-zero": "never",
       "selector-class-pattern": "[a-z]+"
     }
   }
