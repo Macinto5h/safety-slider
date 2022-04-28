@@ -24,6 +24,7 @@ export class SafetySlider {
   @Prop() readonly prevArrowAriaLabel: string;
   @Prop() readonly nextArrowAriaLabel: string;
   @Prop() readonly dotAriaLabel: string;
+  @Prop() readonly trackTransitionDuration: number;
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
@@ -61,7 +62,11 @@ export class SafetySlider {
   render() {
     return (
       <Host class="safety-slider" id={SLIDER_ID_PREFIX + this.uuid}>
-        <safety-slider-window activeSlide={this.activeSlide} isInfinite={this.isInfinite} uuid={this.uuid}>
+        <safety-slider-window
+          activeSlide={this.activeSlide}
+          isInfinite={this.isInfinite}
+          uuid={this.uuid}
+          trackTransitionDuration={this.trackTransitionDuration}>
           <slot></slot>
         </safety-slider-window>
 

@@ -16,6 +16,7 @@ export namespace Components {
         "prevArrowAriaLabel": string;
         "prevArrowInnerHTML": string;
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
+        "trackTransitionDuration": number;
     }
     interface SafetySliderArrows {
         "activeSlide": number;
@@ -82,6 +83,7 @@ declare namespace LocalJSX {
         "nextArrowInnerHTML"?: string;
         "prevArrowAriaLabel"?: string;
         "prevArrowInnerHTML"?: string;
+        "trackTransitionDuration"?: number;
     }
     interface SafetySliderArrows {
         "activeSlide"?: number;
