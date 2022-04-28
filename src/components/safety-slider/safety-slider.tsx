@@ -8,7 +8,6 @@ import { SLIDER_ID_PREFIX } from './safety-slider.resources';
   shadow: false,
 })
 export class SafetySlider {
-
   private uuid: string = uuidv4();
   private slideCount: number;
 
@@ -16,11 +15,11 @@ export class SafetySlider {
 
   @State() activeSlide = 0;
 
-  @Prop({attribute: 'infinite'}) readonly isInfinite: boolean;
-  @Prop({attribute: 'prev-arrow'}) readonly prevArrowInnerHTML: string = '←';
-  @Prop({attribute: 'no-arrows'}) readonly hasNoArrows: boolean;
-  @Prop({attribute: 'no-dots'}) readonly hasNoDots: boolean;
-  @Prop({attribute: 'next-arrow'}) readonly nextArrowInnerHTML: string = '→';
+  @Prop({ attribute: 'infinite' }) readonly isInfinite: boolean;
+  @Prop({ attribute: 'prev-arrow' }) readonly prevArrowInnerHTML: string = '←';
+  @Prop({ attribute: 'no-arrows' }) readonly hasNoArrows: boolean;
+  @Prop({ attribute: 'no-dots' }) readonly hasNoDots: boolean;
+  @Prop({ attribute: 'next-arrow' }) readonly nextArrowInnerHTML: string = '→';
   @Prop() readonly prevArrowAriaLabel: string;
   @Prop() readonly nextArrowAriaLabel: string;
   @Prop() readonly dotAriaLabel: string;
@@ -33,7 +32,7 @@ export class SafetySlider {
   componentDidLoad() {
     try {
       this.applyActiveSlideChanges(this.activeSlide);
-    } catch(e) {
+    } catch (e) {
       console.error('safety-slider: no content has been provided in the slot.');
     }
   }
@@ -47,14 +46,13 @@ export class SafetySlider {
   async setActiveSlide(newActiveSlide: number) {
     try {
       this.applyActiveSlideChanges(newActiveSlide);
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     }
   }
 
   private applyActiveSlideChanges(newActiveSlide: number) {
-    if (newActiveSlide < 0 || newActiveSlide >= this.slideCount)
-      throw 'safety-slider: newActiveSlide index is out of range.';
+    if (newActiveSlide < 0 || newActiveSlide >= this.slideCount) throw 'safety-slider: newActiveSlide index is out of range.';
 
     this.activeSlide = newActiveSlide;
   }
@@ -62,11 +60,7 @@ export class SafetySlider {
   render() {
     return (
       <Host class="safety-slider" id={SLIDER_ID_PREFIX + this.uuid}>
-        <safety-slider-window
-          activeSlide={this.activeSlide}
-          isInfinite={this.isInfinite}
-          uuid={this.uuid}
-          trackTransitionDuration={this.trackTransitionDuration}>
+        <safety-slider-window activeSlide={this.activeSlide} isInfinite={this.isInfinite} uuid={this.uuid} trackTransitionDuration={this.trackTransitionDuration}>
           <slot></slot>
         </safety-slider-window>
 
@@ -79,17 +73,12 @@ export class SafetySlider {
             isInfinite={this.isInfinite}
             prevAriaLabel={this.prevArrowAriaLabel}
             nextAriaLabel={this.nextArrowAriaLabel}
-            uuid={this.uuid}>
-          </safety-slider-arrows>
+            uuid={this.uuid}
+          ></safety-slider-arrows>
         )}
 
         {this.slideCount > 1 && !this.hasNoDots && (
-          <safety-slider-dots
-            activeDot={this.activeSlide}
-            dotCount={this.slideCount}
-            dotAriaLabel={this.dotAriaLabel}
-            uuid={this.uuid}>
-          </safety-slider-dots>
+          <safety-slider-dots activeDot={this.activeSlide} dotCount={this.slideCount} dotAriaLabel={this.dotAriaLabel} uuid={this.uuid}></safety-slider-dots>
         )}
       </Host>
     );

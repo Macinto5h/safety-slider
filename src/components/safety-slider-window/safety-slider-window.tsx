@@ -8,7 +8,7 @@ import {
   WINDOW_ID_PREFIX,
   TRACK_TRANSITION_DURATION_CSS_VAR,
   TRACK_OFFSET_CSS_VAR,
-  WINDOW_WIDTH_CSS_VAR
+  WINDOW_WIDTH_CSS_VAR,
 } from './safety-slider-window.resources';
 
 @Component({
@@ -17,7 +17,6 @@ import {
   shadow: false,
 })
 export class SafetySliderWindow {
-
   private slidesOffset: number;
   private slideCount: number;
   private trackElement: HTMLDivElement;
@@ -31,7 +30,7 @@ export class SafetySliderWindow {
   @State() rootWidth: number;
 
   @Prop() readonly activeSlide: number = 0;
-  @Prop({reflect: true}) readonly isInfinite: boolean = false;
+  @Prop({ reflect: true }) readonly isInfinite: boolean = false;
   @Prop() readonly uuid: string;
   @Prop() readonly trackTransitionDuration: number = 250;
 
@@ -70,7 +69,7 @@ export class SafetySliderWindow {
     }
   }
 
-  @Listen('resize', {target: 'window'})
+  @Listen('resize', { target: 'window' })
   windowResizeHandler() {
     this.rootWidth = this.root.offsetWidth;
   }
@@ -105,15 +104,11 @@ export class SafetySliderWindow {
   }
 
   private setInfiniteLoopToFront(newActiveSlide: number, oldActiveSlide: number) {
-    this.infiniteLoopToFront = this.isInfinite
-      && newActiveSlide === 0
-      && oldActiveSlide === this.slideCount - 1;
+    this.infiniteLoopToFront = this.isInfinite && newActiveSlide === 0 && oldActiveSlide === this.slideCount - 1;
   }
 
   private setInfiniteLoopToBack(newActiveSlide: number, oldActiveSlide: number) {
-    this.infiniteLoopToBack = this.isInfinite
-      && newActiveSlide === this.slideCount - 1
-      && oldActiveSlide === 0;
+    this.infiniteLoopToBack = this.isInfinite && newActiveSlide === this.slideCount - 1 && oldActiveSlide === 0;
   }
 
   private moveActiveSlideClass(newActiveSlide: number, oldActiveSlide: number) {
@@ -137,19 +132,18 @@ export class SafetySliderWindow {
 
   render() {
     return (
-      <Host id={WINDOW_ID_PREFIX + this.uuid} style={{
-        [WINDOW_WIDTH_CSS_VAR]: this.rootWidth + 'px',
-        [TRACK_OFFSET_CSS_VAR]: this.slidesOffset + 'px',
-        [TRACK_TRANSITION_DURATION_CSS_VAR]: this.trackTransitionDuration + 'ms'
-        }}>
-        <div class={SLIDE_TRACK_CLASS} ref={(el) => this.trackElement = el as HTMLDivElement}>
-          {this.isInfinite && this.slideCount > 1 && (
-            <div class={SLIDE_CLONE_CLASS} innerHTML={this.beginningClone}></div>
-          )}
+      <Host
+        id={WINDOW_ID_PREFIX + this.uuid}
+        style={{
+          [WINDOW_WIDTH_CSS_VAR]: this.rootWidth + 'px',
+          [TRACK_OFFSET_CSS_VAR]: this.slidesOffset + 'px',
+          [TRACK_TRANSITION_DURATION_CSS_VAR]: this.trackTransitionDuration + 'ms',
+        }}
+      >
+        <div class={SLIDE_TRACK_CLASS} ref={el => (this.trackElement = el as HTMLDivElement)}>
+          {this.isInfinite && this.slideCount > 1 && <div class={SLIDE_CLONE_CLASS} innerHTML={this.beginningClone}></div>}
           <slot></slot>
-          {this.isInfinite && this.slideCount > 1 && (
-            <div class={SLIDE_CLONE_CLASS} innerHTML={this.endingClone}></div>
-          )}
+          {this.isInfinite && this.slideCount > 1 && <div class={SLIDE_CLONE_CLASS} innerHTML={this.endingClone}></div>}
         </div>
       </Host>
     );

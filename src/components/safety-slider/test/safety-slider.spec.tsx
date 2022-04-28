@@ -49,7 +49,7 @@ describe('safety-slider', () => {
   });
 
   it('should render with no dots and arrows if only one item is provided', async () => {
-    const page = await SpecUtils.buildSliderSpecPage(SpecUtils.buildRandomSlotData(1,1));
+    const page = await SpecUtils.buildSliderSpecPage(SpecUtils.buildRandomSlotData(1, 1));
 
     const arrows = SpecUtils.getArrowsComponent(page);
     const dots = SpecUtils.getDotsComponent(page);
@@ -70,11 +70,10 @@ describe('safety-slider', () => {
 
   it('should render with custom track transition duration if a value is given', async () => {
     const trackTransitionDuration = 100;
-    const page = await SpecUtils.buildSliderSpecPage(SpecUtils.buildRandomSlotData(),
-     `track-transition-duration="${trackTransitionDuration}"`);
+    const page = await SpecUtils.buildSliderSpecPage(SpecUtils.buildRandomSlotData(), `track-transition-duration="${trackTransitionDuration}"`);
 
     const window = SpecUtils.getWindowComponent(page);
 
     expect(window.getAttribute('tracktransitionduration')).toEqual(`${trackTransitionDuration}`);
-  })
+  });
 });

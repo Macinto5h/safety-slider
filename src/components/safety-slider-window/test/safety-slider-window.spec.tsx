@@ -1,18 +1,14 @@
 import { SpecUtils } from '../../../utils/spec-utils';
 import { SafetySliderWindow } from '../safety-slider-window';
-import {
-  SLIDE_CLASS_QUERY,
-  SLIDE_CLONE_CLASS_QUERY,
-  WINDOW_ID_PREFIX,
-  SLIDE_ACTIVE_CLASS
-} from '../safety-slider-window.resources';
+import { SLIDE_CLASS_QUERY, SLIDE_CLONE_CLASS_QUERY, WINDOW_ID_PREFIX, SLIDE_ACTIVE_CLASS } from '../safety-slider-window.resources';
 import { v4 as uuidv4 } from 'uuid';
 
 describe('safety-slider-window', () => {
-
   beforeEach(() => {
     Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
-      configurable: true, value: 500, writable: true
+      configurable: true,
+      value: 500,
+      writable: true,
     });
   });
 
@@ -45,7 +41,7 @@ describe('safety-slider-window', () => {
   });
 
   it('should create clone slides when set to infinite and at least two slides in the window', async () => {
-    const slideCount = SpecUtils.buildRandomSlotData(2,2);
+    const slideCount = SpecUtils.buildRandomSlotData(2, 2);
     const page = await SpecUtils.buildWindowSpecPage(slideCount, 'is-infinite');
 
     await page.waitForChanges();
@@ -58,7 +54,7 @@ describe('safety-slider-window', () => {
   });
 
   it('should not generate clone slides when there is only one slide in the window and set to infinite', async () => {
-    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1,1), 'is-infinite');
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1, 1), 'is-infinite');
 
     const clones = page.root.querySelectorAll(SLIDE_CLONE_CLASS_QUERY);
 

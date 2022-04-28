@@ -8,26 +8,22 @@ import { DOT_CLASS } from './safety-slider-dots.resources';
   shadow: false,
 })
 export class SafetySliderDots {
-
   private dotButtons: number[];
 
-  @Prop() readonly activeDot: number
+  @Prop() readonly activeDot: number;
   @Prop() readonly dotCount: number;
-  @Prop() readonly dotAriaLabel: string = "Go to slide {0} of {1}";
+  @Prop() readonly dotAriaLabel: string = 'Go to slide {0} of {1}';
   @Prop() readonly uuid: string;
 
   @Event() safetySliderNavigationClick: EventEmitter<number>;
 
   componentWillRender() {
     this.dotButtons = [];
-    for (let i = 0; i < this.dotCount; i++)
-      this.dotButtons.push(i);
+    for (let i = 0; i < this.dotCount; i++) this.dotButtons.push(i);
   }
 
   private getFormattedAriaLabel(slideNumber: number) {
-    return this.dotAriaLabel
-      .replace('{0}', slideNumber.toString())
-      .replace('{1}', this.dotCount.toString());
+    return this.dotAriaLabel.replace('{0}', slideNumber.toString()).replace('{1}', this.dotCount.toString());
   }
 
   private dotClick = (event: MouseEvent) => {
@@ -39,7 +35,7 @@ export class SafetySliderDots {
   render() {
     return (
       <Host>
-        {this.dotButtons.map((i) =>
+        {this.dotButtons.map(i => (
           <button
             class={DOT_CLASS}
             type="button"
@@ -48,9 +44,8 @@ export class SafetySliderDots {
             aria-label={this.getFormattedAriaLabel(i + 1)}
             aria-controls={WINDOW_ID_PREFIX + this.uuid}
             data-slide={i}
-          >
-          </button>
-        )}
+          ></button>
+        ))}
       </Host>
     );
   }
