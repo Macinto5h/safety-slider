@@ -25,7 +25,6 @@ export class SafetySliderWindow {
   private endingClone: string;
   private infiniteLoopToFront = false;
   private infiniteLoopToBack = false;
-  private trackTransitionDuration = 250;
 
   @Element() root: HTMLSafetySliderWindowElement;
 
@@ -34,6 +33,7 @@ export class SafetySliderWindow {
   @Prop() readonly activeSlide: number = 0;
   @Prop({reflect: true}) readonly isInfinite: boolean = false;
   @Prop() readonly uuid: string;
+  @Prop() readonly trackTransitionDuration: number = 250;
 
   @Watch('activeSlide')
   activeSlideChanged(newActiveSlide: number, oldActiveSlide: number) {
