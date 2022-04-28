@@ -67,4 +67,14 @@ describe('safety-slider', () => {
     expect(arrows).not.toBeNull();
     expect(dots).not.toBeNull();
   });
+
+  it('should render with custom track transition duration if a value is given', async () => {
+    const trackTransitionDuration = 100;
+    const page = await SpecUtils.buildSliderSpecPage(SpecUtils.buildRandomSlotData(),
+     `track-transition-duration="${trackTransitionDuration}"`);
+
+    const window = SpecUtils.getWindowComponent(page);
+
+    expect(window.getAttribute('tracktransitionduration')).toEqual(`${trackTransitionDuration}`);
+  })
 });
