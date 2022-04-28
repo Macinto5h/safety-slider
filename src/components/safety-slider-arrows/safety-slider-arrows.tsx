@@ -4,7 +4,7 @@ import { WINDOW_ID_PREFIX } from '../safety-slider-window/safety-slider-window.r
 @Component({
   tag: 'safety-slider-arrows',
   styleUrl: 'safety-slider-arrows.css',
-  shadow: true,
+  shadow: false,
 })
 export class SafetySliderArrows {
 

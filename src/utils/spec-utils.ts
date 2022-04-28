@@ -53,11 +53,11 @@ export class SpecUtils {
   }
 
   static getNextArrowElement(page) {
-    return page.root.shadowRoot.querySelector('.safety-slider-arrow.-next');
+    return page.root.querySelector('.safety-slider-arrow.-next');
   }
 
   static getPrevArrowElement(page) {
-    return page.root.shadowRoot.querySelector('.safety-slider-arrow.-prev');
+    return page.root.querySelector('.safety-slider-arrow.-prev');
   }
 
   static getWindowComponent(page) {

@@ -5,7 +5,7 @@ import { DOT_CLASS } from './safety-slider-dots.resources';
 @Component({
   tag: 'safety-slider-dots',
   styleUrl: 'safety-slider-dots.css',
-  shadow: true,
+  shadow: false,
 })
 export class SafetySliderDots {
 

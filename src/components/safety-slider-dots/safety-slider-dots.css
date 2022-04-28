@@ -1,4 +1,4 @@
-:host {
+safety-slider-dots {
   --safety-slider-dots-container-height: calc(var(--safety-slider-bottom-padding) / 2);
   --safety-slider-dots-container-position-bottom: calc(var(--safety-slider-bottom-padding) / 8);
   --safety-slider-dot-background-color: var(--safety-slider-btn-color);
@@ -17,7 +17,7 @@
   text-align: center;
 }
 
-.safety-slider-dot {
+button.safety-slider-dot {
   appearance: none;
   border: none;
   background-color: var(--safety-slider-dot-background-color);
@@ -29,7 +29,7 @@
   cursor: pointer;
 }
 
-.safety-slider-dot[disabled] {
+button.safety-slider-dot[disabled] {
   background-color: var(--safety-slider-dot-disabled-background-color);
   cursor: not-allowed;
 }

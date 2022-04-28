@@ -1,4 +1,4 @@
-:host {
+safety-slider-arrows {
   --safety-slider-arrow-border-width: 1px;
   --safety-slider-arrow-border-color: var(--safety-slider-btn-color);
   --safety-slider-arrow-background-color: white;
@@ -18,7 +18,7 @@
   justify-content: space-between;
 }
 
-.safety-slider-arrow {
+button.safety-slider-arrow {
   appearance: none;
   border: var(--safety-slider-arrow-border-width) solid var(--safety-slider-arrow-border-color);
   background-color: var(--safety-slider-arrow-background-color);
@@ -30,7 +30,7 @@
   cursor: pointer;
 }
 
-.safety-slider-arrow[disabled] {
+button.safety-slider-arrow[disabled] {
   background-color: var(--safety-slider-arrow-disabled-background-color);
   cursor: not-allowed;
 }
