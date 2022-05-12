@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `track-transition-duration` property
 - Documentation for browser support
 - Prettier
+- `aria-live="polite"` to track
 
 ### Changed
 
