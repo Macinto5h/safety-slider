@@ -140,7 +140,7 @@ export class SafetySliderWindow {
           [TRACK_TRANSITION_DURATION_CSS_VAR]: this.trackTransitionDuration + 'ms',
         }}
       >
-        <div class={SLIDE_TRACK_CLASS} ref={el => (this.trackElement = el as HTMLDivElement)}>
+        <div class={SLIDE_TRACK_CLASS} ref={el => (this.trackElement = el as HTMLDivElement)} aria-live="polite">
           {this.isInfinite && this.slideCount > 1 && <div class={SLIDE_CLONE_CLASS} innerHTML={this.beginningClone}></div>}
           <slot></slot>
           {this.isInfinite && this.slideCount > 1 && <div class={SLIDE_CLONE_CLASS} innerHTML={this.endingClone}></div>}

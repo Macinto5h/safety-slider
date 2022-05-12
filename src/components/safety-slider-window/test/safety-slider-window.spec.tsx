@@ -1,6 +1,6 @@
 import { SpecUtils } from '../../../utils/spec-utils';
 import { SafetySliderWindow } from '../safety-slider-window';
-import { SLIDE_CLASS_QUERY, SLIDE_CLONE_CLASS_QUERY, WINDOW_ID_PREFIX, SLIDE_ACTIVE_CLASS } from '../safety-slider-window.resources';
+import { SLIDE_CLASS_QUERY, SLIDE_CLONE_CLASS_QUERY, WINDOW_ID_PREFIX, SLIDE_ACTIVE_CLASS, SLIDE_TRACK_CLASS_QUERY } from '../safety-slider-window.resources';
 import { v4 as uuidv4 } from 'uuid';
 
 describe('safety-slider-window', () => {
@@ -72,5 +72,13 @@ describe('safety-slider-window', () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(), `uuid="${uuid}"`);
 
     expect(page.root.id).toEqual(WINDOW_ID_PREFIX + uuid);
+  });
+
+  it('should render the track element with aria-live set to polite', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+
+    const track = page.root.querySelector(SLIDE_TRACK_CLASS_QUERY);
+
+    expect(track.getAttribute('aria-live')).toBe('polite');
   });
 });
