@@ -24,6 +24,7 @@ export class SafetySliderWindow {
   private endingClone: string;
   private infiniteLoopToFront = false;
   private infiniteLoopToBack = false;
+  private mouseInitialXOffset = -1;
 
   @Element() root: HTMLSafetySliderWindowElement;
 
@@ -85,6 +86,12 @@ export class SafetySliderWindow {
   @Listen('safetySliderApplyTransitionDuration')
   applyTransitionDurationHandler() {
     this.setCSSProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
+  }
+
+  @Listen('mousedown')
+  mouseDownHandler(event: MouseEvent) {
+    this.mouseInitialXOffset = event.offsetX;
+    return this.mouseInitialXOffset;
   }
 
   private calculateTrackOffset() {
