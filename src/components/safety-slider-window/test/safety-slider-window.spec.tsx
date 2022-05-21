@@ -81,4 +81,14 @@ describe('safety-slider-window', () => {
 
     expect(track.getAttribute('aria-live')).toBe('polite');
   });
+
+  it('should record the initial x offset of the mouse when a mousedown event occurs', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const window: SafetySliderWindow = page.rootInstance;
+
+    const offsetX = 100;
+    const mouseEvent: MouseEvent = { offsetX: offsetX };
+
+    expect(window.mouseDownHandler(mouseEvent)).toEqual(offsetX);
+  });
 });
