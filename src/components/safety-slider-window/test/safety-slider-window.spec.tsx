@@ -1,7 +1,16 @@
 import { SpecUtils } from '../../../utils/spec-utils';
 import { SafetySliderWindow } from '../safety-slider-window';
-import { SLIDE_CLASS_QUERY, SLIDE_CLONE_CLASS_QUERY, WINDOW_ID_PREFIX, SLIDE_ACTIVE_CLASS, SLIDE_TRACK_CLASS_QUERY } from '../safety-slider-window.resources';
+import {
+  SLIDE_CLASS_QUERY,
+  SLIDE_CLONE_CLASS_QUERY,
+  WINDOW_ID_PREFIX,
+  SLIDE_ACTIVE_CLASS,
+  SLIDE_TRACK_CLASS_QUERY,
+  TRACK_TRANSITION_DURATION_CSS_VAR,
+  TRACK_OFFSET_CSS_VAR,
+} from '../safety-slider-window.resources';
 import { v4 as uuidv4 } from 'uuid';
+import { setCssProperty } from '../../../utils/css-utils.ts';
 
 describe('safety-slider-window', () => {
   beforeEach(() => {
@@ -14,7 +23,7 @@ describe('safety-slider-window', () => {
 
   it('should render slot content with slide classes and attributes', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
-    const slides = page.body.querySelectorAll(SLIDE_CLASS_QUERY);
+    const slides = page.body.querySelectorAll(SLIDE_CLASS_QUERY) as NodeListOf<HTMLElement>;
 
     slides.forEach(element => {
       if (element.classList.contains(SLIDE_ACTIVE_CLASS)) {
@@ -82,13 +91,87 @@ describe('safety-slider-window', () => {
     expect(track.getAttribute('aria-live')).toBe('polite');
   });
 
-  it('should record the initial x offset of the mouse when a mousedown event occurs', async () => {
+  it('should unset the transition duration when a mousedown event occurs', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const window: SafetySliderWindow = page.rootInstance;
+
+    page.root.offsetWidth = 500;
+    window.windowResizeHandler();
+    await page.waitForChanges();
+
+    setCssProperty = jest.fn();
+
+    window.mouseDownHandler({} as MouseEvent);
+    await page.waitForChanges();
+
+    expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
+  });
+
+  it('should not record the current x offset of the mousemove event if a mousedown event did not occur', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
     const window: SafetySliderWindow = page.rootInstance;
 
     const offsetX = 100;
-    const mouseEvent: MouseEvent = { offsetX: offsetX };
+    const mouseEvent = { offsetX: offsetX } as MouseEvent;
 
-    expect(window.mouseDownHandler(mouseEvent)).toEqual(offsetX);
+    expect(window.mouseMoveHandler(mouseEvent)).toBeNull();
+  });
+
+  it('should record the current x offset of the mousemove event if a mousedown event did occur', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const window: SafetySliderWindow = page.rootInstance;
+
+    const offsetDownX = 100;
+    const mouseDownEvent = { offsetX: offsetDownX } as MouseEvent;
+
+    window.mouseDownHandler(mouseDownEvent);
+    await page.waitForChanges();
+
+    const offsetMoveX = 50;
+    const mouseMoveEvent = { offsetX: offsetMoveX } as MouseEvent;
+
+    expect(window.mouseMoveHandler(mouseMoveEvent)).toEqual(offsetMoveX);
+  });
+
+  it('should set mouse drag to inactive when a mouseleave event occurs', async () => {
+    const transitionDuration = 250;
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1), `tracktransitionduration="${transitionDuration}"`);
+
+    const window: SafetySliderWindow = page.rootInstance;
+    const windowElement = page.root as HTMLElement;
+
+    windowElement.offsetWidth = 500;
+    window.windowResizeHandler();
+    await page.waitForChanges();
+
+    setCssProperty = jest.fn();
+
+    window.mouseLeaveHandler();
+    await page.waitForChanges();
+
+    expect(setCssProperty).toHaveBeenCalledTimes(2);
+    expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
+    expect(setCssProperty).toHaveBeenNthCalledWith(2, expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+  });
+
+  it('should set mouse drag to inactive when a mouseup event occurs', async () => {
+    const transitionDuration = 250;
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1), `tracktransitionduration="${transitionDuration}"`);
+
+    const window: SafetySliderWindow = page.rootInstance;
+    const windowElement = page.root as HTMLElement;
+
+    windowElement.offsetWidth = 500;
+    window.windowResizeHandler();
+    await page.waitForChanges();
+
+    setCssProperty = jest.fn();
+
+    window.mouseUpHandler();
+    await page.waitForChanges();
+
+    expect(setCssProperty).toHaveBeenCalledTimes(2);
+    expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
+    expect(setCssProperty).toHaveBeenNthCalledWith(2, expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
   });
 });

@@ -10,6 +10,7 @@ import {
   TRACK_OFFSET_CSS_VAR,
   WINDOW_WIDTH_CSS_VAR,
 } from './safety-slider-window.resources';
+import { setCssProperty } from '../../utils/css-utils';
 
 @Component({
   tag: 'safety-slider-window',
@@ -25,6 +26,8 @@ export class SafetySliderWindow {
   private infiniteLoopToFront = false;
   private infiniteLoopToBack = false;
   private mouseInitialXOffset = -1;
+  private mouseCurrentXOffset = -1;
+  private mouseDragIsActive = false;
 
   @Element() root: HTMLSafetySliderWindowElement;
 
@@ -53,6 +56,7 @@ export class SafetySliderWindow {
     const slides = Array.from(this.root.children) as HTMLElement[];
     slides.forEach(slide => {
       slide.classList.add(SLIDE_CLASS);
+      slide.setAttribute('draggable', 'false');
       this.updateSlideToBeInactive(slide);
     });
 
@@ -77,21 +81,46 @@ export class SafetySliderWindow {
 
   @Listen('safetySliderInfiniteLoopAdjustment')
   infiniteLoopAdjustmentHandler() {
-    this.setCSSProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `0ms`);
-    this.setCSSProperty(TRACK_OFFSET_CSS_VAR, `${this.rootWidth * (this.activeSlide + 1) * -1}px`);
+    this.disableTrackTransitionDuration();
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.rootWidth * (this.activeSlide + 1) * -1}px`);
 
     setTimeout(() => this.safetySliderApplyTransitionDuration.emit(), this.trackTransitionDuration);
   }
 
   @Listen('safetySliderApplyTransitionDuration')
   applyTransitionDurationHandler() {
-    this.setCSSProperty(TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
+    setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
   }
 
   @Listen('mousedown')
   mouseDownHandler(event: MouseEvent) {
     this.mouseInitialXOffset = event.offsetX;
-    return this.mouseInitialXOffset;
+    this.mouseDragIsActive = true;
+    this.disableTrackTransitionDuration();
+  }
+
+  @Listen('mousemove')
+  mouseMoveHandler(event: MouseEvent) {
+    if (!this.mouseDragIsActive) return null;
+
+    this.mouseCurrentXOffset = event.offsetX;
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset + (this.mouseCurrentXOffset - this.mouseInitialXOffset)}px`);
+
+    return this.mouseCurrentXOffset;
+  }
+
+  @Listen('mouseleave')
+  mouseLeaveHandler() {
+    this.mouseDragIsActive = false;
+    setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
+  }
+
+  @Listen('mouseup')
+  mouseUpHandler() {
+    this.mouseDragIsActive = false;
+    setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
   }
 
   private calculateTrackOffset() {
@@ -104,10 +133,6 @@ export class SafetySliderWindow {
     } else {
       return this.rootWidth * this.activeSlide * -1;
     }
-  }
-
-  private setCSSProperty(key: string, value: string) {
-    this.root.style.setProperty(key, value);
   }
 
   private setInfiniteLoopToFront(newActiveSlide: number, oldActiveSlide: number) {
@@ -135,6 +160,10 @@ export class SafetySliderWindow {
     slide.classList.add(SLIDE_ACTIVE_CLASS);
     slide.tabIndex = 0;
     slide.setAttribute('aria-hidden', 'false');
+  }
+
+  private disableTrackTransitionDuration() {
+    setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
   }
 
   render() {
