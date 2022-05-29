@@ -167,11 +167,40 @@ describe('safety-slider-window', () => {
 
     setCssProperty = jest.fn();
 
-    window.mouseUpHandler();
+    window.mouseUpHandler({} as MouseEvent);
     await page.waitForChanges();
 
     expect(setCssProperty).toHaveBeenCalledTimes(2);
-    expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
-    expect(setCssProperty).toHaveBeenNthCalledWith(2, expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+    expect(setCssProperty).toHaveBeenNthCalledWith(2, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
+    expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
   });
+
+  it('should emit safetySliderNavigationClick event for next slide when mouseup occurs and drag length is a quarter of the window width', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
+    const window: SafetySliderWindow = page.rootInstance;
+    const windowElement = page.root as HTMLElement;
+    const eventSpy = jest.spyOn(window.safetySliderNavigationClick, 'emit');
+
+    windowElement.offsetWidth = 500;
+    window.windowResizeHandler();
+    await page.waitForChanges();
+
+    window.mouseDownHandler({ offsetX: 250 } as MouseEvent);
+    await page.waitForChanges();
+
+    window.mouseUpHandler({ offsetX: 50 } as MouseEvent);
+    await page.waitForChanges();
+
+    expect(eventSpy).toHaveBeenCalledWith(2);
+  });
+
+  // TODO rename safetySliderNavigationClick to safetysliderslidechange
+  // TODO add test for having a drag change to the previous slides
+  // TODO add tests for mouseleave
+  // TODO add test to handle drag case for only 1 slide in slider
+  // TODO add test to handle drag case when attempting to reach non existing previous or next slides (not infinite)
+  // TODO add test to handle drag case when the next slide or previous slide requires an infinite loop
+  // TODO add documentation for new property draggable
+  // TODO create new property draggable that enables mouse dragging to change slides
+  // TODO add draggable property to changelog
 });

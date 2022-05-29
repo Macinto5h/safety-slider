@@ -104,6 +104,7 @@ declare namespace LocalJSX {
     isInfinite?: boolean;
     onSafetySliderApplyTransitionDuration?: (event: CustomEvent<any>) => void;
     onSafetySliderInfiniteLoopAdjustment?: (event: CustomEvent<any>) => void;
+    onSafetySliderNavigationClick?: (event: CustomEvent<number>) => void;
     trackTransitionDuration?: number;
     uuid?: string;
   }
