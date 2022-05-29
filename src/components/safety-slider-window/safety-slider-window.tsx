@@ -25,8 +25,8 @@ export class SafetySliderWindow {
   private endingClone: string;
   private infiniteLoopToFront = false;
   private infiniteLoopToBack = false;
-  private mouseInitialXOffset = -1;
-  private mouseCurrentXOffset = -1;
+  private mouseInitialXOffset: number;
+  private mouseCurrentXOffset: number;
   private mouseDragIsActive = false;
 
   @Element() root: HTMLSafetySliderWindowElement;
@@ -47,6 +47,7 @@ export class SafetySliderWindow {
 
   @Event() safetySliderInfiniteLoopAdjustment: EventEmitter;
   @Event() safetySliderApplyTransitionDuration: EventEmitter;
+  @Event() safetySliderNavigationClick: EventEmitter<number>;
 
   componentWillRender() {
     this.slidesOffset = this.calculateTrackOffset();
@@ -117,10 +118,19 @@ export class SafetySliderWindow {
   }
 
   @Listen('mouseup')
-  mouseUpHandler() {
+  mouseUpHandler(event: MouseEvent) {
+    this.mouseCurrentXOffset = event.offsetX;
+
+    let activeSlideAfterDrag = this.activeSlideAfterDrag();
+
+    if (this.mouseDragIsActive && activeSlideAfterDrag != this.activeSlide) {
+      this.safetySliderNavigationClick.emit(activeSlideAfterDrag);
+    } else {
+      setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
+    }
+
     this.mouseDragIsActive = false;
     setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
-    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
   }
 
   private calculateTrackOffset() {
@@ -164,6 +174,16 @@ export class SafetySliderWindow {
 
   private disableTrackTransitionDuration() {
     setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
+  }
+
+  private activeSlideAfterDrag() {
+    let dragChangeThreshold = Math.floor(this.rootWidth / 4);
+
+    if (this.mouseInitialXOffset - this.mouseCurrentXOffset >= dragChangeThreshold) {
+      return this.activeSlide + 1;
+    }
+
+    return this.activeSlide;
   }
 
   render() {
