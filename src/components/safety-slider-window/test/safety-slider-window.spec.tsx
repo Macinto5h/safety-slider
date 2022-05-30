@@ -175,11 +175,11 @@ describe('safety-slider-window', () => {
     expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
   });
 
-  it('should emit safetySliderNavigationClick event for next slide when mouseup occurs and drag length is a quarter of the window width', async () => {
+  it('should emit safetySliderSlideChange event for next slide when mouseup occurs and drag length is a quarter of the window width', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
     const window: SafetySliderWindow = page.rootInstance;
     const windowElement = page.root as HTMLElement;
-    const eventSpy = jest.spyOn(window.safetySliderNavigationClick, 'emit');
+    const eventSpy = jest.spyOn(window.safetySliderSlideChange, 'emit');
 
     windowElement.offsetWidth = 500;
     window.windowResizeHandler();
@@ -194,7 +194,6 @@ describe('safety-slider-window', () => {
     expect(eventSpy).toHaveBeenCalledWith(2);
   });
 
-  // TODO rename safetySliderNavigationClick to safetysliderslidechange
   // TODO add test for having a drag change to the previous slides
   // TODO add tests for mouseleave
   // TODO add test to handle drag case for only 1 slide in slider

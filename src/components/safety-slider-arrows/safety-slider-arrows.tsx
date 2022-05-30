@@ -16,10 +16,10 @@ export class SafetySliderArrows {
   @Prop() readonly nextAriaLabel: string = 'Go to next slide';
   @Prop() readonly uuid: string;
 
-  @Event() safetySliderNavigationClick: EventEmitter<number>;
+  @Event() safetySliderSlideChange: EventEmitter<number>;
 
   private prevArrowClick = () => {
-    this.safetySliderNavigationClick.emit(this.getPrevSlideNumber());
+    this.safetySliderSlideChange.emit(this.getPrevSlideNumber());
   };
 
   private getPrevSlideNumber() {
@@ -27,7 +27,7 @@ export class SafetySliderArrows {
   }
 
   private nextArrowClick = () => {
-    this.safetySliderNavigationClick.emit(this.getNextSlideNumber());
+    this.safetySliderSlideChange.emit(this.getNextSlideNumber());
   };
 
   private getNextSlideNumber() {

@@ -15,7 +15,7 @@ export class SafetySliderDots {
   @Prop() readonly dotAriaLabel: string = 'Go to slide {0} of {1}';
   @Prop() readonly uuid: string;
 
-  @Event() safetySliderNavigationClick: EventEmitter<number>;
+  @Event() safetySliderSlideChange: EventEmitter<number>;
 
   componentWillRender() {
     this.dotButtons = [];
@@ -29,7 +29,7 @@ export class SafetySliderDots {
   private dotClick = (event: MouseEvent) => {
     const activeSlideValue = (event.target as HTMLButtonElement).getAttribute('data-slide');
 
-    this.safetySliderNavigationClick.emit(parseInt(activeSlideValue));
+    this.safetySliderSlideChange.emit(parseInt(activeSlideValue));
   };
 
   render() {

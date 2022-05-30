@@ -37,8 +37,10 @@ export class SafetySlider {
     }
   }
 
-  @Listen('safetySliderNavigationClick')
-  onSafetySliderDotClick(event: CustomEvent<number>) {
+  // TODO use constant for decorator instead of static value, dependent on this issue being resolved.
+  // https://github.com/ionic-team/stencil/issues/2924
+  @Listen('safetySliderSlideChange')
+  slideChangeHandler(event: CustomEvent<number>) {
     this.setActiveSlide(event.detail);
   }
 

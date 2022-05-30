@@ -24,7 +24,7 @@ describe('safety-slider-dots', () => {
     const page = await SpecUtils.buildDotSpecPage(`dot-count="3"`);
 
     const dotInstance: SafetySliderDots = page.rootInstance;
-    const eventSpy = jest.spyOn(dotInstance.safetySliderNavigationClick, 'emit');
+    const eventSpy = jest.spyOn(dotInstance.safetySliderSlideChange, 'emit');
 
     const dotBtn = page.root.querySelectorAll('button')[1];
 
