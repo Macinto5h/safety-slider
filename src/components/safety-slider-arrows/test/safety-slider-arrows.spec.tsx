@@ -49,7 +49,7 @@ describe('safety-slider-arrows', () => {
 
     const component: SafetySliderArrows = page.rootInstance;
     const prevArrow = SpecUtils.getPrevArrowElement(page);
-    const eventSpy = jest.spyOn(component.safetySliderNavigationClick, 'emit');
+    const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
 
     prevArrow.click();
     await page.waitForChanges();
@@ -62,7 +62,7 @@ describe('safety-slider-arrows', () => {
 
     const component: SafetySliderArrows = page.rootInstance;
     const nextArrow = SpecUtils.getNextArrowElement(page);
-    const eventSpy = jest.spyOn(component.safetySliderNavigationClick, 'emit');
+    const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
 
     nextArrow.click();
     await page.waitForChanges();
@@ -75,7 +75,7 @@ describe('safety-slider-arrows', () => {
 
     const component: SafetySliderArrows = page.rootInstance;
     const nextArrow = SpecUtils.getNextArrowElement(page);
-    const eventSpy = jest.spyOn(component.safetySliderNavigationClick, 'emit');
+    const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
 
     nextArrow.click();
     await page.waitForChanges();
@@ -88,7 +88,7 @@ describe('safety-slider-arrows', () => {
 
     const component: SafetySliderArrows = page.rootInstance;
     const prevArrow = SpecUtils.getPrevArrowElement(page);
-    const eventSpy = jest.spyOn(component.safetySliderNavigationClick, 'emit');
+    const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
 
     prevArrow.click();
     await page.waitForChanges();

@@ -47,7 +47,7 @@ export class SafetySliderWindow {
 
   @Event() safetySliderInfiniteLoopAdjustment: EventEmitter;
   @Event() safetySliderApplyTransitionDuration: EventEmitter;
-  @Event() safetySliderNavigationClick: EventEmitter<number>;
+  @Event() safetySliderSlideChange: EventEmitter<number>;
 
   componentWillRender() {
     this.slidesOffset = this.calculateTrackOffset();
@@ -124,7 +124,7 @@ export class SafetySliderWindow {
     let activeSlideAfterDrag = this.activeSlideAfterDrag();
 
     if (this.mouseDragIsActive && activeSlideAfterDrag != this.activeSlide) {
-      this.safetySliderNavigationClick.emit(activeSlideAfterDrag);
+      this.safetySliderSlideChange.emit(activeSlideAfterDrag);
     } else {
       setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
     }

@@ -86,7 +86,7 @@ declare namespace LocalJSX {
     isInfinite?: boolean;
     nextAriaLabel?: string;
     nextArrowInnerHTML?: string;
-    onSafetySliderNavigationClick?: (event: CustomEvent<number>) => void;
+    onSafetySliderSlideChange?: (event: CustomEvent<number>) => void;
     prevAriaLabel?: string;
     prevArrowInnerHTML?: string;
     slideCount?: number;
@@ -96,7 +96,7 @@ declare namespace LocalJSX {
     activeDot?: number;
     dotAriaLabel?: string;
     dotCount?: number;
-    onSafetySliderNavigationClick?: (event: CustomEvent<number>) => void;
+    onSafetySliderSlideChange?: (event: CustomEvent<number>) => void;
     uuid?: string;
   }
   interface SafetySliderWindow {
@@ -104,7 +104,7 @@ declare namespace LocalJSX {
     isInfinite?: boolean;
     onSafetySliderApplyTransitionDuration?: (event: CustomEvent<any>) => void;
     onSafetySliderInfiniteLoopAdjustment?: (event: CustomEvent<any>) => void;
-    onSafetySliderNavigationClick?: (event: CustomEvent<number>) => void;
+    onSafetySliderSlideChange?: (event: CustomEvent<number>) => void;
     trackTransitionDuration?: number;
     uuid?: string;
   }
