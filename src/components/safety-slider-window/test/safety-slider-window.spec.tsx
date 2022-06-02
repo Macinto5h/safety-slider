@@ -133,87 +133,79 @@ describe('safety-slider-window', () => {
     expect(window.mouseMoveHandler(mouseMoveEvent)).toEqual(offsetMoveX);
   });
 
-  it('should set mouse drag to inactive when a mouseleave event occurs', async () => {
-    const transitionDuration = 250;
-    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1), `tracktransitionduration="${transitionDuration}"`);
+  [{ event: 'mouseup' }, { event: 'mouseleave' }].forEach(event => {
+    it(`should emit safetySliderSlideChange for previous slide when ${event} occurs and drag length is a quarter of the window width`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
+      const window: SafetySliderWindow = page.rootInstance;
+      const windowElement = page.root as HTMLElement;
+      const eventSpy = jest.spyOn(window.safetySliderSlideChange, 'emit');
 
-    const window: SafetySliderWindow = page.rootInstance;
-    const windowElement = page.root as HTMLElement;
+      windowElement.offsetWidth = 500;
+      window.windowResizeHandler();
+      await page.waitForChanges();
 
-    windowElement.offsetWidth = 500;
-    window.windowResizeHandler();
-    await page.waitForChanges();
+      window.mouseDownHandler({ offsetX: 250 } as MouseEvent);
+      await page.waitForChanges();
 
-    setCssProperty = jest.fn();
+      if (event === 'mouseup') {
+        window.mouseUpHandler({ offsetX: 450 } as MouseEvent);
+      } else {
+        window.mouseLeaveHandler({ offsetX: 450 } as MouseEvent);
+      }
+      await page.waitForChanges();
 
-    window.mouseLeaveHandler();
-    await page.waitForChanges();
+      expect(eventSpy).toHaveBeenCalledWith(0);
+    });
 
-    expect(setCssProperty).toHaveBeenCalledTimes(2);
-    expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
-    expect(setCssProperty).toHaveBeenNthCalledWith(2, expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+    it(`should emit safetySliderSlideChange event for the next slide when ${event} occurs and drag length is a quarter of the window width`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
+      const window: SafetySliderWindow = page.rootInstance;
+      const windowElement = page.root as HTMLElement;
+      const eventSpy = jest.spyOn(window.safetySliderSlideChange, 'emit');
+
+      windowElement.offsetWidth = 500;
+      window.windowResizeHandler();
+      await page.waitForChanges();
+
+      window.mouseDownHandler({ offsetX: 250 } as MouseEvent);
+      await page.waitForChanges();
+
+      if (event === 'mouseup') {
+        window.mouseUpHandler({ offsetX: 50 } as MouseEvent);
+      } else {
+        window.mouseLeaveHandler({ offsetX: 50 } as MouseEvent);
+      }
+      await page.waitForChanges();
+
+      expect(eventSpy).toHaveBeenCalledWith(2);
+    });
+
+    it(`should set mouse drag to inactive when a ${event} event occurs`, async () => {
+      const transitionDuration = 250;
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1), `tracktransitionduration="${transitionDuration}"`);
+
+      const window: SafetySliderWindow = page.rootInstance;
+      const windowElement = page.root as HTMLElement;
+
+      windowElement.offsetWidth = 500;
+      window.windowResizeHandler();
+      await page.waitForChanges();
+
+      setCssProperty = jest.fn();
+
+      if (event === 'mouseup') {
+        window.mouseUpHandler({} as MouseEvent);
+      } else {
+        window.mouseLeaveHandler({} as MouseEvent);
+      }
+      await page.waitForChanges();
+
+      expect(setCssProperty).toHaveBeenCalledTimes(2);
+      expect(setCssProperty).toHaveBeenNthCalledWith(2, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
+      expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+    });
   });
 
-  it('should set mouse drag to inactive when a mouseup event occurs', async () => {
-    const transitionDuration = 250;
-    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1), `tracktransitionduration="${transitionDuration}"`);
-
-    const window: SafetySliderWindow = page.rootInstance;
-    const windowElement = page.root as HTMLElement;
-
-    windowElement.offsetWidth = 500;
-    window.windowResizeHandler();
-    await page.waitForChanges();
-
-    setCssProperty = jest.fn();
-
-    window.mouseUpHandler({} as MouseEvent);
-    await page.waitForChanges();
-
-    expect(setCssProperty).toHaveBeenCalledTimes(2);
-    expect(setCssProperty).toHaveBeenNthCalledWith(2, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
-    expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
-  });
-
-  it('should emit safetySliderSlideChange event for next slide when mouseup occurs and drag length is a quarter of the window width', async () => {
-    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
-    const window: SafetySliderWindow = page.rootInstance;
-    const windowElement = page.root as HTMLElement;
-    const eventSpy = jest.spyOn(window.safetySliderSlideChange, 'emit');
-
-    windowElement.offsetWidth = 500;
-    window.windowResizeHandler();
-    await page.waitForChanges();
-
-    window.mouseDownHandler({ offsetX: 250 } as MouseEvent);
-    await page.waitForChanges();
-
-    window.mouseUpHandler({ offsetX: 50 } as MouseEvent);
-    await page.waitForChanges();
-
-    expect(eventSpy).toHaveBeenCalledWith(2);
-  });
-
-  it('should emit safetySliderSlideChange event for previous slide when mouseup occurs and drag length is a quarter of the window width', async () => {
-    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
-    const window: SafetySliderWindow = page.rootInstance;
-    const windowElement = page.root as HTMLElement;
-    const eventSpy = jest.spyOn(window.safetySliderSlideChange, 'emit');
-
-    windowElement.offsetWidth = 500;
-    window.windowResizeHandler();
-    await page.waitForChanges();
-
-    window.mouseDownHandler({ offsetX: 250 } as MouseEvent);
-    await page.waitForChanges();
-
-    window.mouseUpHandler({ offsetX: 450 } as MouseEvent);
-    await page.waitForChanges();
-
-    expect(eventSpy).toHaveBeenCalledWith(0);
-  });
-
-  // TODO add tests for mouseleave
   // TODO add test to handle drag case for only 1 slide in slider
   // TODO add test to handle drag case when attempting to reach non existing previous or next slides (not infinite)
   // TODO add test to handle drag case when the next slide or previous slide requires an infinite loop
