@@ -176,18 +176,20 @@ export class SafetySliderWindow {
   }
 
   private dragEndHandler(event: MouseEvent) {
-    this.mouseCurrentXOffset = event.offsetX;
+    if (this.mouseDragIsActive) {
+      this.mouseCurrentXOffset = event.offsetX;
 
-    let activeSlideAfterDrag = this.activeSlideAfterDrag();
+      let activeSlideAfterDrag = this.activeSlideAfterDrag();
 
-    if (this.mouseDragIsActive && activeSlideAfterDrag != this.activeSlide) {
-      this.safetySliderSlideChange.emit(activeSlideAfterDrag);
-    } else {
-      setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
+      if (activeSlideAfterDrag != this.activeSlide) {
+        this.safetySliderSlideChange.emit(activeSlideAfterDrag);
+      } else {
+        setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
+      }
+
+      this.mouseDragIsActive = false;
+      setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
     }
-
-    this.mouseDragIsActive = false;
-    setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
   }
 
   render() {
