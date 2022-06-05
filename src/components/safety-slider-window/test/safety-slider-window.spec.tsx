@@ -209,9 +209,28 @@ describe('safety-slider-window', () => {
 
       expect(setCssProperty).toHaveBeenCalledTimes(0);
     });
+
+    it(`should reset the track offset back to the active slide on ${scenario.event} if there is no previous slide`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+
+      const component: SafetySliderWindow = page.rootInstance;
+      const componentElement = page.root as HTMLElement;
+
+      componentElement.offsetWidth = 500;
+      component.windowResizeHandler();
+      await page.waitForChanges();
+
+      component.mouseDownHandler({ offsetX: 250 } as MouseEvent);
+      await page.waitForChanges();
+
+      runEventHandler(component, { offsetX: 450 } as MouseEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+      expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
+    });
   });
 
-  // TODO add test to handle drag case for only 1 slide in slider
   // TODO add test to handle drag case when attempting to reach non existing previous or next slides (not infinite)
   // TODO add test to handle drag case when the next slide or previous slide requires an infinite loop
   // TODO add documentation for new property draggable

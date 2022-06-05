@@ -169,10 +169,14 @@ export class SafetySliderWindow {
     if (this.mouseInitialXOffset - this.mouseCurrentXOffset >= dragChangeThreshold) {
       return this.activeSlide + 1;
     } else if (this.mouseCurrentXOffset - this.mouseInitialXOffset >= dragChangeThreshold) {
-      return this.activeSlide - 1;
+      return this.fetchPreviousSlideIndex();
     }
 
     return this.activeSlide;
+  }
+
+  private fetchPreviousSlideIndex() {
+    return this.activeSlide - 1 >= 0 ? this.activeSlide - 1 : 0;
   }
 
   private dragEndHandler(event: MouseEvent) {
