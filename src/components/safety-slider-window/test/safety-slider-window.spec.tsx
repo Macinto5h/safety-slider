@@ -251,7 +251,6 @@ describe('safety-slider-window', () => {
     });
   });
 
-  // TODO add test to handle drag case when attempting to reach non existing previous or next slides (not infinite)
   // TODO add test to handle drag case when the next slide or previous slide requires an infinite loop
   // TODO add documentation for new property draggable
   // TODO create new property draggable that enables mouse dragging to change slides
