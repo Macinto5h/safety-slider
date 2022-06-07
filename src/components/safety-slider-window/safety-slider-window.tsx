@@ -176,11 +176,29 @@ export class SafetySliderWindow {
   }
 
   private fetchPreviousSlideIndex() {
-    return this.activeSlide - 1 >= 0 ? this.activeSlide - 1 : 0;
+    const previousSlideIndex = this.activeSlide - 1;
+    const previousSlideIndexIsValid = previousSlideIndex >= 0;
+
+    if (previousSlideIndexIsValid) {
+      return previousSlideIndex;
+    } else if (this.isInfinite) {
+      return this.slideCount - 1;
+    }
+
+    return 0;
   }
 
   private fetchNextSlideIndex() {
-    return this.activeSlide + 1 <= this.slideCount - 1 ? this.activeSlide + 1 : this.slideCount - 1;
+    const nextSlideIndex = this.activeSlide + 1;
+    const nextSlideIndexIsValid = nextSlideIndex <= this.slideCount - 1;
+
+    if (nextSlideIndexIsValid) {
+      return nextSlideIndex;
+    } else if (this.isInfinite) {
+      return 0;
+    }
+
+    return this.slideCount - 1;
   }
 
   private dragEndHandler(event: MouseEvent) {
@@ -189,14 +207,14 @@ export class SafetySliderWindow {
 
       let activeSlideAfterDrag = this.activeSlideAfterDrag();
 
+      this.mouseDragIsActive = false;
+      setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
+
       if (activeSlideAfterDrag != this.activeSlide) {
         this.safetySliderSlideChange.emit(activeSlideAfterDrag);
       } else {
         setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
       }
-
-      this.mouseDragIsActive = false;
-      setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
     }
   }
 
