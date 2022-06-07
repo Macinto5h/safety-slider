@@ -11,6 +11,7 @@ import {
 } from '../safety-slider-window.resources';
 import { v4 as uuidv4 } from 'uuid';
 import { setCssProperty } from '../../../utils/css-utils';
+import { SpecPage } from '@stencil/core/internal';
 
 describe('safety-slider-window', () => {
   beforeEach(() => {
@@ -249,9 +250,40 @@ describe('safety-slider-window', () => {
       expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
       expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
     });
+
+    it(`should emit the safetySliderSlideChange event when ${scenario.event} occurs, is infinite, and dragging the first slide to the last slide`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(5, 5), 'is-infinite');
+
+      const component: SafetySliderWindow = page.rootInstance;
+      const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+      await setComponentOffsetWidth(component, page, 500);
+
+      component.mouseDownHandler({ offsetX: 250 } as MouseEvent);
+      await page.waitForChanges();
+
+      runEventHandler(component, { offsetX: 450 } as MouseEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(eventSpy).toHaveBeenCalledWith(4);
+    });
+
+    it(`should emit the safetySliderSlideChange event when ${scenario.event} occurs, is infinite, and dragging the last slide to the first slide`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(5, 5), 'is-infinite active-slide="4"');
+
+      const component: SafetySliderWindow = page.rootInstance;
+      const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+      await setComponentOffsetWidth(component, page, 500);
+
+      component.mouseDownHandler({ offsetX: 250 } as MouseEvent);
+      await page.waitForChanges();
+
+      runEventHandler(component, { offsetX: 50 } as MouseEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(eventSpy).toHaveBeenCalledWith(0);
+    });
   });
 
-  // TODO add test to handle drag case when the next slide or previous slide requires an infinite loop
   // TODO add documentation for new property draggable
   // TODO create new property draggable that enables mouse dragging to change slides
   // TODO add draggable property to changelog
@@ -263,4 +295,11 @@ function runEventHandler(component: SafetySliderWindow, event: MouseEvent, event
   } else {
     component.mouseLeaveHandler(event);
   }
+}
+
+async function setComponentOffsetWidth(component: SafetySliderWindow, page: SpecPage, width: number) {
+  //@ts-ignore
+  component.root.offsetWidth = width;
+  component.windowResizeHandler();
+  await page.waitForChanges();
 }
