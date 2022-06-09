@@ -109,6 +109,18 @@ describe('safety-slider-window', () => {
     expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
   });
 
+  it('should do nothing when a mousedown event occurs and the window is not draggable', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1), 'is-draggable="false"');
+    const component: SafetySliderWindow = page.rootInstance;
+
+    setComponentOffsetWidth(component, page, 500);
+
+    component.mouseDownHandler({} as MouseEvent);
+    await page.waitForChanges();
+
+    expect(setCssProperty).not.toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
+  });
+
   it('should not record the current x offset of the mousemove event if a mousedown event did not occur', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
     const window: SafetySliderWindow = page.rootInstance;

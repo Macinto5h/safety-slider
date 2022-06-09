@@ -37,6 +37,7 @@ export class SafetySliderWindow {
   @Prop({ reflect: true }) readonly isInfinite: boolean = false;
   @Prop() readonly uuid: string;
   @Prop() readonly trackTransitionDuration: number = 250;
+  @Prop() readonly isDraggable: boolean = true;
 
   @Watch('activeSlide')
   activeSlideChanged(newActiveSlide: number, oldActiveSlide: number) {
@@ -95,9 +96,11 @@ export class SafetySliderWindow {
 
   @Listen('mousedown')
   mouseDownHandler(event: MouseEvent) {
-    this.mouseInitialXOffset = event.offsetX;
-    this.mouseDragIsActive = true;
-    this.disableTrackTransitionDuration();
+    if (this.isDraggable) {
+      this.mouseInitialXOffset = event.offsetX;
+      this.mouseDragIsActive = true;
+      this.disableTrackTransitionDuration();
+    }
   }
 
   @Listen('mousemove')
