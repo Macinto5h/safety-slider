@@ -36,6 +36,7 @@ export namespace Components {
   }
   interface SafetySliderWindow {
     activeSlide: number;
+    isDraggable: boolean;
     isInfinite: boolean;
     trackTransitionDuration: number;
     uuid: string;
@@ -101,6 +102,7 @@ declare namespace LocalJSX {
   }
   interface SafetySliderWindow {
     activeSlide?: number;
+    isDraggable?: boolean;
     isInfinite?: boolean;
     onSafetySliderApplyTransitionDuration?: (event: CustomEvent<any>) => void;
     onSafetySliderInfiniteLoopAdjustment?: (event: CustomEvent<any>) => void;
