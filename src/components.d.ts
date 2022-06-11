@@ -13,6 +13,7 @@ export namespace Components {
     isInfinite: boolean;
     nextArrowAriaLabel: string;
     nextArrowInnerHTML: string;
+    noDrag: boolean;
     prevArrowAriaLabel: string;
     prevArrowInnerHTML: string;
     setActiveSlide: (newActiveSlide: number) => Promise<void>;
@@ -78,6 +79,7 @@ declare namespace LocalJSX {
     isInfinite?: boolean;
     nextArrowAriaLabel?: string;
     nextArrowInnerHTML?: string;
+    noDrag?: boolean;
     prevArrowAriaLabel?: string;
     prevArrowInnerHTML?: string;
     trackTransitionDuration?: number;

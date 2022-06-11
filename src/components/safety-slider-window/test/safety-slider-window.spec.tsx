@@ -295,10 +295,6 @@ describe('safety-slider-window', () => {
       expect(eventSpy).toHaveBeenCalledWith(0);
     });
   });
-
-  // TODO add documentation for new property draggable
-  // TODO create new property draggable that enables mouse dragging to change slides
-  // TODO add draggable property to changelog
 });
 
 function runEventHandler(component: SafetySliderWindow, event: MouseEvent, eventType: string) {
