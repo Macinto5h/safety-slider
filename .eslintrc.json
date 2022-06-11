@@ -26,7 +26,7 @@
     "@stencil/no-unused-watch": "error",
     "@stencil/own-methods-must-be-private": "error",
     "@stencil/own-props-must-be-private": "error",
-    "@stencil/prefer-vdom-listener": "error",
+    "@stencil/prefer-vdom-listener": "warn",
     "@stencil/props-must-be-public": "error",
     "@stencil/props-must-be-readonly": "error",
     "@stencil/render-returns-host": "error",
