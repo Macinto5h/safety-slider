@@ -21,7 +21,6 @@ describe('safety-slider-window', () => {
       writable: true,
     });
 
-    //@ts-ignore
     setCssProperty = jest.fn();
   });
 
@@ -45,7 +44,7 @@ describe('safety-slider-window', () => {
 
     const component: SafetySliderWindow = page.rootInstance;
     const windowWidth = 375;
-    page.root.offsetWidth = windowWidth;
+    await setComponentOffsetWidth(component, page, windowWidth);
 
     component.windowResizeHandler();
     await page.waitForChanges();
@@ -99,9 +98,7 @@ describe('safety-slider-window', () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
     const window: SafetySliderWindow = page.rootInstance;
 
-    page.root.offsetWidth = 500;
-    window.windowResizeHandler();
-    await page.waitForChanges();
+    await setComponentOffsetWidth(window, page, 500);
 
     window.mouseDownHandler({} as MouseEvent);
     await page.waitForChanges();
@@ -151,17 +148,13 @@ describe('safety-slider-window', () => {
     it(`should emit safetySliderSlideChange for previous slide when ${scenario.event} occurs and drag length is a quarter of the window width`, async () => {
       const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
       const window: SafetySliderWindow = page.rootInstance;
-      const windowElement = page.root as HTMLElement;
       const eventSpy = jest.spyOn(window.safetySliderSlideChange, 'emit');
-
-      windowElement.offsetWidth = 500;
-      window.windowResizeHandler();
-      await page.waitForChanges();
+      await setComponentOffsetWidth(window, page, 500);
 
       window.mouseDownHandler({ offsetX: 250 } as MouseEvent);
       await page.waitForChanges();
 
-      runEventHandler(window, { offsetX: 450 } as MouseEvent, scenario.event);
+      runDragEndEventHandler(window, { offsetX: 450 } as MouseEvent, scenario.event);
       await page.waitForChanges();
 
       expect(eventSpy).toHaveBeenCalledWith(0);
@@ -170,17 +163,13 @@ describe('safety-slider-window', () => {
     it(`should emit safetySliderSlideChange event for the next slide when ${scenario.event} occurs and drag length is a quarter of the window width`, async () => {
       const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
       const window: SafetySliderWindow = page.rootInstance;
-      const windowElement = page.root as HTMLElement;
       const eventSpy = jest.spyOn(window.safetySliderSlideChange, 'emit');
-
-      windowElement.offsetWidth = 500;
-      window.windowResizeHandler();
-      await page.waitForChanges();
+      await setComponentOffsetWidth(window, page, 500);
 
       window.mouseDownHandler({ offsetX: 250 } as MouseEvent);
       await page.waitForChanges();
 
-      runEventHandler(window, { offsetX: 50 } as MouseEvent, scenario.event);
+      runDragEndEventHandler(window, { offsetX: 50 } as MouseEvent, scenario.event);
       await page.waitForChanges();
 
       expect(eventSpy).toHaveBeenCalledWith(2);
@@ -191,16 +180,12 @@ describe('safety-slider-window', () => {
       const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), `tracktransitionduration="${transitionDuration}"`);
 
       const window: SafetySliderWindow = page.rootInstance;
-      const windowElement = page.root as HTMLElement;
-
-      windowElement.offsetWidth = 500;
-      window.windowResizeHandler();
-      await page.waitForChanges();
+      await setComponentOffsetWidth(window, page, 500);
 
       window.mouseDownHandler({ offsetX: 250 } as MouseEvent);
       await page.waitForChanges();
 
-      runEventHandler(window, { offsetX: 250 } as MouseEvent, scenario.event);
+      runDragEndEventHandler(window, { offsetX: 250 } as MouseEvent, scenario.event);
       await page.waitForChanges();
 
       expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
@@ -211,13 +196,9 @@ describe('safety-slider-window', () => {
       const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
 
       const window: SafetySliderWindow = page.rootInstance;
-      const windowElement = page.root as HTMLElement;
+      await setComponentOffsetWidth(window, page, 500);
 
-      windowElement.offsetWidth = 500;
-      window.windowResizeHandler();
-      await page.waitForChanges();
-
-      runEventHandler(window, {} as MouseEvent, scenario.event);
+      runDragEndEventHandler(window, {} as MouseEvent, scenario.event);
       await page.waitForChanges();
 
       expect(setCssProperty).toHaveBeenCalledTimes(0);
@@ -227,16 +208,12 @@ describe('safety-slider-window', () => {
       const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
 
       const component: SafetySliderWindow = page.rootInstance;
-      const componentElement = page.root as HTMLElement;
-
-      componentElement.offsetWidth = 500;
-      component.windowResizeHandler();
-      await page.waitForChanges();
+      await setComponentOffsetWidth(component, page, 500);
 
       component.mouseDownHandler({ offsetX: 250 } as MouseEvent);
       await page.waitForChanges();
 
-      runEventHandler(component, { offsetX: 450 } as MouseEvent, scenario.event);
+      runDragEndEventHandler(component, { offsetX: 450 } as MouseEvent, scenario.event);
       await page.waitForChanges();
 
       expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
@@ -247,16 +224,12 @@ describe('safety-slider-window', () => {
       const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1, 1));
 
       const component: SafetySliderWindow = page.rootInstance;
-      const componentElement = page.root as HTMLElement;
-
-      componentElement.offsetWidth = 500;
-      component.windowResizeHandler();
-      await page.waitForChanges();
+      await setComponentOffsetWidth(component, page, 500);
 
       component.mouseDownHandler({ offsetX: 250 } as MouseEvent);
       await page.waitForChanges();
 
-      runEventHandler(component, { offsetX: 50 } as MouseEvent, scenario.event);
+      runDragEndEventHandler(component, { offsetX: 50 } as MouseEvent, scenario.event);
       await page.waitForChanges();
 
       expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
@@ -273,7 +246,7 @@ describe('safety-slider-window', () => {
       component.mouseDownHandler({ offsetX: 250 } as MouseEvent);
       await page.waitForChanges();
 
-      runEventHandler(component, { offsetX: 450 } as MouseEvent, scenario.event);
+      runDragEndEventHandler(component, { offsetX: 450 } as MouseEvent, scenario.event);
       await page.waitForChanges();
 
       expect(eventSpy).toHaveBeenCalledWith(4);
@@ -289,7 +262,7 @@ describe('safety-slider-window', () => {
       component.mouseDownHandler({ offsetX: 250 } as MouseEvent);
       await page.waitForChanges();
 
-      runEventHandler(component, { offsetX: 50 } as MouseEvent, scenario.event);
+      runDragEndEventHandler(component, { offsetX: 50 } as MouseEvent, scenario.event);
       await page.waitForChanges();
 
       expect(eventSpy).toHaveBeenCalledWith(0);
@@ -297,7 +270,7 @@ describe('safety-slider-window', () => {
   });
 });
 
-function runEventHandler(component: SafetySliderWindow, event: MouseEvent, eventType: string) {
+function runDragEndEventHandler(component: SafetySliderWindow, event: MouseEvent, eventType: string) {
   if (eventType === 'mouseup') {
     component.mouseUpHandler(event);
   } else {
@@ -306,7 +279,6 @@ function runEventHandler(component: SafetySliderWindow, event: MouseEvent, event
 }
 
 async function setComponentOffsetWidth(component: SafetySliderWindow, page: SpecPage, width: number) {
-  //@ts-ignore
   component.root.offsetWidth = width;
   component.windowResizeHandler();
   await page.waitForChanges();

@@ -167,7 +167,7 @@ export class SafetySliderWindow {
   }
 
   private activeSlideAfterDrag() {
-    let dragChangeThreshold = Math.floor(this.rootWidth / 4);
+    const dragChangeThreshold = Math.floor(this.rootWidth / 4);
 
     if (this.mouseInitialXOffset - this.mouseCurrentXOffset >= dragChangeThreshold) {
       return this.fetchNextSlideIndex();
@@ -208,7 +208,7 @@ export class SafetySliderWindow {
     if (this.mouseDragIsActive) {
       this.mouseCurrentXOffset = event.offsetX;
 
-      let activeSlideAfterDrag = this.activeSlideAfterDrag();
+      const activeSlideAfterDrag = this.activeSlideAfterDrag();
 
       this.mouseDragIsActive = false;
       setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
