@@ -9,13 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Ability to change slides by mouse drag
-- `track-transition-duration` property
-- `no-drag` property
-- Documentation for browser support
-- Prettier
-- `aria-live="polite"` to track
-
 ### Changed
 
 ### Deprecated
@@ -24,9 +17,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Invalid value for aria-controls by no longer using Shadow DOM.
-
 ### Security
+
+## [0.7.0] - 2022-06-12
+
+### Added
+
+- Ability to change slides by mouse drag
+- `track-transition-duration` property
+- `no-drag` property
+- Documentation for browser support
+- Prettier
+- `aria-live="polite"` to track
+
+### Fixed
+
+- Invalid value for aria-controls by no longer using Shadow DOM.
 
 ## [0.6.0] - 2022-04-18
 
