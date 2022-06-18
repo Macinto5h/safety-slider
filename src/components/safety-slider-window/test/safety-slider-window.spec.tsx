@@ -12,8 +12,11 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { setCssProperty } from '../../../utils/css-utils';
 import { SpecPage } from '@stencil/core/internal';
+import { Chance } from 'chance';
 
 describe('safety-slider-window', () => {
+  const chance = new Chance();
+
   beforeEach(() => {
     Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
       configurable: true,
@@ -111,14 +114,12 @@ describe('safety-slider-window', () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
     const window: SafetySliderWindow = page.rootInstance;
 
-    await setComponentOffsetWidth(window, page, 500);
-
-    const touchEvent = { touches: [ {pageX: 0}] as any } as TouchEvent;
+    const touchEvent = { touches: [ { pageX: chance.natural() }] as any } as TouchEvent;
 
     window.touchStartHandler(touchEvent);
     await page.waitForChanges();
 
-    expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
+    expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
   });
 
   it('should do nothing when a mousedown event occurs and the window is not draggable', async () => {
