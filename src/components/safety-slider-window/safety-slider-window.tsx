@@ -103,6 +103,14 @@ export class SafetySliderWindow {
     }
   }
 
+  @Listen('touchstart')
+  touchStartHandler(event: TouchEvent) {
+    const touch = event.touches[0] || event.changedTouches[0];
+    this.mouseInitialXOffset = touch.pageX;
+    this.mouseDragIsActive = true;
+    this.disableTrackTransitionDuration();
+  }
+
   @Listen('mousemove')
   mouseMoveHandler(event: MouseEvent) {
     if (!this.mouseDragIsActive) return null;

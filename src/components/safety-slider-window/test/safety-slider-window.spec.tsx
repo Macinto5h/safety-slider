@@ -94,6 +94,7 @@ describe('safety-slider-window', () => {
     expect(track.getAttribute('aria-live')).toBe('polite');
   });
 
+
   it('should unset the transition duration when a mousedown event occurs', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
     const window: SafetySliderWindow = page.rootInstance;
@@ -101,6 +102,20 @@ describe('safety-slider-window', () => {
     await setComponentOffsetWidth(window, page, 500);
 
     window.mouseDownHandler({} as MouseEvent);
+    await page.waitForChanges();
+
+    expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
+  });
+
+  it('should unset the transition duration when a touchstart event occurs', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const window: SafetySliderWindow = page.rootInstance;
+
+    await setComponentOffsetWidth(window, page, 500);
+
+    const touchEvent = { touches: [ {pageX: 0}] as any } as TouchEvent;
+
+    window.touchStartHandler(touchEvent);
     await page.waitForChanges();
 
     expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
