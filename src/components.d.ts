@@ -39,6 +39,7 @@ export namespace Components {
         "activeSlide": number;
         "isDraggable": boolean;
         "isInfinite": boolean;
+        "isSwipeable": boolean;
         "trackTransitionDuration": number;
         "uuid": string;
     }
@@ -110,6 +111,7 @@ declare namespace LocalJSX {
         "activeSlide"?: number;
         "isDraggable"?: boolean;
         "isInfinite"?: boolean;
+        "isSwipeable"?: boolean;
         "onSafetySliderApplyTransitionDuration"?: (event: CustomEvent<any>) => void;
         "onSafetySliderInfiniteLoopAdjustment"?: (event: CustomEvent<any>) => void;
         "onSafetySliderSlideChange"?: (event: CustomEvent<number>) => void;

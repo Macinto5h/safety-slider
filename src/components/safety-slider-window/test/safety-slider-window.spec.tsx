@@ -134,6 +134,17 @@ describe('safety-slider-window', () => {
     expect(setCssProperty).not.toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
   });
 
+  it('should do nothing when a touchstart event occurs and the window is not swipeable', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1), 'is-swipeable="false"');
+    const component: SafetySliderWindow = page.rootInstance;
+    const touchEvent = { touches: [ { pageX: chance.natural() }] as any } as TouchEvent;
+
+    component.touchStartHandler(touchEvent);
+    await page.waitForChanges();
+
+    expect(setCssProperty).not.toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
+  });
+
   it('should not record the current x offset of the mousemove event if a mousedown event did not occur', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
     const window: SafetySliderWindow = page.rootInstance;
