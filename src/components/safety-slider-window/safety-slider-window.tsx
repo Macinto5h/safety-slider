@@ -26,7 +26,7 @@ export class SafetySliderWindow {
   private infiniteLoopToFront = false;
   private infiniteLoopToBack = false;
   private dragOrSwipeStart: number;
-  private mouseCurrentXOffset: number;
+  private dragOrSwipeCurrentPosition: number;
   private dragOrSwipeIsActive = false;
 
   @Element() root: HTMLSafetySliderWindowElement;
@@ -114,10 +114,20 @@ export class SafetySliderWindow {
   mouseMoveHandler(event: MouseEvent) {
     if (!this.dragOrSwipeIsActive) return null;
 
-    this.mouseCurrentXOffset = event.offsetX;
-    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset + (this.mouseCurrentXOffset - this.dragOrSwipeStart)}px`);
+    this.dragOrSwipeCurrentPosition = event.offsetX;
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset + (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart)}px`);
 
-    return this.mouseCurrentXOffset;
+    return this.dragOrSwipeCurrentPosition;
+  }
+
+  @Listen('touchmove')
+  touchMoveHandler(event: TouchEvent) {
+    if (!this.dragOrSwipeIsActive) return null;
+
+    const touch = event.touches[0] || event.changedTouches[0];
+    this.dragOrSwipeCurrentPosition = touch.pageX;
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset + (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart)}px`);
+    return this.dragOrSwipeCurrentPosition;
   }
 
   @Listen('mouseleave')
@@ -176,9 +186,9 @@ export class SafetySliderWindow {
   private activeSlideAfterDrag() {
     const dragChangeThreshold = Math.floor(this.rootWidth / 4);
 
-    if (this.dragOrSwipeStart - this.mouseCurrentXOffset >= dragChangeThreshold) {
+    if (this.dragOrSwipeStart - this.dragOrSwipeCurrentPosition >= dragChangeThreshold) {
       return this.fetchNextSlideIndex();
-    } else if (this.mouseCurrentXOffset - this.dragOrSwipeStart >= dragChangeThreshold) {
+    } else if (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart >= dragChangeThreshold) {
       return this.fetchPreviousSlideIndex();
     }
 
@@ -213,7 +223,7 @@ export class SafetySliderWindow {
 
   private dragEndHandler(event: MouseEvent) {
     if (this.dragOrSwipeIsActive) {
-      this.mouseCurrentXOffset = event.offsetX;
+      this.dragOrSwipeCurrentPosition = event.offsetX;
 
       const activeSlideAfterDrag = this.activeSlideAfterDrag();
 

@@ -148,11 +148,14 @@ describe('safety-slider-window', () => {
   it('should not record the current x offset of the mousemove event if a mousedown event did not occur', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
     const window: SafetySliderWindow = page.rootInstance;
+    expect(window.mouseMoveHandler({} as MouseEvent)).toBeNull();
+  });
 
-    const offsetX = 100;
-    const mouseEvent = { offsetX: offsetX } as MouseEvent;
+  it('should not record the current position of the touchmove event if a touchstart event did not occur', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const component: SafetySliderWindow = page.rootInstance;
 
-    expect(window.mouseMoveHandler(mouseEvent)).toBeNull();
+    expect(component.touchMoveHandler({} as TouchEvent)).toBeNull();
   });
 
   it('should record the current x offset of the mousemove event if a mousedown event did occur', async () => {
@@ -169,6 +172,19 @@ describe('safety-slider-window', () => {
     const mouseMoveEvent = { offsetX: offsetMoveX } as MouseEvent;
 
     expect(window.mouseMoveHandler(mouseMoveEvent)).toEqual(offsetMoveX);
+  });
+
+  it('should record the current x offset of the touchmove event if a touchstart event did occur', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const component: SafetySliderWindow = page.rootInstance;
+
+    const touchStartEvent = { touches: [ { pageX: chance.natural() }] as any } as TouchEvent;
+    component.touchStartHandler(touchStartEvent);
+    await page.waitForChanges();
+
+    const moveOffset = chance.natural()
+    const touchMoveEvent = { touches: [ { pageX: moveOffset }] as any } as TouchEvent;
+    expect(component.touchMoveHandler(touchMoveEvent)).toEqual(moveOffset);
   });
 
   [{ event: 'mouseup' }, { event: 'mouseleave' }].forEach(scenario => {
