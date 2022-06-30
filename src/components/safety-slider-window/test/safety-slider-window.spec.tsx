@@ -311,6 +311,24 @@ describe('safety-slider-window', () => {
       expect(eventSpy).toHaveBeenCalledWith(0);
     });
   });
+
+  it(`should emit safetySliderSlideChange for previous slide when touchend occurs and drag length is a quarter of the window width`, async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
+    const component: SafetySliderWindow = page.rootInstance;
+    const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+    const offsetWidth = chance.natural({ min: 200, max: 1000 });
+    await setComponentOffsetWidth(component, page, offsetWidth);
+
+    const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+    component.touchStartHandler(touchStartEvent);
+    await page.waitForChanges();
+
+    const touchEndEvent = { touches: [ { pageX: offsetWidth * 0.75 } ] as any } as TouchEvent;
+    component.touchEndHandler(touchEndEvent);
+    await page.waitForChanges();
+
+    expect(eventSpy).toHaveBeenCalledWith(0);
+  });
 });
 
 function runDragEndEventHandler(component: SafetySliderWindow, event: MouseEvent, eventType: string) {

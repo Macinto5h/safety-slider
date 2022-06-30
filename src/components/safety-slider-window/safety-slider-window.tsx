@@ -140,6 +140,11 @@ export class SafetySliderWindow {
     this.dragEndHandler(event);
   }
 
+  @Listen('touchend')
+  touchEndHandler(event: TouchEvent) {
+    this.safetySliderSlideChange.emit(0);
+  }
+
   private calculateTrackOffset() {
     if (this.infiniteLoopToFront) {
       return this.rootWidth * (this.slideCount + 1) * -1;
