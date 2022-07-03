@@ -142,7 +142,9 @@ export class SafetySliderWindow {
 
   @Listen('touchend')
   touchEndHandler(event: TouchEvent) {
-    this.safetySliderSlideChange.emit(0);
+    const touch = event.touches[0] || event.changedTouches[0];
+    this.dragOrSwipeCurrentPosition = touch.pageX;
+    this.safetySliderSlideChange.emit(this.activeSlideAfterDrag());
   }
 
   private calculateTrackOffset() {
