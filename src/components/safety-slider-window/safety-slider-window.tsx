@@ -18,7 +18,7 @@ import { setCssProperty } from '../../utils/css-utils';
   shadow: false,
 })
 export class SafetySliderWindow {
-  private slidesOffset: number;
+  private trackOffset: number;
   private slideCount: number;
   private trackElement: HTMLDivElement;
   private beginningClone: string;
@@ -52,7 +52,7 @@ export class SafetySliderWindow {
   @Event() safetySliderSlideChange: EventEmitter<number>;
 
   componentWillRender() {
-    this.slidesOffset = this.calculateTrackOffset();
+    this.trackOffset = this.calculateTrackOffset();
   }
 
   componentWillLoad() {
@@ -115,7 +115,7 @@ export class SafetySliderWindow {
     if (!this.dragOrSwipeIsActive) return null;
 
     this.dragOrSwipeCurrentPosition = event.offsetX;
-    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset + (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart)}px`);
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.trackOffset + (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart)}px`);
 
     return this.dragOrSwipeCurrentPosition;
   }
@@ -126,7 +126,7 @@ export class SafetySliderWindow {
 
     const touch = event.touches[0] || event.changedTouches[0];
     this.dragOrSwipeCurrentPosition = touch.pageX;
-    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset + (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart)}px`);
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.trackOffset + (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart)}px`);
     return this.dragOrSwipeCurrentPosition;
   }
 
@@ -255,7 +255,7 @@ export class SafetySliderWindow {
   }
 
   private resetTrackOffset() {
-    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.trackOffset}px`);
   }
 
   render() {
@@ -264,7 +264,7 @@ export class SafetySliderWindow {
         id={WINDOW_ID_PREFIX + this.uuid}
         style={{
           [WINDOW_WIDTH_CSS_VAR]: this.rootWidth + 'px',
-          [TRACK_OFFSET_CSS_VAR]: this.slidesOffset + 'px',
+          [TRACK_OFFSET_CSS_VAR]: this.trackOffset + 'px',
           [TRACK_TRANSITION_DURATION_CSS_VAR]: this.trackTransitionDuration + 'ms',
         }}
       >
