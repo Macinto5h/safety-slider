@@ -347,6 +347,26 @@ describe('safety-slider-window', () => {
 
     expect(eventSpy).toHaveBeenCalledWith(2);
   });
+
+  it(`should set touch swipe to inactive when a touchend event occurs`, async () => {
+    const transitionDuration = 250;
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), `tracktransitionduration="${transitionDuration}"`);
+
+    const component: SafetySliderWindow = page.rootInstance;
+    const offsetWidth = chance.natural({min: 200, max: 1000 });
+    await setComponentOffsetWidth(component, page, offsetWidth);
+
+    const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+    component.touchStartHandler(touchStartEvent);
+    await page.waitForChanges();
+
+    const touchEndEvent = { touches: [ { pageX: offsetWidth * 0.5 } ] as any } as TouchEvent;
+    component.touchEndHandler(touchEndEvent);
+    await page.waitForChanges();
+
+    expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
+    expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+  });
 });
 
 function runDragEndEventHandler(component: SafetySliderWindow, event: MouseEvent, eventType: string) {

@@ -145,6 +145,8 @@ export class SafetySliderWindow {
     const touch = event.touches[0] || event.changedTouches[0];
     this.dragOrSwipeCurrentPosition = touch.pageX;
     this.safetySliderSlideChange.emit(this.activeSlideAfterDrag());
+    setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
   }
 
   private calculateTrackOffset() {
