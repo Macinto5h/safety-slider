@@ -11,9 +11,12 @@ import {
 } from '../safety-slider-window.resources';
 import { v4 as uuidv4 } from 'uuid';
 import { setCssProperty } from '../../../utils/css-utils';
-import { SpecPage } from '@stencil/core/internal';
+import { Component, SpecPage } from '@stencil/core/internal';
+import { Chance } from 'chance';
 
 describe('safety-slider-window', () => {
+  const chance = new Chance();
+
   beforeEach(() => {
     Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
       configurable: true,
@@ -94,6 +97,7 @@ describe('safety-slider-window', () => {
     expect(track.getAttribute('aria-live')).toBe('polite');
   });
 
+
   it('should unset the transition duration when a mousedown event occurs', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
     const window: SafetySliderWindow = page.rootInstance;
@@ -104,6 +108,18 @@ describe('safety-slider-window', () => {
     await page.waitForChanges();
 
     expect(setCssProperty).toHaveBeenNthCalledWith(1, expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
+  });
+
+  it('should unset the transition duration when a touchstart event occurs', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const window: SafetySliderWindow = page.rootInstance;
+
+    const touchEvent = { touches: [ { pageX: chance.natural() }] as any } as TouchEvent;
+
+    window.touchStartHandler(touchEvent);
+    await page.waitForChanges();
+
+    expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
   });
 
   it('should do nothing when a mousedown event occurs and the window is not draggable', async () => {
@@ -118,14 +134,28 @@ describe('safety-slider-window', () => {
     expect(setCssProperty).not.toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
   });
 
+  it('should do nothing when a touchstart event occurs and the window is not swipeable', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1), 'is-swipeable="false"');
+    const component: SafetySliderWindow = page.rootInstance;
+    const touchEvent = { touches: [ { pageX: chance.natural() }] as any } as TouchEvent;
+
+    component.touchStartHandler(touchEvent);
+    await page.waitForChanges();
+
+    expect(setCssProperty).not.toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
+  });
+
   it('should not record the current x offset of the mousemove event if a mousedown event did not occur', async () => {
     const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
     const window: SafetySliderWindow = page.rootInstance;
+    expect(window.mouseMoveHandler({} as MouseEvent)).toBeNull();
+  });
 
-    const offsetX = 100;
-    const mouseEvent = { offsetX: offsetX } as MouseEvent;
+  it('should not record the current position of the touchmove event if a touchstart event did not occur', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const component: SafetySliderWindow = page.rootInstance;
 
-    expect(window.mouseMoveHandler(mouseEvent)).toBeNull();
+    expect(component.touchMoveHandler({} as TouchEvent)).toBeNull();
   });
 
   it('should record the current x offset of the mousemove event if a mousedown event did occur', async () => {
@@ -142,6 +172,19 @@ describe('safety-slider-window', () => {
     const mouseMoveEvent = { offsetX: offsetMoveX } as MouseEvent;
 
     expect(window.mouseMoveHandler(mouseMoveEvent)).toEqual(offsetMoveX);
+  });
+
+  it('should record the current x offset of the touchmove event if a touchstart event did occur', async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+    const component: SafetySliderWindow = page.rootInstance;
+
+    const touchStartEvent = { touches: [ { pageX: chance.natural() }] as any } as TouchEvent;
+    component.touchStartHandler(touchStartEvent);
+    await page.waitForChanges();
+
+    const moveOffset = chance.natural()
+    const touchMoveEvent = { touches: [ { pageX: moveOffset }] as any } as TouchEvent;
+    expect(component.touchMoveHandler(touchMoveEvent)).toEqual(moveOffset);
   });
 
   [{ event: 'mouseup' }, { event: 'mouseleave' }].forEach(scenario => {
@@ -268,6 +311,162 @@ describe('safety-slider-window', () => {
       expect(eventSpy).toHaveBeenCalledWith(0);
     });
   });
+
+  [{ event: 'touchend' }, { event: 'touchcancel' }].forEach(scenario => {
+    it(`should emit safetySliderSlideChange for previous slide when ${scenario.event} occurs and drag length is a quarter of the window width`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
+      const component: SafetySliderWindow = page.rootInstance;
+      const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+      const offsetWidth = chance.natural({ min: 200, max: 1000 });
+      await setComponentOffsetWidth(component, page, offsetWidth);
+
+      const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+      component.touchStartHandler(touchStartEvent);
+      await page.waitForChanges();
+
+      const lastTouchEvent = { touches: [ { pageX: offsetWidth * 0.75 } ] as any } as TouchEvent;
+      component.touchEndHandler(lastTouchEvent);
+      runSwipeEndEventHandler(component, lastTouchEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(eventSpy).toHaveBeenCalledWith(0);
+    });
+
+    it(`should emit safetySliderSlideChange event for the next slide when ${scenario.event} occurs and drag length is a quarter of the window width`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), 'active-slide="1"');
+      const component: SafetySliderWindow = page.rootInstance;
+      const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+      const offsetWidth = chance.natural({ min: 200, max: 1000 });
+      await setComponentOffsetWidth(component, page, offsetWidth);
+
+      const touchStartEvent = { touches: [ { pageX: offsetWidth * 5 }] as any } as TouchEvent;
+      component.touchStartHandler(touchStartEvent);
+      await page.waitForChanges();
+
+      const lastTouchEvent = { touches: [ { pageX: offsetWidth * 0.25 } ] as any } as TouchEvent;
+      component.touchEndHandler(lastTouchEvent);
+      runSwipeEndEventHandler(component, lastTouchEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(eventSpy).toHaveBeenCalledWith(2);
+    });
+
+    it(`should set touch swipe to inactive when a ${scenario.event} event occurs`, async () => {
+      const transitionDuration = 250;
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(3), `tracktransitionduration="${transitionDuration}"`);
+
+      const component: SafetySliderWindow = page.rootInstance;
+      const offsetWidth = chance.natural({min: 200, max: 1000 });
+      await setComponentOffsetWidth(component, page, offsetWidth);
+
+      const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+      component.touchStartHandler(touchStartEvent);
+      await page.waitForChanges();
+
+      const lastTouchEvent = { touches: [ { pageX: offsetWidth * 0.5 } ] as any } as TouchEvent;
+      runSwipeEndEventHandler(component, lastTouchEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, `${transitionDuration}ms`);
+      expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+    });
+
+    it(`should not make any changes for ${scenario.event} when a touchstart event did not occur`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+
+      const component: SafetySliderWindow = page.rootInstance;
+      const offsetWidth = chance.natural({ min: 200, max: 1000 });
+      await setComponentOffsetWidth(component, page, offsetWidth);
+
+      const lastTouchEvent = { touches: [ { pageX: offsetWidth * 0.5 } ] as any } as TouchEvent;
+      runSwipeEndEventHandler(component, lastTouchEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(setCssProperty).toHaveBeenCalledTimes(0);
+    });
+
+    it(`should reset the track offset back to the active slide on ${scenario.event} if there is no previous slide`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1));
+
+      const component: SafetySliderWindow = page.rootInstance;
+      const offsetWidth = chance.natural({ min: 200, max: 1000 });
+      const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+      await setComponentOffsetWidth(component, page, 500);
+
+      const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+      component.touchStartHandler(touchStartEvent);
+      await page.waitForChanges();
+
+      const lastTouchEvent = { touches: [ { pageX: offsetWidth * 0.75 } ] as any } as TouchEvent;
+      runSwipeEndEventHandler(component, lastTouchEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+      expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
+      expect(eventSpy).not.toHaveBeenCalled();
+    });
+
+    it(`should reset the track offset back to the active slide on ${scenario.event} if there is no next slide`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1, 1));
+
+      const component: SafetySliderWindow = page.rootInstance;
+      const offsetWidth = chance.natural({ min: 200, max: 1000 });
+      const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+      await setComponentOffsetWidth(component, page, offsetWidth);
+
+      const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+      component.touchStartHandler(touchStartEvent);
+      await page.waitForChanges();
+
+      const lastTouchEvent = { touches: [ { pageX: offsetWidth * 0.25 } ] as any } as TouchEvent;
+      runSwipeEndEventHandler(component, lastTouchEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+      expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
+      expect(eventSpy).not.toHaveBeenCalled();
+    });
+
+    it(`should emit the safetySliderSlideChange event when ${scenario.event} occurs, is infinite, and dragging the first slide to the last slide`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(5, 5), 'is-infinite');
+
+      const component: SafetySliderWindow = page.rootInstance;
+      const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+      const offsetWidth = chance.natural({ min: 200, max: 1000 });
+      await setComponentOffsetWidth(component, page, offsetWidth);
+
+      const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+      component.touchStartHandler(touchStartEvent);
+      await page.waitForChanges();
+
+      const lastTouchEvent = { touches: [ { pageX: offsetWidth * 0.75 } ] as any } as TouchEvent;
+      runSwipeEndEventHandler(component, lastTouchEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(eventSpy).toHaveBeenCalledWith(4);
+      expect(setCssProperty).toHaveBeenLastCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
+    });
+
+    it(`should emit the safetySliderSlideChange event when ${scenario.event} occurs, is infinite, and dragging the last slide to the first slide`, async () => {
+      const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(5, 5), 'is-infinite active-slide="4"');
+
+      const component: SafetySliderWindow = page.rootInstance;
+      const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+      const offsetWidth = chance.natural({ min: 200, max: 1000 });
+      await setComponentOffsetWidth(component, page, offsetWidth);
+
+      const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+      component.touchStartHandler(touchStartEvent);
+      await page.waitForChanges();
+
+      const lastTouchEvent = { touches: [ { pageX: offsetWidth * 0.25 } ] as any } as TouchEvent;
+      runSwipeEndEventHandler(component, lastTouchEvent, scenario.event);
+      await page.waitForChanges();
+
+      expect(eventSpy).toHaveBeenCalledWith(0);
+      expect(setCssProperty).toHaveBeenLastCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
+    });
+  });
 });
 
 function runDragEndEventHandler(component: SafetySliderWindow, event: MouseEvent, eventType: string) {
@@ -275,6 +474,14 @@ function runDragEndEventHandler(component: SafetySliderWindow, event: MouseEvent
     component.mouseUpHandler(event);
   } else {
     component.mouseLeaveHandler(event);
+  }
+}
+
+function runSwipeEndEventHandler(component: SafetySliderWindow, event: TouchEvent, eventType: string) {
+  if (eventType === 'touchend') {
+    component.touchEndHandler(event);
+  } else {
+    component.touchCancelHandler(event);
   }
 }
 

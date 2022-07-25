@@ -25,6 +25,7 @@ export class SafetySlider {
   @Prop() readonly dotAriaLabel: string;
   @Prop() readonly trackTransitionDuration: number;
   @Prop() readonly noDrag: boolean;
+  @Prop() readonly noSwipe: boolean;
 
   componentWillLoad() {
     this.slideCount = this.root.children.length;
@@ -69,6 +70,7 @@ export class SafetySlider {
           uuid={this.uuid}
           trackTransitionDuration={this.trackTransitionDuration}
           isDraggable={!this.noDrag}
+          isSwipeable={!this.noSwipe}
         >
           <slot></slot>
         </safety-slider-window>

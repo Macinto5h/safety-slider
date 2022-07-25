@@ -18,16 +18,16 @@ import { setCssProperty } from '../../utils/css-utils';
   shadow: false,
 })
 export class SafetySliderWindow {
-  private slidesOffset: number;
+  private trackOffset: number;
   private slideCount: number;
   private trackElement: HTMLDivElement;
   private beginningClone: string;
   private endingClone: string;
   private infiniteLoopToFront = false;
   private infiniteLoopToBack = false;
-  private mouseInitialXOffset: number;
-  private mouseCurrentXOffset: number;
-  private mouseDragIsActive = false;
+  private dragOrSwipeStart: number;
+  private dragOrSwipeCurrentPosition: number;
+  private dragOrSwipeIsActive = false;
 
   @Element() root: HTMLSafetySliderWindowElement;
 
@@ -38,6 +38,7 @@ export class SafetySliderWindow {
   @Prop() readonly uuid: string;
   @Prop() readonly trackTransitionDuration: number = 250;
   @Prop() readonly isDraggable: boolean = true;
+  @Prop() readonly isSwipeable: boolean = true;
 
   @Watch('activeSlide')
   activeSlideChanged(newActiveSlide: number, oldActiveSlide: number) {
@@ -51,7 +52,7 @@ export class SafetySliderWindow {
   @Event() safetySliderSlideChange: EventEmitter<number>;
 
   componentWillRender() {
-    this.slidesOffset = this.calculateTrackOffset();
+    this.trackOffset = this.calculateTrackOffset();
   }
 
   componentWillLoad() {
@@ -97,30 +98,58 @@ export class SafetySliderWindow {
   @Listen('mousedown')
   mouseDownHandler(event: MouseEvent) {
     if (this.isDraggable) {
-      this.mouseInitialXOffset = event.offsetX;
-      this.mouseDragIsActive = true;
-      this.disableTrackTransitionDuration();
+      this.dragOrSwipeStartHandler(event.offsetX);
+    }
+  }
+
+  @Listen('touchstart')
+  touchStartHandler(event: TouchEvent) {
+    if (this.isSwipeable) {
+      const touch = event.touches[0] || event.changedTouches[0];
+      this.dragOrSwipeStartHandler(touch.pageX);
     }
   }
 
   @Listen('mousemove')
   mouseMoveHandler(event: MouseEvent) {
-    if (!this.mouseDragIsActive) return null;
+    if (!this.dragOrSwipeIsActive) return null;
 
-    this.mouseCurrentXOffset = event.offsetX;
-    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset + (this.mouseCurrentXOffset - this.mouseInitialXOffset)}px`);
+    this.dragOrSwipeCurrentPosition = event.offsetX;
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.trackOffset + (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart)}px`);
 
-    return this.mouseCurrentXOffset;
+    return this.dragOrSwipeCurrentPosition;
+  }
+
+  @Listen('touchmove')
+  touchMoveHandler(event: TouchEvent) {
+    if (!this.dragOrSwipeIsActive) return null;
+
+    const touch = event.touches[0] || event.changedTouches[0];
+    this.dragOrSwipeCurrentPosition = touch.pageX;
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.trackOffset + (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart)}px`);
+    return this.dragOrSwipeCurrentPosition;
   }
 
   @Listen('mouseleave')
   mouseLeaveHandler(event: MouseEvent) {
-    this.dragEndHandler(event);
+    this.dragOrSwipeEndHandler(event.offsetX);
   }
 
   @Listen('mouseup')
   mouseUpHandler(event: MouseEvent) {
-    this.dragEndHandler(event);
+    this.dragOrSwipeEndHandler(event.offsetX);
+  }
+
+  @Listen('touchend')
+  touchEndHandler(event: TouchEvent) {
+    const touch = event.touches[0] || event.changedTouches[0];
+    this.dragOrSwipeEndHandler(touch.pageX);
+  }
+
+  @Listen('touchcancel')
+  touchCancelHandler(event: TouchEvent) {
+    const touch = event.touches[0] || event.changedTouches[0];
+    this.dragOrSwipeEndHandler(touch.pageX);
   }
 
   private calculateTrackOffset() {
@@ -166,12 +195,12 @@ export class SafetySliderWindow {
     setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
   }
 
-  private activeSlideAfterDrag() {
+  private activeSlideAfterDragOrSwipe() {
     const dragChangeThreshold = Math.floor(this.rootWidth / 4);
 
-    if (this.mouseInitialXOffset - this.mouseCurrentXOffset >= dragChangeThreshold) {
+    if (this.dragOrSwipeStart - this.dragOrSwipeCurrentPosition >= dragChangeThreshold) {
       return this.fetchNextSlideIndex();
-    } else if (this.mouseCurrentXOffset - this.mouseInitialXOffset >= dragChangeThreshold) {
+    } else if (this.dragOrSwipeCurrentPosition - this.dragOrSwipeStart >= dragChangeThreshold) {
       return this.fetchPreviousSlideIndex();
     }
 
@@ -204,21 +233,35 @@ export class SafetySliderWindow {
     return this.slideCount - 1;
   }
 
-  private dragEndHandler(event: MouseEvent) {
-    if (this.mouseDragIsActive) {
-      this.mouseCurrentXOffset = event.offsetX;
+  private dragOrSwipeStartHandler(startPosition: number) {
+    this.dragOrSwipeStart = startPosition;
+    this.dragOrSwipeIsActive = true;
+    this.disableTrackTransitionDuration();
+  }
 
-      const activeSlideAfterDrag = this.activeSlideAfterDrag();
+  private dragOrSwipeEndHandler(endPosition: number) {
+    if (this.dragOrSwipeIsActive) {
+      this.dragOrSwipeCurrentPosition = endPosition;
 
-      this.mouseDragIsActive = false;
-      setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
+      const activeSlideAfterDragOrSwipe = this.activeSlideAfterDragOrSwipe();
 
-      if (activeSlideAfterDrag != this.activeSlide) {
-        this.safetySliderSlideChange.emit(activeSlideAfterDrag);
+      this.dragOrSwipeIsActive = false;
+      this.resetTrackTransitionDuration();
+
+      if (activeSlideAfterDragOrSwipe != this.activeSlide) {
+        this.safetySliderSlideChange.emit(activeSlideAfterDragOrSwipe);
       } else {
-        setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
+        this.resetTrackOffset();
       }
     }
+  }
+
+  private resetTrackTransitionDuration() {
+    setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
+  }
+
+  private resetTrackOffset() {
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.trackOffset}px`);
   }
 
   render() {
@@ -227,7 +270,7 @@ export class SafetySliderWindow {
         id={WINDOW_ID_PREFIX + this.uuid}
         style={{
           [WINDOW_WIDTH_CSS_VAR]: this.rootWidth + 'px',
-          [TRACK_OFFSET_CSS_VAR]: this.slidesOffset + 'px',
+          [TRACK_OFFSET_CSS_VAR]: this.trackOffset + 'px',
           [TRACK_TRANSITION_DURATION_CSS_VAR]: this.trackTransitionDuration + 'ms',
         }}
       >
