@@ -132,29 +132,18 @@ export class SafetySliderWindow {
 
   @Listen('mouseleave')
   mouseLeaveHandler(event: MouseEvent) {
-    this.dragEndHandler(event);
+    this.dragOrSwipeEndHandler(event.offsetX);
   }
 
   @Listen('mouseup')
   mouseUpHandler(event: MouseEvent) {
-    this.dragEndHandler(event);
+    this.dragOrSwipeEndHandler(event.offsetX);
   }
 
   @Listen('touchend')
   touchEndHandler(event: TouchEvent) {
-    if (this.dragOrSwipeIsActive) {
-      const touch = event.touches[0] || event.changedTouches[0];
-      this.dragOrSwipeCurrentPosition = touch.pageX;
-
-      const activeSlideAfterDrag = this.activeSlideAfterDrag();
-
-      if (activeSlideAfterDrag != this.activeSlide) {
-        this.safetySliderSlideChange.emit(this.activeSlideAfterDrag());
-      }
-
-      setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
-      setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
-    }
+    const touch = event.touches[0] || event.changedTouches[0];
+    this.dragOrSwipeEndHandler(touch.pageX);
   }
 
   private calculateTrackOffset() {
@@ -200,7 +189,7 @@ export class SafetySliderWindow {
     setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, '0ms');
   }
 
-  private activeSlideAfterDrag() {
+  private activeSlideAfterDragOrSwipe() {
     const dragChangeThreshold = Math.floor(this.rootWidth / 4);
 
     if (this.dragOrSwipeStart - this.dragOrSwipeCurrentPosition >= dragChangeThreshold) {
@@ -238,27 +227,35 @@ export class SafetySliderWindow {
     return this.slideCount - 1;
   }
 
-  private dragEndHandler(event: MouseEvent) {
-    if (this.dragOrSwipeIsActive) {
-      this.dragOrSwipeCurrentPosition = event.offsetX;
-
-      const activeSlideAfterDrag = this.activeSlideAfterDrag();
-
-      this.dragOrSwipeIsActive = false;
-      setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
-
-      if (activeSlideAfterDrag != this.activeSlide) {
-        this.safetySliderSlideChange.emit(activeSlideAfterDrag);
-      } else {
-        setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
-      }
-    }
-  }
-
   private dragOrSwipeStartHandler(startPosition: number) {
     this.dragOrSwipeStart = startPosition;
     this.dragOrSwipeIsActive = true;
     this.disableTrackTransitionDuration();
+  }
+
+  private dragOrSwipeEndHandler(endPosition: number) {
+    if (this.dragOrSwipeIsActive) {
+      this.dragOrSwipeCurrentPosition = endPosition;
+
+      const activeSlideAfterDragOrSwipe = this.activeSlideAfterDragOrSwipe();
+
+      this.dragOrSwipeIsActive = false;
+      this.resetTrackTransitionDuration();
+
+      if (activeSlideAfterDragOrSwipe != this.activeSlide) {
+        this.safetySliderSlideChange.emit(activeSlideAfterDragOrSwipe);
+      } else {
+        this.resetTrackOffset();
+      }
+    }
+  }
+
+  private resetTrackTransitionDuration() {
+    setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
+  }
+
+  private resetTrackOffset() {
+    setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
   }
 
   render() {

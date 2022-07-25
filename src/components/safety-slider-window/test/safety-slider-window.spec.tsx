@@ -402,6 +402,67 @@ describe('safety-slider-window', () => {
     expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
     expect(eventSpy).not.toHaveBeenCalled();
   });
+
+  it(`should reset the track offset back to the active slide on touchend if there is no next slide`, async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(1, 1));
+
+    const component: SafetySliderWindow = page.rootInstance;
+    const offsetWidth = chance.natural({ min: 200, max: 1000 });
+    const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+    await setComponentOffsetWidth(component, page, offsetWidth);
+
+    const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+    component.touchStartHandler(touchStartEvent);
+    await page.waitForChanges();
+
+    const touchEndEvent = { touches: [ { pageX: offsetWidth * 0.25 } ] as any } as TouchEvent;
+    component.touchEndHandler(touchEndEvent);
+    await page.waitForChanges();
+
+    expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_OFFSET_CSS_VAR, '0px');
+    expect(setCssProperty).toHaveBeenCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
+    expect(eventSpy).not.toHaveBeenCalled();
+  });
+
+  it(`should emit the safetySliderSlideChange event when touchend occurs, is infinite, and dragging the first slide to the last slide`, async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(5, 5), 'is-infinite');
+
+    const component: SafetySliderWindow = page.rootInstance;
+    const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+    const offsetWidth = chance.natural({ min: 200, max: 1000 });
+    await setComponentOffsetWidth(component, page, offsetWidth);
+
+    const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+    component.touchStartHandler(touchStartEvent);
+    await page.waitForChanges();
+
+    const touchEndEvent = { touches: [ { pageX: offsetWidth * 0.75 } ] as any } as TouchEvent;
+    component.touchEndHandler(touchEndEvent);
+    await page.waitForChanges();
+
+    expect(eventSpy).toHaveBeenCalledWith(4);
+    expect(setCssProperty).toHaveBeenLastCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
+  });
+
+  it(`should emit the safetySliderSlideChange event when touchend occurs, is infinite, and dragging the last slide to the first slide`, async () => {
+    const page = await SpecUtils.buildWindowSpecPage(SpecUtils.buildRandomSlotData(5, 5), 'is-infinite active-slide="4"');
+
+    const component: SafetySliderWindow = page.rootInstance;
+    const eventSpy = jest.spyOn(component.safetySliderSlideChange, 'emit');
+    const offsetWidth = chance.natural({ min: 200, max: 1000 });
+    await setComponentOffsetWidth(component, page, offsetWidth);
+
+    const touchStartEvent = { touches: [ { pageX: offsetWidth * 0.5 }] as any } as TouchEvent;
+    component.touchStartHandler(touchStartEvent);
+    await page.waitForChanges();
+
+    const touchEndEvent = { touches: [ { pageX: offsetWidth * 0.25 } ] as any } as TouchEvent;
+    component.touchEndHandler(touchEndEvent);
+    await page.waitForChanges();
+
+    expect(eventSpy).toHaveBeenCalledWith(0);
+    expect(setCssProperty).toHaveBeenLastCalledWith(expect.any(HTMLElement), TRACK_TRANSITION_DURATION_CSS_VAR, '250ms');
+  });
 });
 
 function runDragEndEventHandler(component: SafetySliderWindow, event: MouseEvent, eventType: string) {
