@@ -145,7 +145,13 @@ export class SafetySliderWindow {
     if (this.dragOrSwipeIsActive) {
       const touch = event.touches[0] || event.changedTouches[0];
       this.dragOrSwipeCurrentPosition = touch.pageX;
-      this.safetySliderSlideChange.emit(this.activeSlideAfterDrag());
+
+      const activeSlideAfterDrag = this.activeSlideAfterDrag();
+
+      if (activeSlideAfterDrag != this.activeSlide) {
+        this.safetySliderSlideChange.emit(this.activeSlideAfterDrag());
+      }
+
       setCssProperty(this.root, TRACK_TRANSITION_DURATION_CSS_VAR, `${this.trackTransitionDuration}ms`);
       setCssProperty(this.root, TRACK_OFFSET_CSS_VAR, `${this.slidesOffset}px`);
     }
