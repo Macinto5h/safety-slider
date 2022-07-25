@@ -14,6 +14,7 @@ export namespace Components {
         "nextArrowAriaLabel": string;
         "nextArrowInnerHTML": string;
         "noDrag": boolean;
+        "noSwipe": boolean;
         "prevArrowAriaLabel": string;
         "prevArrowInnerHTML": string;
         "setActiveSlide": (newActiveSlide: number) => Promise<void>;
@@ -85,6 +86,7 @@ declare namespace LocalJSX {
         "nextArrowAriaLabel"?: string;
         "nextArrowInnerHTML"?: string;
         "noDrag"?: boolean;
+        "noSwipe"?: boolean;
         "prevArrowAriaLabel"?: string;
         "prevArrowInnerHTML"?: string;
         "trackTransitionDuration"?: number;
