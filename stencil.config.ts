@@ -1,7 +1,6 @@
 import { Config } from '@stencil/core';
 import { postcss } from '@stencil/postcss';
 import autoprefixer from 'autoprefixer';
-import tailwindcss from 'tailwindcss';
 
 export const config: Config = {
   namespace: 'safety-slider',
@@ -25,9 +24,7 @@ export const config: Config = {
     postcss({
       plugins: [
         autoprefixer(),
-        tailwindcss()
       ]
     })
   ],
-  globalStyle: 'src/global/app.css'
 };
