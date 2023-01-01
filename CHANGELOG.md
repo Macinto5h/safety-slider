@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+- json5 version 2.2.3 is now used
+
 ## [0.8.0] - 2022-09-11
 
 ### Added

@@ -45,6 +45,18 @@ export namespace Components {
         "uuid": string;
     }
 }
+export interface SafetySliderArrowsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSafetySliderArrowsElement;
+}
+export interface SafetySliderDotsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSafetySliderDotsElement;
+}
+export interface SafetySliderWindowCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSafetySliderWindowElement;
+}
 declare global {
     interface HTMLSafetySliderElement extends Components.SafetySlider, HTMLStencilElement {
     }
@@ -96,7 +108,7 @@ declare namespace LocalJSX {
         "isInfinite"?: boolean;
         "nextAriaLabel"?: string;
         "nextArrowInnerHTML"?: string;
-        "onSafetySliderSlideChange"?: (event: CustomEvent<number>) => void;
+        "onSafetySliderSlideChange"?: (event: SafetySliderArrowsCustomEvent<number>) => void;
         "prevAriaLabel"?: string;
         "prevArrowInnerHTML"?: string;
         "slideCount"?: number;
@@ -106,7 +118,7 @@ declare namespace LocalJSX {
         "activeDot"?: number;
         "dotAriaLabel"?: string;
         "dotCount"?: number;
-        "onSafetySliderSlideChange"?: (event: CustomEvent<number>) => void;
+        "onSafetySliderSlideChange"?: (event: SafetySliderDotsCustomEvent<number>) => void;
         "uuid"?: string;
     }
     interface SafetySliderWindow {
@@ -114,9 +126,9 @@ declare namespace LocalJSX {
         "isDraggable"?: boolean;
         "isInfinite"?: boolean;
         "isSwipeable"?: boolean;
-        "onSafetySliderApplyTransitionDuration"?: (event: CustomEvent<any>) => void;
-        "onSafetySliderInfiniteLoopAdjustment"?: (event: CustomEvent<any>) => void;
-        "onSafetySliderSlideChange"?: (event: CustomEvent<number>) => void;
+        "onSafetySliderApplyTransitionDuration"?: (event: SafetySliderWindowCustomEvent<any>) => void;
+        "onSafetySliderInfiniteLoopAdjustment"?: (event: SafetySliderWindowCustomEvent<any>) => void;
+        "onSafetySliderSlideChange"?: (event: SafetySliderWindowCustomEvent<number>) => void;
         "trackTransitionDuration"?: number;
         "uuid"?: string;
     }
