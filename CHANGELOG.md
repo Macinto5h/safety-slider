@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+- Address vulnerabilities by updating json5 and puppeteer
+
 ## [0.8.0] - 2022-09-11
 
 ### Added
