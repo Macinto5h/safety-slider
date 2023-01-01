@@ -51,7 +51,7 @@
     "jest-cli": "27.5.1",
     "lint-staged": "^12.4.1",
     "prettier": "2.6.2",
-    "puppeteer": "10.0.0",
+    "puppeteer": "^19.4.1",
     "stylelint": "14.6.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "25.0.0",
